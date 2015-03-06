@@ -34,13 +34,14 @@
         <h3>
 <a id="ides-data-preparation" class="anchor" href="#ides-data-preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>IDES Data Preparation</h3>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/IDES_logo.png" alt="IDES Logo"> 
-The International Data Exchange Service (IDES) is a secure managed file transfer service that allows financial institutions and foreign tax authorities to securely send information on financial accounts held by U.S. taxpayers in accordance with the Foreign Account Tax Compliance Act (FATCA).<br>
-IDES only accepts encrypted electronic submissions through a data preparation process. The following sample is one of many possible implementations of the data preparation process created for the .NET Framework. The steps below briefly explain the overall process:</p>
+<p>The International Data Exchange Service (IDES) is a secure managed file transfer service that allows financial institutions and foreign tax authorities to securely send information on financial accounts held by U.S. taxpayers in accordance with the Foreign Account Tax Compliance Act (FATCA). </p>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/Figure%204-1.jpg" alt="Overview of the IDES data preparation process"></p>
+<p>The IDES Data Preparation.NET project repository demonstrates a working application built using <a href="http://www.visualstudio.com/en-us/products/free-developer-offers-vs">Microsoft Visual Studio 2013 Community edition</a>.  There are many tools available that may produce the same results. The IRS does not endorse any software applications or commercial products.</p>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img1.png" alt="Image 1"></p>
+<p>The example explains how to create a new project and use the code to build an application that will create a valid transmission and process notifications through IDES. The project starts with a validated FATCA XML file. The application will digitally sign, encrypt, compress, and archive the data packet into a compliant .ZIP format that is ready for transmission in IDES.</p>
+
+<p>Open <strong>Visual Studio</strong>, select <strong>New Project</strong>.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img1.png" alt="Image 1"></p>
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
