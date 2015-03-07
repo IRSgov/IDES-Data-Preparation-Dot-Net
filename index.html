@@ -178,38 +178,38 @@ Figure 7    </p>
 
 <p>Next, let’s create code used to display error messages and show the file load dialog screens. In the new class <strong>ExtensionMethods.cs</strong> , enter the following:  </p>
 
-<pre><code>using System;
+<div class="highlight highlight-javascript"><pre>using System;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public static class ExtensionMethods
+    <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">class</span> ExtensionMethods
     {
-        public static string ShowDialogWithFilter(this OpenFileDialog dialog, string filter)
+        <span class="pl-s">public</span> <span class="pl-s">static</span> string ShowDialogWithFilter(<span class="pl-v">this</span> OpenFileDialog dialog, string filter)
         {
-            dialog.Filter = filter;
+            dialog.Filter <span class="pl-k">=</span> filter;
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            <span class="pl-k">if</span> (dialog.ShowDialog() <span class="pl-k">==</span> DialogResult.OK)
             {
-                return dialog.FileName;
+                <span class="pl-k">return</span> dialog.FileName;
             }
 
-            return string.Empty;
+            <span class="pl-k">return</span> string.Empty;
         }
 
-        public static void DisplayException(this Exception ex, string messageBoxTitle)
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-k">void</span> DisplayException(<span class="pl-v">this</span> Exception ex, string messageBoxTitle)
         {
-            string errorMessage = ex.GetBaseException().Message;
+            string errorMessage <span class="pl-k">=</span> ex.GetBaseException().Message;
 
-            if (errorMessage.Contains("password"))
+            <span class="pl-k">if</span> (errorMessage.Contains(<span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>))
             {
-                // certificate password is incorrect
-                MessageBox.Show("Specified certificate password is incorrect!", 
+                <span class="pl-c">// certificate password is incorrect</span>
+                MessageBox.Show(<span class="pl-s1"><span class="pl-pds">"</span>Specified certificate password is incorrect!<span class="pl-pds">"</span></span>, 
 messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                <span class="pl-k">return</span>;
             }
 
-            // other error
+            <span class="pl-c">// other error</span>
             MessageBox.Show(errorMessage, messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
@@ -217,8 +217,7 @@ messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
     }
 }
-
-</code></pre>
+</pre></div>
 
 <p>$ cd your_repo_root/repo_name
 $ git fetch origin
