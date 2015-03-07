@@ -219,21 +219,463 @@ messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 }
 </pre></div>
 
-<p>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages</p>
+<h4>
+<a id="class-file---xmlsignercs" class="anchor" href="#class-file---xmlsignercs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class File - XmlSigner.cs</h4>
 
-<pre><code>
+<p>Create a new class named <strong>XmlSigner.cs</strong> in the <strong>Helpers</strong> folder. Add the following code to the new <strong>XmlSigner.cs</strong> class:  </p>
 
+<pre><code>using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
+using System.Text;
+using System.Xml;
+using System.Linq;
+using System.Collections.Generic;
 
+namespace WindowsFormsApplication1
+{
+    /// &lt;summary&gt;
+    /// The type of signature to perform
+    /// &lt;/summary&gt;
+    public enum XmlSignatureType
+    {
 
+        Enveloping
+    }
 
-### Authors and Contributors
-You can @mention a GitHub username to generate a link to their profile. The resulting `&lt;a&gt;` element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (@defunkt), PJ Hyett (@pjhyett), and Tom Preston-Werner (@mojombo) founded GitHub.
+    class XmlManager
+    {
+        #region Private methods
+        /// &lt;summary&gt;
+        /// Creates a KeyInfo object based on information from specified certificate
+        /// &lt;/summary&gt;
+        /// &lt;param name="certificate"&gt;The certificate used to create the KeyInfo from&lt;/param&gt;
+        /// &lt;returns&gt;KeyInfo object&lt;/returns&gt;
+        private static KeyInfo CreateKeyInfoFromCertificate(X509Certificate2 certificate)
+        {
+            // create KeyInfoX509Data object &amp; include certificate subject
+            KeyInfoX509Data kiData = new KeyInfoX509Data(certificate);
+            kiData.AddSubjectName(certificate.Subject);
 
-### Support or Contact
-Having trouble with Pages? Check out the documentation at https://help.github.com/pages or contact support@github.com and we’ll help you sort it out.
+            // create KeyInfo object with specified KeyInfoX509Data
+            KeyInfo keyInfo = new KeyInfo();
+            keyInfo.AddClause(kiData);
+
+            return keyInfo;
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the RSA private key from the specified signing certificate
+        /// &lt;/summary&gt;
+        /// &lt;param name="certificate"&gt;The certificate used to extract the key from&lt;/param&gt;
+        /// &lt;returns&gt;RSACryptoServiceProvider object&lt;/returns&gt;
+        private static RSACryptoServiceProvider GetSigningRsaKeyFromCertificate(X509Certificate2 certificate)
+        {
+            RSACryptoServiceProvider key = new RSACryptoServiceProvider(new CspParameters(24));
+            key.FromXmlString(certificate.PrivateKey.ToXmlString(true));
+
+            return key;
+        }
+
+        /// &lt;summary&gt;
+        /// Loads the specified certificate using specific storage flags for SHA-256
+        /// &lt;/summary&gt;
+        /// &lt;param name="certFile"&gt;The certificate file to open&lt;/param&gt;
+        /// &lt;param name="certPassword"&gt;The certificate password&lt;/param&gt;
+        /// &lt;param name="signWithSha256"&gt;Sign the document using SHA-256&lt;/param&gt;
+        /// &lt;returns&gt;X509Certificate2 object&lt;/returns&gt;
+        private static X509Certificate2 LoadSigningCertificate(string certFile, string certPassword, bool signWithSha256)
+        {
+            X509Certificate2 certificate = null;
+
+            if (signWithSha256)
+            {
+                // register SHA-256 and open certificate with exportable private key
+                CryptoConfig.AddAlgorithm(typeof(RSAPKCS1SHA256SignatureDescription), RSAPKCS1SHA256SignatureDescription.SignatureMethod);
+                certificate = new X509Certificate2(certFile, certPassword, X509KeyStorageFlags.Exportable);
+            }
+            else
+            {
+                // open certificate with password (to be able to access the private key)
+                certificate = new X509Certificate2(certFile, certPassword);
+            }
+
+            return certificate;
+        }
+
+        /// &lt;summary&gt;
+        /// Generates a SignedXml object
+        /// &lt;/summary&gt;
+        /// &lt;param name="doc"&gt;The XML data to sign represented as XmlDocument object&lt;/param&gt;
+        /// &lt;param name="certificate"&gt;The certificate used for signing represented as X509Certificate2 object&lt;/param&gt;
+        /// &lt;param name="signWithSha256"&gt;Sign the document using SHA-256&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        private static SignedXml GenerateSignedXml(XmlDocument doc, X509Certificate2 certificate, bool signWithSha256)
+        {
+            // create new SignedXml from XmlDocument
+            SignedXml signed = new SignedXml(doc);
+
+            if (signWithSha256)
+            {
+                // set signing key and signature method for SHA-256
+                signed.SigningKey = GetSigningRsaKeyFromCertificate(certificate);
+                signed.SignedInfo.SignatureMethod = RSAPKCS1SHA256SignatureDescription.SignatureMethod;
+            }
+            else
+            {
+                // set signing key and signature method for SHA-1
+                signed.SigningKey = certificate.PrivateKey;
+            }
+
+            return signed;
+        }
+
+        /// &lt;summary&gt;
+        /// Signs a XML file (enveloped signature) using a digital certificate
+        /// &lt;/summary&gt;
+        /// &lt;param name="xml"&gt;The XML data to sign represented as byte array&lt;/param&gt;
+        /// &lt;param name="certFile"&gt;The certificate file to use for signing&lt;/param&gt;
+        /// &lt;param name="certPassword"&gt;The certificate password&lt;/param&gt;
+        /// &lt;param name="signWithSha256"&gt;Sign the document using SHA-256&lt;/param&gt;
+        /// &lt;returns&gt;The signed data represented as byte array&lt;/returns&gt;
+        private static byte[] SignEnvelopedXml(byte[] xml, string certFile, string certPassword, bool signWithSha256)
+        {
+            if (xml == null || xml.Length == 0)
+            {
+                // invalid XML array
+                throw new Exception("Nothing to sign!");
+            }
+
+            // load certificate
+            X509Certificate2 certificate = LoadSigningCertificate(certFile, certPassword, signWithSha256);
+
+            if (!certificate.HasPrivateKey)
+            {
+                // invalid certificate
+                throw new Exception("Specified certificate not suitable for signing!");
+            }
+
+            using (MemoryStream stream = new MemoryStream(xml))
+            {
+                // go to the beginning of the stream
+                stream.Flush();
+                stream.Position = 0;
+
+                // create new XmlDocument from stream
+                XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
+                doc.Load(stream);
+
+                // create new SignedXml from XmlDocument
+                SignedXml signed = GenerateSignedXml(doc, certificate, signWithSha256);
+
+                // create reference &amp; add enveloped transform
+                Reference reference = new Reference(string.Empty);
+                reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
+
+                if (signWithSha256)
+                {
+                    // SHA-256 digest
+                    reference.DigestMethod = RSAPKCS1SHA256SignatureDescription.ReferenceDigestMethod;
+                }
+
+                // add reference to document
+                signed.AddReference(reference);
+
+                // include KeyInfo object &amp; compute signature
+                signed.KeyInfo = CreateKeyInfoFromCertificate(certificate);
+                signed.ComputeSignature();
+
+                // get signature &amp; append node
+                XmlElement xmlDigitalSignature = signed.GetXml();
+                doc.DocumentElement.AppendChild(doc.ImportNode(xmlDigitalSignature, true));
+
+                // returned content as byte array
+                return Encoding.UTF8.GetBytes(doc.OuterXml);
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Signs a XML file (enveloping signature) using a digital certificate
+        /// &lt;/summary&gt;
+        /// &lt;param name="xml"&gt;The XML data to sign represented as byte array&lt;/param&gt;
+        /// &lt;param name="certFile"&gt;The certificate file to use for signing&lt;/param&gt;
+        /// &lt;param name="certPassword"&gt;The certificate password&lt;/param&gt;
+        /// &lt;param name="signWithSha256"&gt;Sign the document using SHA-256&lt;/param&gt;
+        /// &lt;returns&gt;The signed data represented as byte array&lt;/returns&gt;
+        private static byte[] SignEnvelopingXml(byte[] xml, string certFile, string certPassword, bool signWithSha256)
+        {
+            if (xml == null || xml.Length == 0)
+            {
+                // invalid XML array
+                throw new Exception("Nothing to sign!");
+            }
+
+            // load certificate
+            X509Certificate2 certificate = LoadSigningCertificate(certFile, certPassword, signWithSha256);
+
+            if (!certificate.HasPrivateKey)
+            {
+                // invalid certificate
+                throw new Exception("Specified certificate not suitable for signing!");
+            }
+
+            using (MemoryStream stream = new MemoryStream(xml))
+            {
+                // go to the beginning of the stream
+                stream.Flush();
+                stream.Position = 0;
+
+                // create new XmlDocument from stream
+                XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
+                doc.Load(stream);
+
+                // craete transform (for canonicalization method &amp; reference)
+                XmlDsigExcC14NTransform transform = new XmlDsigExcC14NTransform();
+
+                // create new SignedXml from XmlDocument
+                SignedXml signed = GenerateSignedXml(doc, certificate, signWithSha256);
+                signed.SignedInfo.CanonicalizationMethod = transform.Algorithm;
+
+                // get nodes (use XPath to include FATCA declaration)
+                XmlNodeList nodes = doc.DocumentElement.SelectNodes("/*");
+
+                // define data object
+                DataObject dataObject = new DataObject() { Data = nodes, Id = "FATCA" };
+
+                // add the data we are signing as a sub-element (object) of the signature element
+                signed.AddObject(dataObject);
+
+                // create reference
+                Reference reference = new Reference(string.Format("#{0}", dataObject.Id));
+                reference.AddTransform(transform);
+
+                if (signWithSha256)
+                {
+                    // SHA-256 digest
+                    reference.DigestMethod = RSAPKCS1SHA256SignatureDescription.ReferenceDigestMethod;
+                }
+
+                // add reference to document
+                signed.AddReference(reference);
+
+                // include KeyInfo object &amp; compute signature
+                signed.KeyInfo = CreateKeyInfoFromCertificate(certificate);
+                signed.ComputeSignature();
+
+                // get signature
+                XmlElement xmlDigitalSignature = signed.GetXml();
+
+                // XML declaration
+                string xmlDeclaration = string.Empty;
+
+                if (doc.FirstChild is XmlDeclaration)
+                {
+                    // include declaration
+                    xmlDeclaration = doc.FirstChild.OuterXml;
+                }
+
+                // return signature as byte array
+                return Encoding.UTF8.GetBytes(string.Concat(xmlDeclaration, xmlDigitalSignature.OuterXml));
+            }
+        }
+        #endregion Private methods
+
+        /// &lt;summary&gt;
+        /// Signs a XML file using a digital certificate
+        /// &lt;/summary&gt;
+        /// &lt;param name="signatureType"&gt;The type of signature to perform&lt;/param&gt;
+        /// &lt;param name="xml"&gt;The XML data to sign represented as byte array&lt;/param&gt;
+        /// &lt;param name="certFile"&gt;The certificate file to use for signing&lt;/param&gt;
+        /// &lt;param name="certPassword"&gt;The certificate password&lt;/param&gt;
+        /// &lt;param name="signWithSha256"&gt;Sign the document using SHA-256&lt;/param&gt;
+        /// &lt;returns&gt;The signed data represented as byte array&lt;/returns&gt;
+        public static byte[] Sign(XmlSignatureType signatureType, byte[] xml, string certFile, string certPassword, bool signWithSha256 = true)
+        {
+            switch (signatureType)
+            {
+
+                case XmlSignatureType.Enveloping:
+                    return SignEnvelopingXml(xml, certFile, certPassword, signWithSha256);
+
+                default:
+                    throw new Exception("Please use a valid XML signature type!");
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Verifies if the signature of the file is valid
+        /// &lt;/summary&gt;
+        /// &lt;param name="signedXml"&gt;The path to the signed file&lt;/param&gt;
+        /// &lt;returns&gt;True or false&lt;/returns&gt;
+        public static bool CheckSignature(string signedXml)
+        {
+            byte[] xml = File.ReadAllBytes(signedXml);
+
+            using (MemoryStream stream = new MemoryStream(xml))
+            {
+                // go to the beginning of the stream
+                stream.Flush();
+                stream.Position = 0;
+
+                // create new XmlDocument from stream
+                XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
+                doc.Load(stream);
+
+                // get signature node
+                XmlNodeList nodeList = doc.GetElementsByTagName("Signature");
+
+                if (nodeList.Count != 1)
+                {
+                    // invalid file
+                    throw new Exception("Signature is missing or multiple signatures found!");
+                }
+
+                // create SignedXml and load it with data
+                SignedXml signed = new SignedXml(doc);
+                signed.LoadXml(nodeList[0] as XmlElement);
+
+                // check
+                return signed.CheckSignature();
+            }
+        }
+    }
+}
 </code></pre>
+
+<p><strong>Class File - RSAPKCS1SHA256SignatureDescription.cs</strong><br>
+Create a new class named <strong>RSAPKCS1SHA256SignatureDescription.cs</strong>in the <strong>Helpers</strong>folder and add the code to the new <strong>RSAPKCS1SHA256SignatureDescription.cs</strong> class:  </p>
+
+<pre><code>using System;
+using System.Security.Cryptography;
+
+namespace WindowsFormsApplication1
+{
+    public sealed class RSAPKCS1SHA256SignatureDescription : SignatureDescription
+    {
+        public const string SignatureMethod = "http://" + "www.w3.org/2001/04/xmldsig-more#rsa-sha256";
+        public const string ReferenceDigestMethod = "http://" + "www.w3.org/2001/04/xmlenc#sha256";
+
+        public RSAPKCS1SHA256SignatureDescription()
+        {
+            KeyAlgorithm = typeof(RSACryptoServiceProvider).FullName;
+            DigestAlgorithm = typeof(SHA256Managed).FullName;
+            FormatterAlgorithm = typeof(RSAPKCS1SignatureFormatter).FullName;
+            DeformatterAlgorithm = typeof(RSAPKCS1SignatureDeformatter).FullName;
+        }
+
+        public override AsymmetricSignatureDeformatter CreateDeformatter(AsymmetricAlgorithm key)
+        {
+            if (key == null)
+            {
+                throw new Exception("Invalid key specified for RSAPKCS1SHA256SignatureDescription!");
+            }
+
+            RSAPKCS1SignatureDeformatter deformatter = new RSAPKCS1SignatureDeformatter(key);
+            deformatter.SetHashAlgorithm("SHA256");
+
+            return deformatter;
+        }
+
+        public override AsymmetricSignatureFormatter CreateFormatter(AsymmetricAlgorithm key)
+        {
+            if (key == null)
+            {
+                throw new Exception("Invalid key specified for RSAPKCS1SHA256SignatureDescription!");
+            }
+
+            RSAPKCS1SignatureFormatter formatter = new RSAPKCS1SignatureFormatter(key);
+            formatter.SetHashAlgorithm("SHA256");
+
+            return formatter;
+        }
+    }
+}
+
+</code></pre>
+
+<p><strong>Class File-ZipManager.cs</strong><br>
+Create a new class named <strong>ZipManager.cs</strong> in the Helpers folder and add the following code to the new <strong>ZipManager.cs</strong> class:</p>
+
+<pre><code>using System.IO;
+using System.IO.Compression;
+
+namespace WindowsFormsApplication1
+{
+    class ZipManager
+    {
+        public static void CreateArchive(string inputFileName, string outputFileName)
+        {
+            using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.Write))
+            {
+                using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create))
+                {
+                    string entryName = Path.GetFileName(inputFileName);
+                    archive.CreateEntryFromFile(inputFileName, entryName, CompressionLevel.Optimal);
+                }
+            }
+        }
+
+        public static void UpdateArchive(string inputFileName, string outputFileName)
+        {
+            using (FileStream fs = new FileStream(outputFileName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Update))
+                {
+                    string entryName = Path.GetFileName(inputFileName);
+                    archive.CreateEntryFromFile(inputFileName, entryName, CompressionLevel.Optimal);
+                }
+            }
+        }
+
+        public static string ExtractArchive(string inputFileName, string outputFolder)
+        {
+            string zipFileName = Path.GetFileNameWithoutExtension(inputFileName);
+            string zipFolderPath = outputFolder + "\\" + zipFileName;
+
+            using (ZipArchive archive = ZipFile.Open(inputFileName, ZipArchiveMode.Update))
+            {
+
+                archive.ExtractToDirectory(zipFolderPath);
+            }
+
+            return zipFolderPath;
+
+        }
+
+        public static void ExtractArchive(string inputFileName, string outputFolder, bool noPath)
+        {
+
+            string zipFileName = Path.GetFileName(inputFileName);
+            string zipFolderPath = inputFileName.Replace(zipFileName, "");
+
+            using (ZipArchive archive = ZipFile.Open(inputFileName, ZipArchiveMode.Update))
+            {
+
+                archive.ExtractToDirectory(zipFolderPath);
+            }
+
+
+
+        }
+    }
+
+
+
+
+}
+</code></pre>
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
     </div>
 
