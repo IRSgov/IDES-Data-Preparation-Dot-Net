@@ -52,7 +52,38 @@ Under <strong>New Project</strong>, select the settings Visual C#, Windows Deskt
 <h4>
 <a id="adding-references" class="anchor" href="#adding-references" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding References</h4>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img3.png" alt=""></p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img3.png" alt="Image 3">
+Next, you will add a reference to the each of the following:</p>
+
+<ul>
+<li>System.IO.Compression</li>
+<li>System.IO.Compression.FileSystem</li>
+<li>System.Security 
+Select the <strong>Project *<em>and *</em>Add Reference</strong> from the program menu. The <strong>Reference Manager-SignXML</strong> screen appears. Select the checkbox next to each entry and click <strong>OK</strong>.</li>
+</ul>
+
+<h4>
+<a id="adding-components" class="anchor" href="#adding-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding Components</h4>
+
+<p><img src="/images/img4.png" alt="Image 4">
+In the <strong>Designer Interface</strong>, add the components listed below. The selections are used when you run the application. Figure 4 above shows a sample layout.
+Label – lblLoadXML    Label – lblReceiverCert
+TextBox – txtXmlFile  TextBox – txtReceiverCert
+Button – btnBrowseXml Button – btnBrowseRecCert
+Label – lblCert   Label – lblRecPass
+TextBox – txtCert TextBox – txtRecKeyPassword* 
+Button – btnBrowseCert    Button – btnDecryptZip
+Label – lblCertPass   Label – lblSender
+TextBox – txtCertPass*    TextBox – txtSenderCode
+Label – lblKeyCert    Label – lblReceiver
+TextBox – txtKeyCert  TextBox – txtReceiverCode
+Button – btnBrowseKeyCert Label – lblOutput
+Label – lblKeyEncryptionCertPassword  TextBox – txtNotificationFolder
+TextBox – txtKeyCertPassword  Button – btnBrowseOutput
+Button – btnSignXML   OpenFileDialog - dlgOpen
+Label – lblZipFile    SaveFileDialog – dlgSave
+TextBox – txtNotificationZip  FolderBrowserDialog - dlgOpenFolder
+Button – btnBrowseNotificationZip </p>
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
