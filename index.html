@@ -860,21 +860,36 @@ using System.Security.Cryptography.X509Certificates;</p>
 
 <p>Double click <em>8btnBrowseXml</em>* on the designer and add the code:  </p>
 
-<p><code>private void btnBrowseXml_Click(object sender, EventArgs e)</code>
-        <code>{</code>
-            <code>// load XML</code>
-            <code>txtXmlFile.Text = dlgOpen.ShowDialogWithFilter("XML Files (*.xml)|*.xml");</code>
-        <code>}</code></p>
+<pre><code>private void btnBrowseXml_Click(object sender, EventArgs e)
+    {
+     // load XML
+     txtXmlFile.Text = dlgOpen.ShowDialogWithFilter("XML Files (*.xml)|*.xml");
+    }
+</code></pre>
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<h4>
+<a id="btnbrowsecert" class="anchor" href="#btnbrowsecert" aria-hidden="true"><span class="octicon octicon-link"></span></a>btnBrowseCert</h4>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Double click <strong>btnBrowseCert</strong> on the designer and add the code:  </p>
 
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<div class="highlight highlight-c#"><pre><span class="pl-s">private</span> <span class="pl-st">void</span> btnBrowseCert_Click(<span class="pl-st">object</span> sender, EventArgs e)
+    {
+      <span class="pl-c">// load certificate</span>
+      txtCert.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s1"><span class="pl-pds">"</span>Signing Certificates (*.pfx, *.p12)|*.pfx;*.p12<span class="pl-pds">"</span></span>);
+     }
+```c#
 
-<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+
+
+
+
+
+
+### Authors and Contributors
+You can @mention a GitHub username to generate a link to their profile. The resulting `&lt;a&gt;` element will link to the contributor<span class="pl-s1"><span class="pl-pds">'</span>s GitHub Profile. For example: In 2007, Chris Wanstrath (@defunkt), PJ Hyett (@pjhyett), and Tom Preston-Werner (@mojombo) founded GitHub.</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">### Support or Contact</span>
+<span class="pl-s1">Having trouble with Pages? Check out the documentation at https://help.github.com/pages or contact support@github.com and we’ll help you sort it out.</span></pre></div>
       </section>
     </div>
 
