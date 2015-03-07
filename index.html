@@ -108,35 +108,52 @@ In the <strong>Designer Interface</strong>, add the components listed below. The
 <td align="center">btnBrowseNotificationZip</td>
 </tr>
 <tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
+<td align="center">lblReceiverCert</td>
+<td align="center">txtReceiverCert</td>
+<td align="center">btnBrowseRecCert</td>
 </tr>
 <tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
+<td align="center">lblRecPass</td>
+<td align="center">txtRecKeyPassword</td>
+<td align="center">btnDecryptZip</td>
+</tr>
+<tr>
+<td align="center">lblRecPass</td>
+<td align="center">txtRecKeyPassword</td>
+<td align="center">btnDecryptZip</td>
+</tr>
+<tr>
+<td align="center">lblSender</td>
+<td align="center">txtSenderCode</td>
+<td align="center">N/A</td>
+</tr>
+<tr>
+<td align="center">lblReceiver</td>
+<td align="center">txtReceiverCode</td>
+<td align="center">N/A</td>
+</tr>
+<tr>
+<td align="center">lblOutput</td>
+<td align="center">txtNotificationFolder</td>
+<td align="center">btnBrowseOutput</td>
+</tr>
+<tr>
+<td align="center">OpenFileDialog</td>
+<td align="center">dlgOpen</td>
+<td align="center">N/A</td>
+</tr>
+<tr>
+<td align="center">SaveFileDialog</td>
+<td align="center">dlgSave</td>
+<td align="center">N/A</td>
+</tr>
+<tr>
+<td align="center">FolderBrowserDialog</td>
+<td align="center">dlgOpenFolder</td>
+<td align="center">N/A</td>
 </tr>
 </tbody>
 </table>
-
-<p>Label lblLoadXM|Label – lblReceiverCert<br>
-TextBox – |   TextBox – txtReceiverCert<br>
-Button – btnBrowseXml|    Button – btnBrowseRecCert<br>
-Label – lblCert|  Label – lblRecPass<br>
-TextBox – txtCert|    TextBox – txtRecKeyPassword*<br>
-Button – btnBrowseCert|   Button – btnDecryptZip<br>
-Label – lblCertPass   Label – lblSender<br>
-TextBox – txtCertPass*    TextBox – txtSenderCode<br>
-Label – lblKeyCert    Label – lblReceiver<br>
-TextBox – txtKeyCert  TextBox – txtReceiverCode<br>
-Button – btnBrowseKeyCert Label – lblOutput<br>
-Label – lblKeyEncryptionCertPassword  TextBox – txtNotificationFolder<br>
-TextBox – txtKeyCertPassword  Button – btnBrowseOutput<br>
-Button – btnSignXML   OpenFileDialog - dlgOpen<br>
-Label – lblZipFile    SaveFileDialog – dlgSave
-TextBox – txtNotificationZip  FolderBrowserDialog - dlgOpenFolder
-Button – btnBrowseNotificationZip </p>
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
