@@ -1196,6 +1196,18 @@ Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 <h2>
 <a id="create-a-transmission-file" class="anchor" href="#create-a-transmission-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a Transmission File</h2>
 
+<p>To create a transmission file for IDES, you are required to have (1) an .xml file, (2) a private key that will be used to sign the xml, and (3) the public key of the receiver. The file names are case sensitive and any variation in name, extension or format will cause a transmission failure.  There are no file extensions, unless otherwise noted. For more information, review the IDES User Guide or the <a href="http://www.irs.gov/Businesses/Corporations/IDES-Data-Transmission-and-File-Preparation">IDES User Guide</a>.  </p>
+
+<ol>
+<li>Select the .xml file. The file should be correctly named  to create the correct sender metadata file. For example, Canada (ISO Code = 124) requires a file to be named 000000.00000.TA.124.xml.</li>
+<li>Select the sender’s private key. The application uses a .p12 file that contains the private key. The key may be in a different format, such as a .pfx file.</li>
+<li>If there is a password on the key file above, enter it here. </li>
+<li>Select the receiver’s public key. The application uses a .p12 file that contains the public key. This may be in a different format, such as a .cer extension.</li>
+<li>If there is a password on the public key, enter it here.</li>
+<li>Enter the Sender Code and Receiver code. These will be used to ensure the files are correctly named. The sender is 124 (Canada) and the receiver is 840 (US/IRS) in this sample.<br>
+</li>
+</ol>
+
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
