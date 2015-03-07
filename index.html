@@ -31,8 +31,8 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a id="ides-data-preparation" class="anchor" href="#ides-data-preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>IDES Data Preparation</h3>
+        <h2>
+<a id="ides-data-preparation" class="anchor" href="#ides-data-preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>IDES Data Preparation</h2>
 
 <p>The International Data Exchange Service (IDES) is a secure managed file transfer service that allows financial institutions and foreign tax authorities to securely send information on financial accounts held by U.S. taxpayers in accordance with the Foreign Account Tax Compliance Act (FATCA). </p>
 
@@ -43,14 +43,14 @@
 <p>Open <strong>Visual Studio</strong>, select <strong>New Project</strong>.
 <img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img1.png" alt="Image 1"></p>
 
-<h4>
-<a id="create-a-new-project" class="anchor" href="#create-a-new-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a New Project</h4>
+<h3>
+<a id="create-a-new-project" class="anchor" href="#create-a-new-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a New Project</h3>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img2.png" alt="Image 2">
 Under <strong>New Project</strong>, select the settings Visual C#, Windows Desktop and Windows Forms Application. Verify the settings, name and location. Click <strong>OK</strong> to continue.</p>
 
-<h4>
-<a id="adding-references" class="anchor" href="#adding-references" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding References</h4>
+<h3>
+<a id="adding-references" class="anchor" href="#adding-references" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding References</h3>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img3.png" alt="Image 3">
 Next, you will add a reference to the each of the following:</p>
@@ -62,8 +62,8 @@ Next, you will add a reference to the each of the following:</p>
 Select the <strong>Project ** and **Add Reference</strong> from the program menu. The <strong>Reference Manager-SignXML</strong> screen appears. Select the checkbox next to each entry and click <strong>OK</strong>.</li>
 </ul>
 
-<h4>
-<a id="adding-components" class="anchor" href="#adding-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding Components</h4>
+<h3>
+<a id="adding-components" class="anchor" href="#adding-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding Components</h3>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img4.png" alt="Image 3">
 In the <strong>Designer Interface</strong>, add the components listed below. The selections are used when you run the application. The figure above shows a sample layout.</p>
@@ -152,11 +152,11 @@ In the <strong>Designer Interface</strong>, add the components listed below. The
 
 <p>Note: The *<em>passwordChar *</em>attribute can be set to mask the input for this text box.</p>
 
-<h3>
-<a id="create-class-files" class="anchor" href="#create-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create Class Files</h3>
+<h2>
+<a id="create-class-files" class="anchor" href="#create-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create Class Files</h2>
 
-<h4>
-<a id="organizing-class-files" class="anchor" href="#organizing-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organizing Class Files</h4>
+<h3>
+<a id="organizing-class-files" class="anchor" href="#organizing-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organizing Class Files</h3>
 
 <p>The descriptions of the interface components may be modified to provide more detail.</p>
 
@@ -165,8 +165,8 @@ Figure 5  </p>
 
 <p>In <strong>Solution Explorer</strong>, add a new folder named *<em>Helpers *</em> that will contain class files or modules for the phase of the application.  </p>
 
-<h4>
-<a id="class-file---extensionmethodscs" class="anchor" href="#class-file---extensionmethodscs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class File - ExtensionMethods.cs</h4>
+<h3>
+<a id="class-file---extensionmethodscs" class="anchor" href="#class-file---extensionmethodscs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class File - ExtensionMethods.cs</h3>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img6.png" alt="Image 6"><br>
 Figure 6  </p>
@@ -178,28 +178,28 @@ Figure 7    </p>
 
 <p>Next, let’s create code used to display error messages and show the file load dialog screens. In the new class <strong>ExtensionMethods.cs</strong> , enter the following:  </p>
 
-<div class="highlight highlight-javascript"><pre>using System;
-using System.Windows.Forms;
+<div class="highlight highlight-c#"><pre><span class="pl-k">using</span> System;
+<span class="pl-k">using</span> System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+<span class="pl-k">namespace</span> <span class="pl-en">WindowsFormsApplication1</span>
 {
-    <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">class</span> ExtensionMethods
+    <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-s">class</span> <span class="pl-en">ExtensionMethods</span>
     {
-        <span class="pl-s">public</span> <span class="pl-s">static</span> string ShowDialogWithFilter(<span class="pl-v">this</span> OpenFileDialog dialog, string filter)
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">string</span> <span class="pl-en">ShowDialogWithFilter</span>(<span class="pl-st">this</span> <span class="pl-vpf">OpenFileDialog</span> dialog, <span class="pl-st">string</span> <span class="pl-vpf">filter</span>)
         {
-            dialog.Filter <span class="pl-k">=</span> filter;
+            dialog.Filter = filter;
 
-            <span class="pl-k">if</span> (dialog.ShowDialog() <span class="pl-k">==</span> DialogResult.OK)
+            <span class="pl-k">if</span> (dialog.ShowDialog() == DialogResult.OK)
             {
                 <span class="pl-k">return</span> dialog.FileName;
             }
 
-            <span class="pl-k">return</span> string.Empty;
+            <span class="pl-k">return</span> <span class="pl-st">string</span>.Empty;
         }
 
-        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-k">void</span> DisplayException(<span class="pl-v">this</span> Exception ex, string messageBoxTitle)
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">void</span> <span class="pl-en">DisplayException</span>(<span class="pl-st">this</span> <span class="pl-vpf">Exception</span> ex, <span class="pl-st">string</span> <span class="pl-vpf">messageBoxTitle</span>)
         {
-            string errorMessage <span class="pl-k">=</span> ex.GetBaseException().Message;
+            <span class="pl-st">string</span> errorMessage = ex.GetBaseException().Message;
 
             <span class="pl-k">if</span> (errorMessage.Contains(<span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>))
             {
@@ -219,10 +219,10 @@ messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 }
 </pre></div>
 
-<h4>
-<a id="class-file---xmlsignercs" class="anchor" href="#class-file---xmlsignercs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class File - XmlSigner.cs</h4>
+<h3>
+<a id="class-file---xmlsignercs" class="anchor" href="#class-file---xmlsignercs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class File - XmlSigner.cs</h3>
 
-<p>Create a new class named <strong>XmlSigner.cs</strong> in the <strong>Helpers</strong> folder. Add the following code to the new <strong>XmlSigner.cs</strong> class:  </p>
+<p>Create a new class named <strong>XmlSigner.cs</strong> in the <strong>Helpers</strong> folder and add the following code to the new <strong>XmlSigner.cs</strong> class:  </p>
 
 <pre><code>using System;
 using System.IO;
@@ -547,7 +547,7 @@ namespace WindowsFormsApplication1
 <h3>
 <a id="class-file-rsapkcs1sha256signaturedescriptioncs" class="anchor" href="#class-file-rsapkcs1sha256signaturedescriptioncs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class File-RSAPKCS1SHA256SignatureDescription.cs</h3>
 
-<p>Create a new class named <strong>RSAPKCS1SHA256SignatureDescription.cs</strong>in the <strong>Helpers</strong>folder and add the code to the new <strong>RSAPKCS1SHA256SignatureDescription.cs</strong> class:   </p>
+<p>Create a new class named <strong>RSAPKCS1SHA256SignatureDescription.cs</strong>in the <strong>Helpers</strong> folder and add the code to the new <strong>RSAPKCS1SHA256SignatureDescription.cs</strong> class:   </p>
 
 <pre><code>using System;
 using System.Security.Cryptography;
