@@ -676,7 +676,196 @@ namespace WindowsFormsApplication1
 
 <p>Create a new class in the <strong>Helpers</strong> folder named <strong>AesManager.cs</strong> and add the following code to the new <strong>AesManager.cs</strong> class:  </p>
 
-<pre><code></code></pre>
+<div class="highlight highlight-c#"><pre><span class="pl-k">using</span> System;
+<span class="pl-k">using</span> System.IO;
+<span class="pl-k">using</span> System.Security.Cryptography;
+<span class="pl-k">using</span> System.Security.Cryptography.X509Certificates;
+
+<span class="pl-k">namespace</span> <span class="pl-en">WindowsFormsApplication1</span>
+{
+    <span class="pl-s">class</span> <span class="pl-en">AesManager</span>
+    {
+        <span class="pl-s">private</span> <span class="pl-s">const</span> <span class="pl-st">int</span> bufferSize = <span class="pl-c1">1024</span> * <span class="pl-c1">8</span>;
+        <span class="pl-s">private</span> <span class="pl-s">const</span> <span class="pl-st">int</span> keySize = <span class="pl-c1">256</span>;
+
+        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// AES key size</span>
+        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">int</span> KeySize
+        {
+            <span class="pl-k">get</span>
+            {
+                <span class="pl-k">return</span> keySize;
+            }
+        }
+
+        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// Generates a random key of the specified size</span>
+        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>length<span class="pl-pds">"</span></span>&gt;The length of the key to generate&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>emptyBytes<span class="pl-pds">"</span></span>&gt;If true all bytes will contain zeroes&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;A random key represented as byte array&lt;/<span class="pl-ent">returns</span>&gt;</span>
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">byte</span>[] <span class="pl-en">GenerateRandomKey</span>(<span class="pl-st">int</span> <span class="pl-vpf">length</span>, <span class="pl-st">bool</span> <span class="pl-vpf">emptyBytes</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>)
+        {
+            <span class="pl-st">byte</span>[] key = <span class="pl-s">new</span> <span class="pl-st">byte</span>[length];
+
+            <span class="pl-k">if</span> (emptyBytes)
+            {
+                <span class="pl-k">return</span> key;
+            }
+
+            <span class="pl-k">using</span> (RNGCryptoServiceProvider random = <span class="pl-s">new</span> RNGCryptoServiceProvider())
+            {
+                random.GetBytes(key);
+            }
+
+            <span class="pl-k">return</span> key;
+        }
+
+        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// Encrypts a file with AES</span>
+        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>filePath<span class="pl-pds">"</span></span>&gt;Full path of the file to be encrypted&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>outputFilePath<span class="pl-pds">"</span></span>&gt;Full path of the encrypted file&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>&gt;AES encryption key&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>iv<span class="pl-pds">"</span></span>&gt;AES initialization vector&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">void</span> <span class="pl-en">EncryptFile</span>(<span class="pl-st">string</span> <span class="pl-vpf">filePath</span>, <span class="pl-st">string</span> <span class="pl-vpf">outputFilePath</span>, <span class="pl-st">byte[]</span> <span class="pl-vpf">key</span>, <span class="pl-st">byte[]</span> <span class="pl-vpf">iv</span>)
+        {
+            <span class="pl-k">using</span> (AesCryptoServiceProvider aes = <span class="pl-s">new</span> AesCryptoServiceProvider())
+            {
+                aes.Mode = CipherMode.ECB;
+                aes.Key = key;
+                aes.IV = iv;
+
+
+                <span class="pl-k">using</span> (ICryptoTransform cryptoTransform = aes.CreateEncryptor(aes.Key, aes.IV))
+                {
+                    <span class="pl-k">using</span> (FileStream plain = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        <span class="pl-k">using</span> (FileStream encrypted = File.Open(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            <span class="pl-k">using</span> (CryptoStream cs = <span class="pl-s">new</span> CryptoStream(encrypted, cryptoTransform, CryptoStreamMode.Write))
+                            {
+                                plain.CopyTo(cs, bufferSize);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// Decrypts a file encrypted with AES</span>
+        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>filePath<span class="pl-pds">"</span></span>&gt;Full path of the file to be decrypted&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>outputFilePath<span class="pl-pds">"</span></span>&gt;Full path of the decrypted file&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>&gt;AES decryption key&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>iv<span class="pl-pds">"</span></span>&gt;AES initialization vector&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">void</span> <span class="pl-en">DecryptFile</span>(<span class="pl-st">string</span> <span class="pl-vpf">filePath</span>, <span class="pl-st">string</span> <span class="pl-vpf">outputFilePath</span>, <span class="pl-st">byte[]</span> <span class="pl-vpf">key</span>, <span class="pl-st">byte[]</span> <span class="pl-vpf">iv</span>)
+        {
+            <span class="pl-k">using</span> (AesCryptoServiceProvider aes = <span class="pl-s">new</span> AesCryptoServiceProvider())
+            {
+                aes.Mode = CipherMode.ECB;
+                aes.Key = key;
+                aes.IV = iv;
+
+                <span class="pl-k">using</span> (ICryptoTransform cryptoTransform = aes.CreateDecryptor(aes.Key, aes.IV))
+                {
+                    <span class="pl-k">using</span> (FileStream encrypted = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        <span class="pl-k">using</span> (FileStream plain = File.Open(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            <span class="pl-k">using</span> (CryptoStream cs = <span class="pl-s">new</span> CryptoStream(plain, cryptoTransform, CryptoStreamMode.Write))
+                            {
+                                encrypted.CopyTo(cs, bufferSize);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// Encrypts a key using the public key from the specified certificate</span>
+        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>payload<span class="pl-pds">"</span></span>&gt;The data to encrypt&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>encryptionCert<span class="pl-pds">"</span></span>&gt;The certificate used for encryption&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>encryptionCertPassword<span class="pl-pds">"</span></span>&gt;The password for the encryption certificate&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>outputFilePath<span class="pl-pds">"</span></span>&gt;Full path of the encrypted file&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">void</span> <span class="pl-en">EncryptAesKey</span>(<span class="pl-st">byte[]</span> <span class="pl-vpf">payload</span>, <span class="pl-st">string</span> <span class="pl-vpf">encryptionCert</span>, <span class="pl-st">string</span> <span class="pl-vpf">encryptionCertPassword</span>, <span class="pl-st">string</span> <span class="pl-vpf">outputFilePath</span>)
+        {
+            X509Certificate2 cert = <span class="pl-s">new</span> X509Certificate2(encryptionCert, encryptionCertPassword);
+
+            <span class="pl-k">using</span> (RSACryptoServiceProvider rsa = cert.PublicKey.Key <span class="pl-k">as</span> RSACryptoServiceProvider)
+            {
+                <span class="pl-st">byte</span>[] encryptedKey = rsa.Encrypt(payload, <span class="pl-c1">false</span>);
+                File.WriteAllBytes(outputFilePath, encryptedKey);
+            }
+        }
+
+        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// Decrypts a key using the private key from the specified certificate</span>
+        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>payload<span class="pl-pds">"</span></span>&gt;The data to decrypt&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>encryptionCert<span class="pl-pds">"</span></span>&gt;The certificate used for decryption&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>encryptionCertPassword<span class="pl-pds">"</span></span>&gt;The password for the decryption certificate&lt;/<span class="pl-ent">param</span>&gt;</span>
+        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;Decrypted key represented as byte array&lt;/<span class="pl-ent">returns</span>&gt;</span>
+        <span class="pl-s">public</span> <span class="pl-s">static</span> <span class="pl-st">byte</span>[] <span class="pl-en">DecryptAesKey</span>(<span class="pl-st">byte[]</span> <span class="pl-vpf">payload</span>, <span class="pl-st">string</span> <span class="pl-vpf">encryptionCert</span>, <span class="pl-st">string</span> <span class="pl-vpf">encryptionCertPassword</span>)
+        {
+            X509Certificate2 cert = <span class="pl-s">new</span> X509Certificate2(encryptionCert, encryptionCertPassword);
+
+            <span class="pl-k">if</span> (!cert.HasPrivateKey)
+            {
+                <span class="pl-c">// invalid certificate</span>
+                <span class="pl-k">throw</span> <span class="pl-s">new</span> Exception(<span class="pl-s1"><span class="pl-pds">"</span>Specified certificate not suitable for decryption!<span class="pl-pds">"</span></span>);
+
+            }
+
+            <span class="pl-k">using</span> (RSACryptoServiceProvider rsa = cert.PrivateKey <span class="pl-k">as</span> RSACryptoServiceProvider)
+            {
+
+                <span class="pl-k">return</span> rsa.Decrypt(payload, <span class="pl-c1">false</span>);
+            }
+        }
+    }
+}
+</pre></div>
+
+<p><strong>Note: There should be five (5) classes in the Helpers folder.</strong>  </p>
+
+<h3>
+<a id="adding-a-using-statement" class="anchor" href="#adding-a-using-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding a using Statement</h3>
+
+<p>Figure 8</p>
+
+<p>In <strong>Form1.cs</strong>, enter the following using statements:
+`cs
+using System;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using System.Text;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;</p>
+
+<h3>
+<a id="enter-methods-for-click-events" class="anchor" href="#enter-methods-for-click-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enter Methods for Click Events</h3>
+
+<p>Figure 9  </p>
+
+<p>In <strong>Form1.cs</strong>, enter methods that will handle the button click events for the form.</p>
+
+<h4>
+<a id="btnbrowsexml" class="anchor" href="#btnbrowsexml" aria-hidden="true"><span class="octicon octicon-link"></span></a>btnBrowseXml</h4>
+
+<p>Double click <em>8btnBrowseXml</em>* on the designer and add the code:  </p>
+
+<p><code>private void btnBrowseXml_Click(object sender, EventArgs e)</code>
+        <code>{</code>
+            <code>// load XML</code>
+            <code>txtXmlFile.Text = dlgOpen.ShowDialogWithFilter("XML Files (*.xml)|*.xml");</code>
+        <code>}</code></p>
+
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
