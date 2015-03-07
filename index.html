@@ -153,7 +153,7 @@ In the <strong>Designer Interface</strong>, add the components listed below. The
 <p>Note: The *<em>passwordChar *</em>attribute can be set to mask the input for this text box.</p>
 
 <h3>
-<a id="create-modules-and-class-files" class="anchor" href="#create-modules-and-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create Modules and Class Files</h3>
+<a id="create-class-files" class="anchor" href="#create-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create Class Files</h3>
 
 <h4>
 <a id="organizing-class-files" class="anchor" href="#organizing-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organizing Class Files</h4>
@@ -163,14 +163,55 @@ In the <strong>Designer Interface</strong>, add the components listed below. The
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img5.png" alt="Image 5">
 Figure 5  </p>
 
-<p>In <strong>Solution Explorer</strong>, add a new folder named *<em>Helpers *</em>that will contain class files or modules for the phase of the application.  </p>
+<p>In <strong>Solution Explorer</strong>, add a new folder named *<em>Helpers *</em> that will contain class files or modules for the phase of the application.  </p>
 
 <h4>
 <a id="class-file---extensionmethodscs" class="anchor" href="#class-file---extensionmethodscs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class File - ExtensionMethods.cs</h4>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img6.png" alt="Image 6"><br>
-Figure 6<br>
-In the <strong>Helpers *<em>folder, create a new class file named *</em>ExtensionMethods.cs</strong>.  </p>
+Figure 6  </p>
+
+<p>In the <strong>Helpers</strong> folder, create a new class file named <strong>ExtensionMethods.cs</strong>.  </p>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img7.png" alt="Image 7"><br>
+Figure 7    </p>
+
+<p>Next, let’s create code used to display error messages and show the file load dialog screens. In the new class <strong>ExtensionMethods.cs</strong> , enter the following:   </p>
+
+<pre><code>using System;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication1
+{
+    public static class ExtensionMethods
+    {
+        public static string ShowDialogWithFilter(this OpenFileDialog dialog, string filter)
+        {
+            dialog.Filter = filter;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.FileName;
+            }
+            return string.Empty;
+        }
+        public static void DisplayException(this Exception ex, string messageBoxTitle)
+        {
+            string errorMessage = ex.GetBaseException().Message;
+
+            if (errorMessage.Contains("password"))
+            {
+                // certificate password is incorrect
+                MessageBox.Show("Specified certificate password is incorrect!", messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // other error
+            MessageBox.Show(errorMessage, messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+    }
+}
+</code></pre>
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
