@@ -65,7 +65,7 @@ Figure 3  </p>
 <li>System.IO.Compression</li>
 <li>System.IO.Compression.FileSystem</li>
 <li>System.Security<br>
-Select the <strong>Project ** and **Add Reference</strong> from the program menu. The <strong>Reference Manager-SignXML</strong> screen appears. Select the checkbox next to each entry and click <strong>OK</strong>.</li>
+Select the <strong>Project</strong> and <strong>Add Reference</strong> from the program menu. The <strong>Reference Manager-SignXML</strong> screen appears. Select the checkbox next to each entry and click <strong>OK</strong>.</li>
 </ul>
 
 <h3>
@@ -220,8 +220,6 @@ messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             <span class="pl-c">// other error</span>
             MessageBox.Show(errorMessage, messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-
-
 
     }
 }
@@ -1069,9 +1067,10 @@ Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 <p>Double click <strong>btnBrowseNotificationZip</strong> on the designer and add this code:  </p>
 
 <pre><code>private void btnBrowseNotificationZip_Click(object sender, EventArgs e)
-        {
+  {
             // load Notification Zip file
             txtNotificationZip.Text = dlgOpen.ShowDialogWithFilter("ZIP Files (*.zip)|*.zip");
+  }
 </code></pre>
 
 <h3>
@@ -1080,10 +1079,10 @@ Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 <p>Double click the <strong>btnBrowseRecCert</strong> on the designer and add this code:  </p>
 
 <pre><code>private void btnBrowseRecCert_Click(object sender, EventArgs e)
-        {
-            // load Notification Receiver key
-            txtReceiverCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
-        }  
+  {
+      // load Notification Receiver key
+      txtReceiverCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
+  }  
 </code></pre>
 
 <h3>
