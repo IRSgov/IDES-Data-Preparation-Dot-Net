@@ -40,20 +40,26 @@
 
 <p>The example explains how to create a new project and use the code to build an application that will create a valid transmission and process notifications through IDES. The project starts with a validated FATCA XML file. The application will digitally sign, encrypt, compress, and archive the data packet into a compliant .ZIP format that is ready for transmission in IDES.</p>
 
-<p>Open <strong>Visual Studio</strong>, select <strong>New Project</strong>.
-<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img1.png" alt="Image 1"></p>
+<p>Open <strong>Visual Studio</strong>, select <strong>New Project</strong>.  </p>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img1.png" alt="Image 1"><br>
+Figure 1</p>
 
 <h3>
 <a id="create-a-new-project" class="anchor" href="#create-a-new-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a New Project</h3>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img2.png" alt="Image 2">
-Under <strong>New Project</strong>, select the settings Visual C#, Windows Desktop and Windows Forms Application. Verify the settings, name and location. Click <strong>OK</strong> to continue.</p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img2.png" alt="Image 2"><br>
+Figure 2  </p>
+
+<p>Under <strong>New Project</strong>, select the settings Visual C#, Windows Desktop and Windows Forms Application. Verify the settings, name and location. Click <strong>OK</strong> to continue.</p>
 
 <h3>
 <a id="adding-references" class="anchor" href="#adding-references" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding References</h3>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img3.png" alt="Image 3">
-Next, you will add a reference to the each of the following:</p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img3.png" alt="Image 3"><br>
+Figure 3  </p>
+
+<p>Next, you will add a reference to the each of the following:</p>
 
 <ul>
 <li>System.IO.Compression</li>
@@ -65,8 +71,10 @@ Select the <strong>Project ** and **Add Reference</strong> from the program menu
 <h3>
 <a id="adding-components" class="anchor" href="#adding-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding Components</h3>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img4.png" alt="Image 3">
-In the <strong>Designer Interface</strong>, add the components listed below. The selections are used when you run the application. The figure above shows a sample layout.</p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img4.png" alt="Image 4">
+Figure 4  </p>
+
+<p>In the <strong>Designer Interface</strong>, add the components listed below. The selections are used when you run the application. The figure above shows a sample layout.</p>
 
 <table>
 <thead>
@@ -836,7 +844,8 @@ namespace WindowsFormsApplication1
 <h3>
 <a id="adding-a-using-statement" class="anchor" href="#adding-a-using-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding a using Statement</h3>
 
-<p>Figure 8</p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img8.png" alt="Image 8">
+Figure 8</p>
 
 <p>In <strong>Form1.cs</strong>, enter the following using statements:</p>
 
@@ -852,7 +861,8 @@ using System.Security.Cryptography.X509Certificates;
 <h3>
 <a id="enter-methods-for-click-events" class="anchor" href="#enter-methods-for-click-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enter Methods for Click Events</h3>
 
-<p>Figure 9  </p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img9.png" alt="Image 9">
+Figure 9  </p>
 
 <p>In <strong>Form1.cs</strong>, enter methods that will handle the button click events for the form.</p>
 
@@ -1196,22 +1206,66 @@ Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 <h2>
 <a id="create-a-transmission-file" class="anchor" href="#create-a-transmission-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a Transmission File</h2>
 
-<p>To create a transmission file for IDES, you are required to have (1) an .xml file, (2) a private key that will be used to sign the xml, and (3) the public key of the receiver. The file names are case sensitive and any variation in name, extension or format will cause a transmission failure.  There are no file extensions, unless otherwise noted. For more information, review the IDES User Guide or the <a href="http://www.irs.gov/Businesses/Corporations/IDES-Data-Transmission-and-File-Preparation">IDES User Guide</a>.  </p>
+<p>To create a transmission file for IDES, you are required to have (1) an .xml file, (2) a private key that will be used to sign the xml, and (3) the public key of the receiver. The file names are case sensitive and any variation in name, extension or format will cause a transmission failure.  There are no file extensions, unless otherwise noted. For more information, review the IDES User Guide.  </p>
 
 <ol>
-<li>Select the .xml file. The file should be correctly named  to create the correct sender metadata file. For example, Canada (ISO Code = 124) requires a file to be named 000000.00000.TA.124.xml.</li>
-<li>Select the sender’s private key. The application uses a .p12 file that contains the private key. The key may be in a different format, such as a .pfx file.</li>
-<li>If there is a password on the key file above, enter it here. </li>
-<li>Select the receiver’s public key. The application uses a .p12 file that contains the public key. This may be in a different format, such as a .cer extension.</li>
-<li>If there is a password on the public key, enter it here.</li>
-<li>Enter the Sender Code and Receiver code. These will be used to ensure the files are correctly named. The sender is 124 (Canada) and the receiver is 840 (US/IRS) in this sample.<br>
+<li> Select the .xml file. The file should be correctly named  to create the correct sender metadata file. For example, Canada (ISO Code = 124) requires a file to be named 000000.00000.TA.124.xml.</li>
+<li> Select the sender’s private key. The application uses a <strong>.p12</strong> file that contains the private key. The key may be in a different format, such as a .pfx file.</li>
+<li> If there is a password on the key file above, enter it here. </li>
+<li> Select the receiver’s public key. The application uses a <strong>.p12</strong> file that contains the public key. This may be in a different format, such as a .cer extension.</li>
+<li> If there is a password on the public key, enter it here.</li>
+<li> Enter the Sender Code and Receiver code. These will be used to ensure the files are correctly named. The sender is 124 (Canada) and the receiver is 840 (US/IRS) in this sample.<br>
 </li>
 </ol>
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img10.png" alt="Image 10">
+Figure 10  </p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<ol>
+<li> Click the <strong>Sign and Encrypt XML</strong> button. If the files and keys are set up correctly, a success message dialog box will appear. Click <strong>OK</strong> to continue.<br>
+</li>
+</ol>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img11.png" alt="Image 11">
+Figure 11    </p>
+
+<h3>
+<a id="creating-a-zip-file" class="anchor" href="#creating-a-zip-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a .ZIP File</h3>
+
+<p>The<strong>Sign and Encrypt XML</strong> button creates a .zip file that contains the key, payload, and sender metadata xml file. The zip filename should follow proper naming conventions and any variation in name, extension or format will cause a transmission failure. For example, the filename is 20150115T174443889Z_000000.00000.TA.124.zip. The contents of the sample .zip file are shown in Figure 12 below.  </p>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img12.png" alt="Image 12">
+Figure 12  </p>
+
+<p>Next, you are ready to upload the transmission into IDES. For more information on using IDES, review the <a href="http://www.irs.gov/Businesses/Corporations/International-Data-Exchange-Service">IDES User Guide</a>.    </p>
+
+<h3>
+<a id="decrypting-a-notification" class="anchor" href="#decrypting-a-notification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decrypting a Notification</h3>
+
+<p>The application can be used to decrypt system notifications received in IDES. To decrypt the notification, the receiver must use their private key.  </p>
+
+<ol>
+<li> In IDES, download or save the notification to your hard drive.  Select the downloaded .zip notification file.</li>
+<li> Select the private key of the receiver. The sample uses a .p12 format; however, the file can be modified for other formats.</li>
+<li> If there is a password on the private key, enter it here.</li>
+<li> The notification output folder controls the location of the decrypted output.<br>
+</li>
+<li> Click the <strong>Decrypt Notification</strong> button.<br>
+</li>
+</ol>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img13.png" alt="Image 13">
+Figure 13  </p>
+
+<ol>
+<li> If the correct key and password (optional) are used on the file, a success message dialog box will appear.<br>
+</li>
+<li> In the <strong>Notification Output Folder</strong> field, the location of the decrypted and signed xml file that contains the contents of the notification are present. For example, the file name 000000.00000.TA.840_Payload.xml is used in this sample.<br>
+</li>
+</ol>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img14.png" alt="Image 14">
+Figure 14  </p>
 
 <h3>
 <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
