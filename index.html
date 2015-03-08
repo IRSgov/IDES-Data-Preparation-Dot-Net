@@ -51,7 +51,7 @@ Figure 1   </p>
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img2.png" alt="Image 2"><br>
 Figure 2  </p>
 
-<p>Under <strong>New Project</strong>, select the settings Visual C#, Windows Desktop and Windows Forms Application. Verify the settings, name and location. Click <strong>OK</strong> to continue.</p>
+<p>Under <strong>New Project</strong>, select the settings Visual C#, Windows Desktop and Windows Forms Application. Verify the settings, name and location. Click <strong>OK</strong> to continue.  </p>
 
 <h3>
 <a id="adding-references" class="anchor" href="#adding-references" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding References</h3>
@@ -158,7 +158,7 @@ Figure 4  </p>
 </tbody>
 </table>
 
-<p>Note: The <strong>passwordChar</strong> attribute can be set to mask the input for this text box.</p>
+<p>Note: The <strong>passwordChar</strong> attribute can be set to mask the input for this text box.  </p>
 
 <h2>
 <a id="create-class-files" class="anchor" href="#create-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create Class Files</h2>
@@ -166,7 +166,7 @@ Figure 4  </p>
 <h3>
 <a id="organizing-class-files" class="anchor" href="#organizing-class-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organizing Class Files</h3>
 
-<p>The descriptions of the interface components may be modified to provide more detail.</p>
+<p>The descriptions of the interface components may be modified to provide more detail.  </p>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img5.png" alt="Image 5">
 Figure 5  </p>
@@ -1192,13 +1192,13 @@ Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 <p>Double click the <strong>btnBrowseOutput</strong> on the designer and add this code:  </p>
 
 <pre><code>private void btnBrowseOutput_Click(object sender, EventArgs e)
+    {
+        // load AES key encryption certificate
+        if (dlgOpenFolder.ShowDialog() == DialogResult.OK)
         {
-            // load AES key encryption certificate
-            if (dlgOpenFolder.ShowDialog() == DialogResult.OK)
-            {
-                txtNotificationFolder.Text = dlgOpenFolder.SelectedPath;
-            }
-        }  
+            txtNotificationFolder.Text = dlgOpenFolder.SelectedPath;
+        }
+    }  
 </code></pre>
 
 <p>This is the end of the code used to create and run the application.  </p>
@@ -1232,15 +1232,15 @@ Figure 11    </p>
 <h3>
 <a id="creating-a-zip-file" class="anchor" href="#creating-a-zip-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a .ZIP File</h3>
 
-<p>The<strong>Sign and Encrypt XML</strong> button creates a .zip file that contains the key, payload, and sender metadata xml file. The zip filename should follow proper naming conventions and any variation in name, extension or format will cause a transmission failure. For example, the filename is 20150115T174443889Z_000000.00000.TA.124.zip. The contents of the sample .zip file are shown in Figure 12 below.  </p>
+<p>The <strong>Sign and Encrypt XML</strong> button creates a .zip file that contains the key, payload, and sender metadata xml file. The zip filename should follow proper naming conventions and any variation in name, extension or format will cause a transmission failure. For example, the filename is 20150115T174443889Z_000000.00000.TA.124.zip. The contents of the sample .zip file are shown in Figure 12 below.  </p>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img12.png" alt="Image 12"><br>
 Figure 12  </p>
 
 <p>Next, you are ready to upload the transmission into IDES. For more information on using IDES, review the <a href="http://www.irs.gov/Businesses/Corporations/International-Data-Exchange-Service">IDES User Guide</a>.    </p>
 
-<h3>
-<a id="decrypting-a-notification" class="anchor" href="#decrypting-a-notification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decrypting a Notification</h3>
+<h2>
+<a id="decrypting-a-notification" class="anchor" href="#decrypting-a-notification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decrypting a Notification</h2>
 
 <p>The application can be used to decrypt system notifications received in IDES. To decrypt the notification, the receiver must use their private key.  </p>
 
