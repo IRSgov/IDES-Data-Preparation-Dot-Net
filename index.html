@@ -4,11 +4,11 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="IDES Data Preparation.NET : An example of the data preparation process created with the .NET Framework">
+    <meta name="description" content="IDES Data Preparation - .NET Framework : An example of the data preparation process developed using the .NET Framework">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>IDES Data Preparation.NET</title>
+    <title>IDES Data Preparation - .NET Framework</title>
   </head>
 
   <body>
@@ -18,8 +18,8 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/IRSgov/IDES-Data-Preparation-Dot-Net">View on GitHub</a>
 
-          <h1 id="project_title">IDES Data Preparation.NET</h1>
-          <h2 id="project_tagline">An example of the data preparation process created with the .NET Framework</h2>
+          <h1 id="project_title">IDES Data Preparation - .NET Framework</h1>
+          <h2 id="project_tagline">An example of the data preparation process developed using the .NET Framework</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/IRSgov/IDES-Data-Preparation-Dot-Net/zipball/master">Download this project as a .zip file</a>
@@ -34,11 +34,13 @@
         <h2>
 <a id="ides-data-preparation" class="anchor" href="#ides-data-preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>IDES Data Preparation</h2>
 
-<p>The International Data Exchange Service (IDES) is a secure managed file transfer service that allows financial institutions and foreign tax authorities to securely send information on financial accounts held by U.S. taxpayers in accordance with the Foreign Account Tax Compliance Act (FATCA). </p>
+<p>The International Data Exchange Service (IDES) is a secure managed file transfer service that allows financial institutions and tax authorities to securely send information on financial accounts held by U.S. taxpayers in accordance with the Foreign Account Tax Compliance Act (FATCA). Files transmitted via IDES must be encrypted and packaged in accordance with published data preparation instructions.  The data preparation process is an important step to ensure that information transmitted via IDES conforms to U.S security standards to safeguard sensitive information.</p>
 
-<p>The IDES Data Preparation.NET project repository demonstrates a working application built using <a href="http://www.visualstudio.com/en-us/products/free-developer-offers-vs">Microsoft Visual Studio 2013 Community edition</a>.  There are many tools available that may produce the same results. The IRS does not endorse any software applications or commercial products.</p>
+<p>The IDES Data Preparation.NET project repository demonstrates a sample working application built using <a href="http://www.visualstudio.com/en-us/products/free-developer-offers-vs">Microsoft Visual Studio 2013 Community edition</a>.  An application was also developed using Java, see <a href="http://irsgov.github.io/IDES-Data-Preparation-Java">IDES Data Preparation Java</a>for more information.</p>
 
-<p>The example explains how to create a new project and use the code to build an application that will create a valid transmission and process notifications through IDES. The project starts with a validated FATCA XML file. The application will digitally sign, encrypt, compress, and archive the data packet into a compliant .ZIP format that is ready for transmission in IDES.  </p>
+<p>The example explains how to use the code to develop an application that will create an IDES data packet and decrypt notifications. The project starts with a validated FATCA XML file. The application does not validate the XML or metadata schemas. The sample application will digitally sign, encrypt, compress, and archive the data packet into a compliant .ZIP format.  </p>
+
+<p>Please note that there are many open market tools that produce the same results; however, the IRS does not endorse any commercial products, including the frameworks used in the example.  </p>
 
 <h3>
 <a id="create-a-new-project" class="anchor" href="#create-a-new-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a New Project</h3>
@@ -663,15 +665,8 @@ messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 archive.ExtractToDirectory(zipFolderPath);
             }
-
-
-
         }
     }
-
-
-
-
 }</pre></div>
 
 <h3>
@@ -1254,13 +1249,18 @@ Figure 13  </p>
 
 <p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img14.png" alt="Image 14">
 Figure 14  </p>
+
+<h3>
+<a id="disclaimer" class="anchor" href="#disclaimer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disclaimer:</h3>
+
+<p>We waive copyright and related rights in the work worldwide through the CC0 1.0 Universal public domain dedication. Unless expressly stated otherwise, the person who associated a work with this deed makes no warranties about the work, and disclaims liability for all uses of the work, to the fullest extent permitted by applicable law. When using or citing the work, you should not imply endorsement by the author or the affirmer.</p>
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">IDES Data Preparation.NET maintained by <a href="https://github.com/IRSgov">IRSgov</a></p>
+        <p class="copyright">IDES Data Preparation - .NET Framework maintained by <a href="https://github.com/IRSgov">IRSgov</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
