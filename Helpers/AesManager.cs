@@ -51,6 +51,40 @@ namespace WindowsFormsApplication1
         /// <param name="outputFilePath">Full path of the encrypted file</param>
         /// <param name="key">AES encryption key</param>
         /// <param name="iv">AES initialization vector</param>
+        public static byte[] EncryptFile(byte[] fileContent, byte[] key, byte[] iv)
+        {
+            using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
+            {
+                aes.Mode = CipherMode.ECB;
+                aes.Key = key;
+                aes.IV = iv;
+
+
+                using (ICryptoTransform cryptoTransform = aes.CreateEncryptor(aes.Key, aes.IV))
+                {
+                    using (MemoryStream plain = new MemoryStream(fileContent))
+                    {
+                        using (MemoryStream encrypted = new MemoryStream())
+                        {
+                            using (CryptoStream cs = new CryptoStream(encrypted, cryptoTransform, CryptoStreamMode.Write))
+                            {
+                                plain.CopyTo(cs, bufferSize);
+                            }
+
+                            return encrypted.ToArray();
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Encrypts a file with AES
+        /// </summary>
+        /// <param name="filePath">Full path of the file to be encrypted</param>
+        /// <param name="outputFilePath">Full path of the encrypted file</param>
+        /// <param name="key">AES encryption key</param>
+        /// <param name="iv">AES initialization vector</param>
         public static void EncryptFile(string filePath, string outputFilePath, byte[] key, byte[] iv)
         {
             using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
@@ -114,14 +148,13 @@ namespace WindowsFormsApplication1
         /// <param name="encryptionCert">The certificate used for encryption</param>
         /// <param name="encryptionCertPassword">The password for the encryption certificate</param>
         /// <param name="outputFilePath">Full path of the encrypted file</param>
-        public static void EncryptAesKey(byte[] payload, string encryptionCert, string encryptionCertPassword, string outputFilePath)
+        public static byte[] EncryptAesKey(byte[] payload, string encryptionCert, string encryptionCertPassword)
         {
             X509Certificate2 cert = new X509Certificate2(encryptionCert, encryptionCertPassword);
 
             using (RSACryptoServiceProvider rsa = cert.PublicKey.Key as RSACryptoServiceProvider)
             {
-                byte[] encryptedKey = rsa.Encrypt(payload, false);
-                File.WriteAllBytes(outputFilePath, encryptedKey);
+                return rsa.Encrypt(payload, false);
             }
         }
 

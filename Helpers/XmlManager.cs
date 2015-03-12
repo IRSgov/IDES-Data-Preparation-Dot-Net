@@ -314,5 +314,60 @@ namespace WindowsFormsApplication1
                 return signed.CheckSignature();
             }
         }
+
+        public static XmlDocument GenerateMetadata(string senderGIIN, string senderFile, string fileCreationDateTime, int taxYear)
+        {
+            XmlDocument document = new XmlDocument();
+
+            using (MemoryStream xmlContent = new MemoryStream())
+            {
+
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = ("\t");
+                //settings.OmitXmlDeclaration = false;
+                settings.NewLineHandling = NewLineHandling.Replace;
+                //settings.CloseOutput = true;
+                settings.ConformanceLevel = ConformanceLevel.Document;
+                settings.Encoding = new UTF8Encoding(false);
+
+
+
+                XmlWriter writer = XmlWriter.Create(xmlContent, settings);
+                writer.WriteStartDocument();
+
+                writer.WriteStartElement("FATCAIDESSenderFileMetadata", "urn:fatca:idessenderfilemetadata");
+                writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+                writer.WriteStartElement("FATCAEntitySenderId");
+                writer.WriteString(senderGIIN);
+                writer.WriteEndElement();
+                writer.WriteStartElement("FATCAEntityReceiverId");
+                writer.WriteString("000000.00000.TA.840");
+                writer.WriteEndElement();
+                writer.WriteStartElement("FATCAEntCommunicationTypeCd");
+                writer.WriteString("RPT");
+                writer.WriteEndElement();
+                writer.WriteStartElement("SenderFileId");
+                writer.WriteString(senderFile);
+                writer.WriteEndElement();
+                writer.WriteStartElement("FileCreateTs");
+                writer.WriteString(fileCreationDateTime);
+                writer.WriteEndElement();
+                writer.WriteStartElement("TaxYear");
+                writer.WriteString(taxYear.ToString());
+                writer.WriteEndElement();
+                writer.WriteStartElement("FileRevisionInd");
+                writer.WriteString("false");
+                writer.WriteEndElement();
+
+                writer.WriteEndDocument();
+                writer.Flush();
+                writer.Close();
+
+
+                document.LoadXml(Encoding.UTF8.GetString(xmlContent.ToArray()));
+            }
+            return document;
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Xml;
 using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 
 
 namespace WindowsFormsApplication1
@@ -72,111 +73,52 @@ namespace WindowsFormsApplication1
                 byte[] xmlContent = File.ReadAllBytes(txtXmlFile.Text);
                 string senderGIIN = Path.GetFileNameWithoutExtension(txtXmlFile.Text);
                 string filePath = Path.GetDirectoryName(txtXmlFile.Text);
+                string baseFileName = System.IO.Path.GetFileNameWithoutExtension(txtXmlFile.Text);
 
-                // perform sign
+                // perform sign using sender digital certificate
                 byte[] envelopingSignature = XmlManager.Sign(XmlSignatureType.Enveloping, xmlContent, txtCert.Text, txtCertPass.Text);
 
-                string envelopingFileName = txtXmlFile.Text.Replace(".xml", "_Payload.xml");
-                string zipFileName = envelopingFileName.Replace(".xml", ".zip");
+                // zip the enveloping signature
+                envelopingSignature = ZipManager.ZipContent(baseFileName + ".xml", envelopingSignature);
 
-                // save enveloping version to disk
-                File.WriteAllBytes(envelopingFileName, envelopingSignature);
-
-                // add enveloping signature to ZIP file
-                ZipManager.CreateArchive(envelopingFileName, zipFileName);
-
-                // generate AES key (32 bytes) & default initialization vector (empty)
+                // generate AES key (32 bytes)
                 byte[] aesEncryptionKey = AesManager.GenerateRandomKey(AesManager.KeySize / 8);
-                byte[] aesEncryptionVector = AesManager.GenerateRandomKey(16, true);
 
-                // encrypt file & save to disk
-                string encryptedFileName = zipFileName.Replace(".zip", "");
-                string payloadFileName = encryptedFileName;
-                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector);
+                // encrypt enveloping signature
+                envelopingSignature = AesManager.EncryptFile(
+                        envelopingSignature,
+                        aesEncryptionKey,
+                        AesManager.GenerateRandomKey(16, true)
+                    );
 
-                // encrypt key with public key of certificate & save to disk
-                // System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                //aesEncryptionKey = encoding.GetBytes("test");
-
-                //  Byte[] bytes = System.Text.Encoder.GetBytes("some test data");
-                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key"; ;
-                AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName);
-
-                // cleanup
-                envelopingSignature = null;
-                aesEncryptionKey = aesEncryptionVector = null;
-
-                //Start creating XML metadata
-                XmlWriter writer = null;
-                string fileCreationDateTime = "";
-                fileCreationDateTime = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
-
-                DateTime uDat = new DateTime();
-                uDat = DateTime.UtcNow;
-                string senderFile = uDat.ToString("yyyyMMddTHHmmssfffZ") + "_" + senderGIIN;
-
-                try
-                {
-
-                    // Create an XmlWriterSettings object with the correct options. 
-                    XmlWriterSettings settings = new XmlWriterSettings();
-                    settings.Indent = true;
-                    settings.IndentChars = ("\t");
-                    settings.OmitXmlDeclaration = false;
-                    settings.NewLineHandling = NewLineHandling.Replace;
-                    settings.CloseOutput = true;
-
-                    string metadataFileName = filePath + "\\" + senderGIIN + "_Metadata.xml";
-
-                    // Create the XmlWriter object and write some content.
-                    writer = XmlWriter.Create(metadataFileName, settings);
-                    writer.WriteStartElement("FATCAIDESSenderFileMetadata", "urn:fatca:idessenderfilemetadata");
-                    writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
-                    writer.WriteStartElement("FATCAEntitySenderId");
-                    writer.WriteString(senderGIIN);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("FATCAEntityReceiverId");
-                    writer.WriteString("000000.00000.TA.840");
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("FATCAEntCommunicationTypeCd");
-                    writer.WriteString("RPT");
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("SenderFileId");
-                    writer.WriteString(senderFile);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("FileCreateTs");
-                    writer.WriteString(fileCreationDateTime);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("TaxYear");
-                    writer.WriteString("2014");
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("FileRevisionInd");
-                    writer.WriteString("false");
-                    writer.WriteEndElement();
-                    //Close the XmlTextWriter.
-                    writer.WriteEndDocument();
-                    writer.Close();
-                    writer.Flush();
+                // encrypt the key used to encrypt the file using the receiver digital certificate
+                byte[] keyFile = AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert.Text, txtKeyCertPassword.Text);
 
 
-                    //Add the metadata, payload, and key files to the final zip package
-                    // add enveloping signature to ZIP file
-                    ZipManager.CreateArchive(metadataFileName, filePath + "\\" + senderFile + ".zip");
-                    ZipManager.UpdateArchive(encryptedFileName, filePath + "\\" + senderFile + ".zip");
-                    ZipManager.UpdateArchive(payloadFileName, filePath + "\\" + senderFile + ".zip");
+                // Generate the XML Metadata
+                string fileCreationDateTime = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
+                string senderFile = DateTime.UtcNow.ToString("yyyyMMddTHHmmssfffZ") + "_" + senderGIIN;
 
-                    // success
-                    MessageBox.Show("XML Signing and Encryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XmlDocument metadataXml = XmlManager.GenerateMetadata(senderGIIN, senderFile, fileCreationDateTime, 2014);
 
 
-                }
-                finally
-                {
-                    if (writer != null)
-                        writer.Close();
-                }
+                //Add the metadata, payload, and key files to the final zip package
+                Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
+                files.Add(baseFileName + "_Payload", envelopingSignature); // Signed, Zipped and Encrypted Report File
+                files.Add("000000.00000.TA.840_Key", keyFile); // Encripted Key File
+                files.Add(senderGIIN + "_Metadata.xml", metadataXml.OuterXml.GetUTF8Bytes()); // Metadata File
+
+                byte[] fileData = ZipManager.ZipContent(files);
+
+                //Save the File to the disk
+                System.IO.File.WriteAllBytes(filePath + "\\" + senderFile + ".zip", fileData);
+
+                //some cleanup
+                fileData = envelopingSignature = keyFile = null;
 
 
+                // success
+                MessageBox.Show("XML Signing and Encryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch (Exception ex)
