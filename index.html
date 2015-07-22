@@ -1191,7 +1191,19 @@ Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }  </pre></div>
 
 <h3>
-<a id="chkm1" class="anchor" href="#chkm1" aria-hidden="true"><span class="octicon octicon-link"></span></a>chkM1</h3>
+<a id="btnbrowsehctacert_click" class="anchor" href="#btnbrowsehctacert_click" aria-hidden="true"><span class="octicon octicon-link"></span></a>btnBrowseHCTACert_Click</h3>
+
+<p>Double click the <strong>btnBrowseHCTACert</strong> on the designer and add this code:</p>
+
+<div class="highlight highlight-c#"><pre>  <span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseHCTACert_Click(<span class="pl-k">object</span> sender, EventArgs e)
+        {
+            <span class="pl-c">// load AES key encryption certificate</span>
+            txtHCTACert.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s"><span class="pl-pds">"</span>Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12<span class="pl-pds">"</span></span>);
+
+        }</pre></div>
+
+<h3>
+<a id="chkm1o2" class="anchor" href="#chkm1o2" aria-hidden="true"><span class="octicon octicon-link"></span></a>chkM1O2</h3>
 
 <p>Double click the <strong>chkM1O2</strong> on the designer and add this code:</p>
 
