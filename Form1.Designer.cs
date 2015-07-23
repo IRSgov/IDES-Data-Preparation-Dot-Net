@@ -61,6 +61,14 @@
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
             this.dlgOpenFolder = new System.Windows.Forms.FolderBrowserDialog();
+            this.chkM1O2 = new System.Windows.Forms.CheckBox();
+            this.btnBrowseHCTACert = new System.Windows.Forms.Button();
+            this.txtHCTACert = new System.Windows.Forms.TextBox();
+            this.lblHCTAKey = new System.Windows.Forms.Label();
+            this.txtHCTACertPassword = new System.Windows.Forms.TextBox();
+            this.lblEncryptionHCTAPassword = new System.Windows.Forms.Label();
+            this.txtHCTACode = new System.Windows.Forms.TextBox();
+            this.lblHCTACode = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblLoadXML
@@ -340,11 +348,94 @@
             // 
             this.dlgOpenFolder.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
+            // chkM1O2
+            // 
+            this.chkM1O2.AutoSize = true;
+            this.chkM1O2.Location = new System.Drawing.Point(664, 36);
+            this.chkM1O2.Name = "chkM1O2";
+            this.chkM1O2.Size = new System.Drawing.Size(93, 17);
+            this.chkM1O2.TabIndex = 30;
+            this.chkM1O2.Text = "Model 1 Opt 2";
+            this.chkM1O2.UseVisualStyleBackColor = true;
+            this.chkM1O2.CheckedChanged += new System.EventHandler(this.chkM1O2_CheckedChanged);
+            // 
+            // btnBrowseHCTACert
+            // 
+            this.btnBrowseHCTACert.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBrowseHCTACert.Location = new System.Drawing.Point(197, 304);
+            this.btnBrowseHCTACert.Name = "btnBrowseHCTACert";
+            this.btnBrowseHCTACert.Size = new System.Drawing.Size(28, 23);
+            this.btnBrowseHCTACert.TabIndex = 33;
+            this.btnBrowseHCTACert.Text = "...";
+            this.btnBrowseHCTACert.UseVisualStyleBackColor = true;
+            this.btnBrowseHCTACert.Visible = false;
+            this.btnBrowseHCTACert.Click += new System.EventHandler(this.btnBrowseHCTACert_Click);
+            // 
+            // txtHCTACert
+            // 
+            this.txtHCTACert.Location = new System.Drawing.Point(15, 304);
+            this.txtHCTACert.Name = "txtHCTACert";
+            this.txtHCTACert.Size = new System.Drawing.Size(173, 20);
+            this.txtHCTACert.TabIndex = 32;
+            this.txtHCTACert.Visible = false;
+            // 
+            // lblHCTAKey
+            // 
+            this.lblHCTAKey.AutoSize = true;
+            this.lblHCTAKey.Location = new System.Drawing.Point(15, 288);
+            this.lblHCTAKey.Name = "lblHCTAKey";
+            this.lblHCTAKey.Size = new System.Drawing.Size(219, 13);
+            this.lblHCTAKey.TabIndex = 31;
+            this.lblHCTAKey.Text = "Encryption Key Certificate (HCTA Public Key)";
+            this.lblHCTAKey.Visible = false;
+            // 
+            // txtHCTACertPassword
+            // 
+            this.txtHCTACertPassword.Location = new System.Drawing.Point(15, 345);
+            this.txtHCTACertPassword.Name = "txtHCTACertPassword";
+            this.txtHCTACertPassword.Size = new System.Drawing.Size(173, 20);
+            this.txtHCTACertPassword.TabIndex = 35;
+            this.txtHCTACertPassword.Visible = false;
+            // 
+            // lblEncryptionHCTAPassword
+            // 
+            this.lblEncryptionHCTAPassword.AutoSize = true;
+            this.lblEncryptionHCTAPassword.Location = new System.Drawing.Point(15, 329);
+            this.lblEncryptionHCTAPassword.Name = "lblEncryptionHCTAPassword";
+            this.lblEncryptionHCTAPassword.Size = new System.Drawing.Size(261, 13);
+            this.lblEncryptionHCTAPassword.TabIndex = 34;
+            this.lblEncryptionHCTAPassword.Text = "Encryption Key Certificate HCTA password (if needed)";
+            this.lblEncryptionHCTAPassword.Visible = false;
+            // 
+            // txtHCTACode
+            // 
+            this.txtHCTACode.Location = new System.Drawing.Point(15, 388);
+            this.txtHCTACode.Name = "txtHCTACode";
+            this.txtHCTACode.Size = new System.Drawing.Size(78, 20);
+            this.txtHCTACode.TabIndex = 37;
+            // 
+            // lblHCTACode
+            // 
+            this.lblHCTACode.AutoSize = true;
+            this.lblHCTACode.Location = new System.Drawing.Point(15, 372);
+            this.lblHCTACode.Name = "lblHCTACode";
+            this.lblHCTACode.Size = new System.Drawing.Size(64, 13);
+            this.lblHCTACode.TabIndex = 36;
+            this.lblHCTACode.Text = "HCTA Code";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 427);
+            this.Controls.Add(this.txtHCTACode);
+            this.Controls.Add(this.lblHCTACode);
+            this.Controls.Add(this.txtHCTACertPassword);
+            this.Controls.Add(this.lblEncryptionHCTAPassword);
+            this.Controls.Add(this.btnBrowseHCTACert);
+            this.Controls.Add(this.txtHCTACert);
+            this.Controls.Add(this.lblHCTAKey);
+            this.Controls.Add(this.chkM1O2);
             this.Controls.Add(this.btnBrowseOutput);
             this.Controls.Add(this.txtNotificationFolder);
             this.Controls.Add(this.lblOutput);
@@ -377,6 +468,7 @@
             this.Controls.Add(this.lblLoadXML);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -417,6 +509,14 @@
         private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.SaveFileDialog dlgSave;
         private System.Windows.Forms.FolderBrowserDialog dlgOpenFolder;
+        private System.Windows.Forms.CheckBox chkM1O2;
+        private System.Windows.Forms.Button btnBrowseHCTACert;
+        private System.Windows.Forms.TextBox txtHCTACert;
+        private System.Windows.Forms.Label lblHCTAKey;
+        private System.Windows.Forms.TextBox txtHCTACertPassword;
+        private System.Windows.Forms.Label lblEncryptionHCTAPassword;
+        private System.Windows.Forms.TextBox txtHCTACode;
+        private System.Windows.Forms.Label lblHCTACode;
     }
 }
 

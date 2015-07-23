@@ -5,6 +5,8 @@ using System.Xml;
 using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Drawing;
+
 
 
 namespace WindowsFormsApplication1
@@ -27,13 +29,13 @@ namespace WindowsFormsApplication1
         private void btnBrowseCert_Click(object sender, EventArgs e)
         {
             // load certificate
-            txtCert.Text = dlgOpen.ShowDialogWithFilter("Signing Certificates (*.pfx, *.p12)|*.pfx;*.p12");
+            txtCert.Text = dlgOpen.ShowDialogWithFilter("Signing Certificates (*.pfx, *.p12)|*.pfx;*.p12;");
         }
 
         private void btnBrowseKeyCert_Click(object sender, EventArgs e)
         {
             // load AES key encryption certificate
-            txtKeyCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
+            txtKeyCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12;");
         }
 
         private void btnSignXML_Click(object sender, EventArgs e)
@@ -91,16 +93,18 @@ namespace WindowsFormsApplication1
 
                 // encrypt file & save to disk
                 string encryptedFileName = zipFileName.Replace(".zip", "");
+                string encryptedHCTAFileName = zipFileName.Replace(".zip", "");
                 string payloadFileName = encryptedFileName;
                 AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector);
 
                 // encrypt key with public key of certificate & save to disk
-                // System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                //aesEncryptionKey = encoding.GetBytes("test");
-
-                //  Byte[] bytes = System.Text.Encoder.GetBytes("some test data");
-                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key"; ;
+                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key"; 
                 AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName);
+                //For Model1 Option2 Only, encrypt the AES Key with the HCTA Public Key
+                if (chkM1O2.Checked) {
+                    encryptedHCTAFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA." + txtHCTACode.Text + "_Key";
+                    AesManager.EncryptAesKey(aesEncryptionKey, txtHCTACert.Text, txtHCTACertPassword.Text, encryptedHCTAFileName);
+                }
 
                 // cleanup
                 envelopingSignature = null;
@@ -164,6 +168,11 @@ namespace WindowsFormsApplication1
                     ZipManager.CreateArchive(metadataFileName, filePath + "\\" + senderFile + ".zip");
                     ZipManager.UpdateArchive(encryptedFileName, filePath + "\\" + senderFile + ".zip");
                     ZipManager.UpdateArchive(payloadFileName, filePath + "\\" + senderFile + ".zip");
+                    //Add the HCTA Key file for a M1O2 packet
+                    if (chkM1O2.Checked)
+                    {
+                        ZipManager.UpdateArchive(encryptedHCTAFileName, filePath + "\\" + senderFile + ".zip");
+                    }
 
                     // success
                     MessageBox.Show("XML Signing and Encryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -300,12 +309,117 @@ namespace WindowsFormsApplication1
             }
         }
 
-     
 
+        private void chkM1O2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkM1O2.Checked)
+            {
+                this.lblHCTAKey.Location = new Point(
+                this.lblHCTAKey.Location.X,
+                this.lblHCTAKey.Location.Y - 40
+                );
+                this.btnBrowseHCTACert.Location = new Point(
+                this.btnBrowseHCTACert.Location.X,
+                this.btnBrowseHCTACert.Location.Y - 40
+                );
+                this.txtHCTACert.Location = new Point(
+                this.txtHCTACert.Location.X,
+                this.txtHCTACert.Location.Y - 40
+                );
+                this.lblEncryptionHCTAPassword.Location = new Point(
+                this.lblEncryptionHCTAPassword.Location.X,
+                this.lblEncryptionHCTAPassword.Location.Y - 40
+                );
+                this.txtHCTACertPassword.Location = new Point(
+                this.txtHCTACertPassword.Location.X,
+                this.txtHCTACertPassword.Location.Y - 40
+                );
+                this.lblHCTACode.Location = new Point(
+                this.lblHCTACode.Location.X,
+                this.lblHCTACode.Location.Y - 40
+                );
+                this.txtHCTACode.Location = new Point(
+                this.txtHCTACode.Location.X,
+                this.txtHCTACode.Location.Y - 40
+                );
+                this.btnSignXML.Location = new Point(
+                this.btnSignXML.Location.X,
+                this.btnSignXML.Location.Y + 140
+                );
+                
+
+                lblHCTAKey.Visible = true;
+                txtHCTACert.Visible = true;
+                btnBrowseHCTACert.Visible = true;
+                lblEncryptionHCTAPassword.Visible = true;
+                txtHCTACertPassword.Visible = true;
+                lblHCTACode.Visible = true;
+                txtHCTACode.Visible = true;
+            }
+            else
+            {
+                this.lblHCTAKey.Location = new Point(
+                this.lblHCTAKey.Location.X,
+                this.lblHCTAKey.Location.Y + 40
+                );
+                this.btnBrowseHCTACert.Location = new Point(
+                this.btnBrowseHCTACert.Location.X,
+                this.btnBrowseHCTACert.Location.Y + 40
+                );
+                this.txtHCTACert.Location = new Point(
+                this.txtHCTACert.Location.X,
+                this.txtHCTACert.Location.Y + 40
+                );
+                this.lblEncryptionHCTAPassword.Location = new Point(
+                this.lblEncryptionHCTAPassword.Location.X,
+                this.lblEncryptionHCTAPassword.Location.Y + 40
+                );
+                this.txtHCTACertPassword.Location = new Point(
+                this.txtHCTACertPassword.Location.X,
+                this.txtHCTACertPassword.Location.Y + 40
+                );
+                this.lblHCTACode.Location = new Point(
+                this.lblHCTACode.Location.X,
+                this.lblHCTACode.Location.Y + 40
+                );
+                this.txtHCTACode.Location = new Point(
+                this.txtHCTACode.Location.X,
+                this.txtHCTACode.Location.Y + 40
+                );
+                this.btnSignXML.Location = new Point(
+                this.btnSignXML.Location.X,
+                this.btnSignXML.Location.Y - 140
+                );
+
+                lblHCTAKey.Visible = false;
+                txtHCTACert.Visible = false;
+                btnBrowseHCTACert.Visible = false;
+                lblEncryptionHCTAPassword.Visible = false;
+                txtHCTACertPassword.Visible = false;
+                lblHCTACode.Visible = false;
+                txtHCTACode.Visible = false;
+            }
+        }
+
+
+        private void btnBrowseHCTACert_Click(object sender, EventArgs e)
+        {
+            // load AES key encryption certificate
+            txtHCTACert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
       
-     
+        }
 
-       
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            lblHCTAKey.Visible = false;
+            txtHCTACert.Visible = false;
+            btnBrowseHCTACert.Visible = false;
+            lblEncryptionHCTAPassword.Visible = false;
+            txtHCTACertPassword.Visible = false;
+            lblHCTACode.Visible = false;
+            txtHCTACode.Visible = false;
+        }
+
 
        
     }
