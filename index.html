@@ -880,6 +880,22 @@ Figure 9  </p>
 <p>In <strong>Form1.cs</strong>, enter methods that will handle the button click events for the form.</p>
 
 <h4>
+<a id="form1" class="anchor" href="#form1" aria-hidden="true"><span class="octicon octicon-link"></span></a>form1</h4>
+
+<p>Double click the main form1 on the designer and add the code:</p>
+
+<div class="highlight highlight-c#"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> MainForm_Load(<span class="pl-k">object</span> sender, EventArgs e)
+        {
+            lblHCTAKey.Visible = <span class="pl-c1">false</span>;
+            txtHCTACert.Visible = <span class="pl-c1">false</span>;
+            btnBrowseHCTACert.Visible = <span class="pl-c1">false</span>;
+            lblEncryptionHCTAPassword.Visible = <span class="pl-c1">false</span>;
+            txtHCTACertPassword.Visible = <span class="pl-c1">false</span>;
+            lblHCTACode.Visible = <span class="pl-c1">false</span>;
+            txtHCTACode.Visible = <span class="pl-c1">false</span>;
+        }</pre></div>
+
+<h4>
 <a id="btnbrowsexml" class="anchor" href="#btnbrowsexml" aria-hidden="true"><span class="octicon octicon-link"></span></a>btnBrowseXml</h4>
 
 <p>Double click <strong>8btnBrowseXml</strong> on the designer and add the code:  </p>
