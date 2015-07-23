@@ -979,6 +979,7 @@ Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 <span class="pl-c">// encrypt file &amp; save to disk</span>
                 <span class="pl-k">string</span> encryptedFileName = zipFileName.Replace(<span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>);
+                <span class="pl-k">string</span> encryptedHCTAFileName = zipFileName.Replace(<span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>);
                 <span class="pl-k">string</span> payloadFileName = encryptedFileName;
                 AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector);
 
