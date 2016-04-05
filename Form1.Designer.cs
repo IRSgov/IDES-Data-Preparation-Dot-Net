@@ -69,6 +69,8 @@
             this.lblEncryptionHCTAPassword = new System.Windows.Forms.Label();
             this.txtHCTACode = new System.Windows.Forms.TextBox();
             this.lblHCTACode = new System.Windows.Forms.Label();
+            this.lblTaxYear = new System.Windows.Forms.Label();
+            this.cmbTaxYear = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblLoadXML
@@ -423,11 +425,31 @@
             this.lblHCTACode.TabIndex = 36;
             this.lblHCTACode.Text = "HCTA Code";
             // 
+            // lblTaxYear
+            // 
+            this.lblTaxYear.AutoSize = true;
+            this.lblTaxYear.Location = new System.Drawing.Point(664, 69);
+            this.lblTaxYear.Name = "lblTaxYear";
+            this.lblTaxYear.Size = new System.Drawing.Size(50, 13);
+            this.lblTaxYear.TabIndex = 38;
+            this.lblTaxYear.Text = "Tax Year";
+            // 
+            // cmbTaxYear
+            // 
+            this.cmbTaxYear.FormattingEnabled = true;
+            this.cmbTaxYear.Location = new System.Drawing.Point(667, 87);
+            this.cmbTaxYear.Name = "cmbTaxYear";
+            this.cmbTaxYear.Size = new System.Drawing.Size(78, 21);
+            this.cmbTaxYear.TabIndex = 39;
+            this.cmbTaxYear.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 427);
+            this.Controls.Add(this.cmbTaxYear);
+            this.Controls.Add(this.lblTaxYear);
             this.Controls.Add(this.txtHCTACode);
             this.Controls.Add(this.lblHCTACode);
             this.Controls.Add(this.txtHCTACertPassword);
@@ -517,6 +539,8 @@
         private System.Windows.Forms.Label lblEncryptionHCTAPassword;
         private System.Windows.Forms.TextBox txtHCTACode;
         private System.Windows.Forms.Label lblHCTACode;
+        private System.Windows.Forms.Label lblTaxYear;
+        private System.Windows.Forms.ComboBox cmbTaxYear;
     }
 }
 

@@ -152,7 +152,7 @@ namespace WindowsFormsApplication1
                     writer.WriteString(fileCreationDateTime);
                     writer.WriteEndElement();
                     writer.WriteStartElement("TaxYear");
-                    writer.WriteString("2014");
+                    writer.WriteString(cmbTaxYear.SelectedItem.ToString());
                     writer.WriteEndElement();
                     writer.WriteStartElement("FileRevisionInd");
                     writer.WriteString("false");
@@ -418,6 +418,18 @@ namespace WindowsFormsApplication1
             txtHCTACertPassword.Visible = false;
             lblHCTACode.Visible = false;
             txtHCTACode.Visible = false;
+
+            //Populate tax year combo box
+            cmbTaxYear.Items.Add(2014);
+            cmbTaxYear.Items.Add(2015);
+            cmbTaxYear.Items.Add(2016);
+            cmbTaxYear.SelectedItem = DateTime.Now.Year - 1;
+            
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
 
