@@ -55,13 +55,7 @@ namespace WindowsFormsApplication1
 
                 archive.ExtractToDirectory(zipFolderPath);
             }
-
-
-
         }
     }
-
-
-
 
 }

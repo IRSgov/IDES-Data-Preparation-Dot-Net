@@ -6,7 +6,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Drawing;
-
+using System.Linq;
 
 
 namespace WindowsFormsApplication1
@@ -89,21 +89,22 @@ namespace WindowsFormsApplication1
 
                 // generate AES key (32 bytes) & default initialization vector (empty)
                 byte[] aesEncryptionKey = AesManager.GenerateRandomKey(AesManager.KeySize / 8);
-                byte[] aesEncryptionVector = AesManager.GenerateRandomKey(16, true);
+                byte[] aesEncryptionVector = AesManager.GenerateRandomKey(16, radECB.Checked);
 
                 // encrypt file & save to disk
                 string encryptedFileName = zipFileName.Replace(".zip", "");
                 string encryptedHCTAFileName = zipFileName.Replace(".zip", "");
                 string payloadFileName = encryptedFileName;
-                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector);
+                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector, radECB.Checked);
+
 
                 // encrypt key with public key of certificate & save to disk
-                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key"; 
-                AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName);
+                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key";
+                AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName, radECB.Checked);
                 //For Model1 Option2 Only, encrypt the AES Key with the HCTA Public Key
                 if (chkM1O2.Checked) {
                     encryptedHCTAFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA." + txtHCTACode.Text + "_Key";
-                    AesManager.EncryptAesKey(aesEncryptionKey, txtHCTACert.Text, txtHCTACertPassword.Text, encryptedHCTAFileName);
+                    AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtHCTACert.Text, txtHCTACertPassword.Text, encryptedHCTAFileName, radECB.Checked);
                 }
 
                 // cleanup
@@ -147,6 +148,12 @@ namespace WindowsFormsApplication1
                     writer.WriteEndElement();
                     writer.WriteStartElement("SenderFileId");
                     writer.WriteString(senderFile);
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("FileFormatCd");
+                    writer.WriteString("XML");
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("BinaryEncodingSchemeCd");
+                    writer.WriteString("NONE");
                     writer.WriteEndElement();
                     writer.WriteStartElement("FileCreateTs");
                     writer.WriteString(fileCreationDateTime);
@@ -263,15 +270,19 @@ namespace WindowsFormsApplication1
                 // decrypt AES key & generate default (empty) initialization vector
                 decryptedAesKey = AesManager.DecryptAesKey(encryptedAesKey, txtReceiverCert.Text, txtRecKeyPassword.Text);
                 aesVector = AesManager.GenerateRandomKey(16, true);
+                if (radECB.Checked != true)
+                {
+                    aesVector = decryptedAesKey.Skip(32).Take(16).ToArray();
+                    decryptedAesKey = decryptedAesKey.Take(32).ToArray();
+                }
 
                 // decrypt encrypted ZIP file using decrypted AES key
                 string decryptedFileName = encryptedPayloadFile.Replace("_Payload", "_Payload_decrypted.zip");
-                AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector);
+                AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector, radECB.Checked);
 
 
                 //Deflate the decrypted zip archive
                 ZipManager.ExtractArchive(decryptedFileName, decryptedFileName, false);
-
 
 
                 // success
@@ -424,6 +435,9 @@ namespace WindowsFormsApplication1
             cmbTaxYear.Items.Add(2015);
             cmbTaxYear.Items.Add(2016);
             cmbTaxYear.SelectedItem = DateTime.Now.Year - 1;
+
+            //Default the CBC checkbox to on
+            radCBC.Checked = true;
             
         }
 
@@ -431,6 +445,8 @@ namespace WindowsFormsApplication1
         {
 
         }
+
+       
 
 
        

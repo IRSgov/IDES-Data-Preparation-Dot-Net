@@ -51,10 +51,6 @@
             this.txtRecKeyPassword = new System.Windows.Forms.TextBox();
             this.lblRecPass = new System.Windows.Forms.Label();
             this.btnDecryptZip = new System.Windows.Forms.Button();
-            this.txtSenderCode = new System.Windows.Forms.TextBox();
-            this.lblSender = new System.Windows.Forms.Label();
-            this.txtReceiverCode = new System.Windows.Forms.TextBox();
-            this.lblReceiver = new System.Windows.Forms.Label();
             this.btnBrowseOutput = new System.Windows.Forms.Button();
             this.txtNotificationFolder = new System.Windows.Forms.TextBox();
             this.lblOutput = new System.Windows.Forms.Label();
@@ -71,6 +67,8 @@
             this.lblHCTACode = new System.Windows.Forms.Label();
             this.lblTaxYear = new System.Windows.Forms.Label();
             this.cmbTaxYear = new System.Windows.Forms.ComboBox();
+            this.radECB = new System.Windows.Forms.RadioButton();
+            this.radCBC = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // lblLoadXML
@@ -270,7 +268,7 @@
             // 
             // btnDecryptZip
             // 
-            this.btnDecryptZip.Location = new System.Drawing.Point(397, 172);
+            this.btnDecryptZip.Location = new System.Drawing.Point(397, 218);
             this.btnDecryptZip.Name = "btnDecryptZip";
             this.btnDecryptZip.Size = new System.Drawing.Size(173, 23);
             this.btnDecryptZip.TabIndex = 22;
@@ -278,42 +276,10 @@
             this.btnDecryptZip.UseVisualStyleBackColor = true;
             this.btnDecryptZip.Click += new System.EventHandler(this.btnDecryptZip_Click);
             // 
-            // txtSenderCode
-            // 
-            this.txtSenderCode.Location = new System.Drawing.Point(397, 246);
-            this.txtSenderCode.Name = "txtSenderCode";
-            this.txtSenderCode.Size = new System.Drawing.Size(69, 20);
-            this.txtSenderCode.TabIndex = 24;
-            // 
-            // lblSender
-            // 
-            this.lblSender.AutoSize = true;
-            this.lblSender.Location = new System.Drawing.Point(397, 230);
-            this.lblSender.Name = "lblSender";
-            this.lblSender.Size = new System.Drawing.Size(69, 13);
-            this.lblSender.TabIndex = 23;
-            this.lblSender.Text = "Sender Code";
-            // 
-            // txtReceiverCode
-            // 
-            this.txtReceiverCode.Location = new System.Drawing.Point(500, 246);
-            this.txtReceiverCode.Name = "txtReceiverCode";
-            this.txtReceiverCode.Size = new System.Drawing.Size(78, 20);
-            this.txtReceiverCode.TabIndex = 26;
-            // 
-            // lblReceiver
-            // 
-            this.lblReceiver.AutoSize = true;
-            this.lblReceiver.Location = new System.Drawing.Point(500, 230);
-            this.lblReceiver.Name = "lblReceiver";
-            this.lblReceiver.Size = new System.Drawing.Size(78, 13);
-            this.lblReceiver.TabIndex = 25;
-            this.lblReceiver.Text = "Receiver Code";
-            // 
             // btnBrowseOutput
             // 
             this.btnBrowseOutput.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrowseOutput.Location = new System.Drawing.Point(579, 292);
+            this.btnBrowseOutput.Location = new System.Drawing.Point(579, 175);
             this.btnBrowseOutput.Name = "btnBrowseOutput";
             this.btnBrowseOutput.Size = new System.Drawing.Size(29, 23);
             this.btnBrowseOutput.TabIndex = 29;
@@ -323,7 +289,7 @@
             // 
             // txtNotificationFolder
             // 
-            this.txtNotificationFolder.Location = new System.Drawing.Point(397, 292);
+            this.txtNotificationFolder.Location = new System.Drawing.Point(397, 175);
             this.txtNotificationFolder.Name = "txtNotificationFolder";
             this.txtNotificationFolder.Size = new System.Drawing.Size(173, 20);
             this.txtNotificationFolder.TabIndex = 28;
@@ -331,7 +297,7 @@
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(397, 276);
+            this.lblOutput.Location = new System.Drawing.Point(397, 159);
             this.lblOutput.Name = "lblOutput";
             this.lblOutput.Size = new System.Drawing.Size(127, 13);
             this.lblOutput.TabIndex = 27;
@@ -340,6 +306,7 @@
             // dlgOpen
             // 
             this.dlgOpen.Title = "Open File";
+            this.dlgOpen.FileOk += new System.ComponentModel.CancelEventHandler(this.dlgOpen_FileOk);
             // 
             // dlgSave
             // 
@@ -353,7 +320,7 @@
             // chkM1O2
             // 
             this.chkM1O2.AutoSize = true;
-            this.chkM1O2.Location = new System.Drawing.Point(664, 36);
+            this.chkM1O2.Location = new System.Drawing.Point(676, 69);
             this.chkM1O2.Name = "chkM1O2";
             this.chkM1O2.Size = new System.Drawing.Size(93, 17);
             this.chkM1O2.TabIndex = 30;
@@ -428,7 +395,7 @@
             // lblTaxYear
             // 
             this.lblTaxYear.AutoSize = true;
-            this.lblTaxYear.Location = new System.Drawing.Point(664, 69);
+            this.lblTaxYear.Location = new System.Drawing.Point(673, 94);
             this.lblTaxYear.Name = "lblTaxYear";
             this.lblTaxYear.Size = new System.Drawing.Size(50, 13);
             this.lblTaxYear.TabIndex = 38;
@@ -437,17 +404,41 @@
             // cmbTaxYear
             // 
             this.cmbTaxYear.FormattingEnabled = true;
-            this.cmbTaxYear.Location = new System.Drawing.Point(667, 87);
+            this.cmbTaxYear.Location = new System.Drawing.Point(676, 112);
             this.cmbTaxYear.Name = "cmbTaxYear";
             this.cmbTaxYear.Size = new System.Drawing.Size(78, 21);
             this.cmbTaxYear.TabIndex = 39;
             this.cmbTaxYear.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // radECB
+            // 
+            this.radECB.AutoSize = true;
+            this.radECB.Location = new System.Drawing.Point(676, 39);
+            this.radECB.Name = "radECB";
+            this.radECB.Size = new System.Drawing.Size(76, 17);
+            this.radECB.TabIndex = 42;
+            this.radECB.Text = "ECB Mode";
+            this.radECB.UseVisualStyleBackColor = true;
+            // 
+            // radCBC
+            // 
+            this.radCBC.AutoSize = true;
+            this.radCBC.Checked = true;
+            this.radCBC.Location = new System.Drawing.Point(676, 19);
+            this.radCBC.Name = "radCBC";
+            this.radCBC.Size = new System.Drawing.Size(76, 17);
+            this.radCBC.TabIndex = 44;
+            this.radCBC.TabStop = true;
+            this.radCBC.Text = "CBC Mode";
+            this.radCBC.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(767, 427);
+            this.ClientSize = new System.Drawing.Size(791, 427);
+            this.Controls.Add(this.radCBC);
+            this.Controls.Add(this.radECB);
             this.Controls.Add(this.cmbTaxYear);
             this.Controls.Add(this.lblTaxYear);
             this.Controls.Add(this.txtHCTACode);
@@ -461,10 +452,6 @@
             this.Controls.Add(this.btnBrowseOutput);
             this.Controls.Add(this.txtNotificationFolder);
             this.Controls.Add(this.lblOutput);
-            this.Controls.Add(this.txtReceiverCode);
-            this.Controls.Add(this.lblReceiver);
-            this.Controls.Add(this.txtSenderCode);
-            this.Controls.Add(this.lblSender);
             this.Controls.Add(this.btnDecryptZip);
             this.Controls.Add(this.txtRecKeyPassword);
             this.Controls.Add(this.lblRecPass);
@@ -521,10 +508,6 @@
         private System.Windows.Forms.TextBox txtRecKeyPassword;
         private System.Windows.Forms.Label lblRecPass;
         private System.Windows.Forms.Button btnDecryptZip;
-        private System.Windows.Forms.TextBox txtSenderCode;
-        private System.Windows.Forms.Label lblSender;
-        private System.Windows.Forms.TextBox txtReceiverCode;
-        private System.Windows.Forms.Label lblReceiver;
         private System.Windows.Forms.Button btnBrowseOutput;
         private System.Windows.Forms.TextBox txtNotificationFolder;
         private System.Windows.Forms.Label lblOutput;
@@ -541,6 +524,8 @@
         private System.Windows.Forms.Label lblHCTACode;
         private System.Windows.Forms.Label lblTaxYear;
         private System.Windows.Forms.ComboBox cmbTaxYear;
+        private System.Windows.Forms.RadioButton radECB;
+        private System.Windows.Forms.RadioButton radCBC;
     }
 }
 
