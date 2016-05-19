@@ -306,7 +306,6 @@
             // dlgOpen
             // 
             this.dlgOpen.Title = "Open File";
-            this.dlgOpen.FileOk += new System.ComponentModel.CancelEventHandler(this.dlgOpen_FileOk);
             // 
             // dlgSave
             // 
