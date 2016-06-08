@@ -476,10 +476,7 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void dlgOpen_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
+       
 
        
 
