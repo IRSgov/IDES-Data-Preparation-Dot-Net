@@ -238,9 +238,11 @@ namespace WindowsFormsApplication1
             // select encrypted key file
             string encryptedKeyFile = "";
             string encryptedPayloadFile = "";
+            string metadataFile = "";
             string[] keyFiles = Directory.GetFiles(zipFolder, "*_Key", SearchOption.TopDirectoryOnly);
             string[] payloadFiles = Directory.GetFiles(zipFolder, "*_Payload", SearchOption.TopDirectoryOnly);
-
+            string[] metadataFiles = Directory.GetFiles(zipFolder, "*_Metadata*", SearchOption.TopDirectoryOnly);
+            
             if (keyFiles.Length == 0)
             {
                 // key file validation
@@ -255,7 +257,10 @@ namespace WindowsFormsApplication1
             }
             encryptedKeyFile = keyFiles[0];
             encryptedPayloadFile = payloadFiles[0];
+            metadataFile = metadataFiles[0];
 
+            //Check the metadata and see what we have
+            string metadataContentType = XmlManager.CheckMetadataType(metadataFile);
 
 
             byte[] encryptedAesKey = null;
@@ -283,7 +288,32 @@ namespace WindowsFormsApplication1
 
                 //Deflate the decrypted zip archive
                 ZipManager.ExtractArchive(decryptedFileName, decryptedFileName, false);
+                string decryptedPayload = decryptedFileName.Replace("_Payload_decrypted.zip", "_Payload.xml");
+                //If the metadata is something other than XML, read the wrapper and rebuild the non-XML file
 
+                if (metadataContentType != "XML")
+                {
+                    //Some non-XML files may not have _Payload in the file name, if not remove it   
+                    if (!File.Exists(decryptedPayload))
+                    {
+                        decryptedPayload = decryptedPayload.Replace("_Payload.xml", ".xml");
+                    }
+
+                    //This will give us the base64 encoded data from the XML file    
+
+                    string encodedData = XmlManager.ExtractXMLImageData(decryptedPayload);
+
+                    //We will convert the base64 data back to bytes
+                    byte[] binaryData;
+                    string decodedPayload = decryptedPayload.Replace(".xml", "." + metadataContentType);
+                    binaryData = System.Convert.FromBase64String(encodedData);
+
+                    //We can write the bytes back to rebuild the file
+                    FileStream decodedFile;
+                    decodedFile = new FileStream(decodedPayload, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+                    decodedFile.Write(binaryData, 0, binaryData.Length);
+                    decodedFile.Close();
+                }
 
                 // success
                 MessageBox.Show("Notification decryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -442,6 +472,11 @@ namespace WindowsFormsApplication1
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dlgOpen_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }

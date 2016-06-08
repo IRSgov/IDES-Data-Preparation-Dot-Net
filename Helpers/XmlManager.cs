@@ -314,5 +314,79 @@ namespace WindowsFormsApplication1
                 return signed.CheckSignature();
             }
         }
+
+        /// <summary>
+        /// This will pull the encoded image data from the xml wrapper
+        /// </summary>
+        /// <param name="signedXml">The path to the xml file with the encoded data</param>
+        /// <returns>the encoded image data</returns>
+        public static string ExtractXMLImageData(string signedXml)
+        {
+
+            string hold = "test";
+            byte[] xml = File.ReadAllBytes(signedXml);
+
+            using (MemoryStream stream = new MemoryStream(xml))
+            {
+                // go to the beginning of the stream
+                stream.Flush();
+                stream.Position = 0;
+
+                // create new XmlDocument from stream
+                XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
+                doc.Load(stream);
+
+                // get signature node
+                XmlNodeList nodeList = doc.GetElementsByTagName("Wrapper", "*");
+
+                if (nodeList.Count != 1)
+                {
+                    // invalid file
+                    throw new Exception("No wrapper element for the image data was found!");
+                }
+
+                //This will be the base64 encoded Payload that will need to be converted back to an image file
+                hold = nodeList[0].InnerText;
+
+                // check
+                return hold;
+            }
+        }
+
+        /// <summary>
+        /// This will check the metadata file to see if there is a FileFormatCd and what it is
+        /// </summary>
+        /// <param name="metadataFile">The path to the metadata file</param>
+        /// <returns>the code from the metadata file</returns>
+        public static string CheckMetadataType(string metadataFile)
+        {
+
+            //Our default value will be XML, and we only need to do something different if it isn't
+            string codeFromMetadata = "XML";
+            byte[] xml = File.ReadAllBytes(metadataFile);
+
+            using (MemoryStream stream = new MemoryStream(xml))
+            {
+                // go to the beginning of the stream
+                stream.Flush();
+                stream.Position = 0;
+
+                // create new XmlDocument from stream
+                XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
+                doc.Load(stream);
+
+                // get File Format Code node
+                XmlNodeList nodeList = doc.GetElementsByTagName("FileFormatCd");
+
+                //If the node is found, we will pull the value so we know if this is something other than XML
+                if (nodeList.Count == 1)
+                {
+                    codeFromMetadata = nodeList[0].InnerText;
+                }
+
+                // check
+                return codeFromMetadata;
+            }
+        }
     }
 }
