@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace IDES
 {
     partial class MainForm
     {
@@ -35,7 +35,7 @@
             this.txtCert = new System.Windows.Forms.TextBox();
             this.btnBrowseCert = new System.Windows.Forms.Button();
             this.lblCertPass = new System.Windows.Forms.Label();
-            this.txtCertPass = new System.Windows.Forms.TextBox();
+            this.txtCertPassword = new System.Windows.Forms.TextBox();
             this.btnBrowseKeyCert = new System.Windows.Forms.Button();
             this.txtKeyCert = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.cmbTaxYear = new System.Windows.Forms.ComboBox();
             this.radECB = new System.Windows.Forms.RadioButton();
             this.radCBC = new System.Windows.Forms.RadioButton();
+            this.chkSavePasswords = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblLoadXML
@@ -134,13 +135,13 @@
             this.lblCertPass.TabIndex = 6;
             this.lblCertPass.Text = "Signing Certificate Password";
             // 
-            // txtCertPass
+            // txtCertPassword
             // 
-            this.txtCertPass.Location = new System.Drawing.Point(15, 128);
-            this.txtCertPass.Name = "txtCertPass";
-            this.txtCertPass.PasswordChar = '*';
-            this.txtCertPass.Size = new System.Drawing.Size(173, 20);
-            this.txtCertPass.TabIndex = 7;
+            this.txtCertPassword.Location = new System.Drawing.Point(15, 128);
+            this.txtCertPassword.Name = "txtCertPassword";
+            this.txtCertPassword.PasswordChar = '*';
+            this.txtCertPassword.Size = new System.Drawing.Size(173, 20);
+            this.txtCertPassword.TabIndex = 7;
             // 
             // btnBrowseKeyCert
             // 
@@ -407,7 +408,6 @@
             this.cmbTaxYear.Name = "cmbTaxYear";
             this.cmbTaxYear.Size = new System.Drawing.Size(78, 21);
             this.cmbTaxYear.TabIndex = 39;
-            this.cmbTaxYear.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // radECB
             // 
@@ -431,11 +431,22 @@
             this.radCBC.Text = "CBC Mode";
             this.radCBC.UseVisualStyleBackColor = true;
             // 
+            // chkSavePasswords
+            // 
+            this.chkSavePasswords.AutoSize = true;
+            this.chkSavePasswords.Location = new System.Drawing.Point(397, 391);
+            this.chkSavePasswords.Name = "chkSavePasswords";
+            this.chkSavePasswords.Size = new System.Drawing.Size(153, 17);
+            this.chkSavePasswords.TabIndex = 45;
+            this.chkSavePasswords.Text = "Save Passwords (plaintext)";
+            this.chkSavePasswords.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(791, 427);
+            this.Controls.Add(this.chkSavePasswords);
             this.Controls.Add(this.radCBC);
             this.Controls.Add(this.radECB);
             this.Controls.Add(this.cmbTaxYear);
@@ -466,7 +477,7 @@
             this.Controls.Add(this.btnBrowseKeyCert);
             this.Controls.Add(this.txtKeyCert);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtCertPass);
+            this.Controls.Add(this.txtCertPassword);
             this.Controls.Add(this.lblCertPass);
             this.Controls.Add(this.btnBrowseCert);
             this.Controls.Add(this.txtCert);
@@ -475,7 +486,8 @@
             this.Controls.Add(this.txtXmlFile);
             this.Controls.Add(this.lblLoadXML);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "IDES Upload / Download";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -491,7 +503,7 @@
         private System.Windows.Forms.TextBox txtCert;
         private System.Windows.Forms.Button btnBrowseCert;
         private System.Windows.Forms.Label lblCertPass;
-        private System.Windows.Forms.TextBox txtCertPass;
+        private System.Windows.Forms.TextBox txtCertPassword;
         private System.Windows.Forms.Button btnBrowseKeyCert;
         private System.Windows.Forms.TextBox txtKeyCert;
         private System.Windows.Forms.Label label3;
@@ -525,6 +537,7 @@
         private System.Windows.Forms.ComboBox cmbTaxYear;
         private System.Windows.Forms.RadioButton radECB;
         private System.Windows.Forms.RadioButton radCBC;
+        private System.Windows.Forms.CheckBox chkSavePasswords;
     }
 }
 
