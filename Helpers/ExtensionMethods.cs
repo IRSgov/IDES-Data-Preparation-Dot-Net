@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace IDES
 {
     public static class ExtensionMethods
     {

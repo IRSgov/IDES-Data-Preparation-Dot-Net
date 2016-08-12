@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace WindowsFormsApplication1
+namespace IDES
 {
     public sealed class RSAPKCS1SHA256SignatureDescription : SignatureDescription
     {

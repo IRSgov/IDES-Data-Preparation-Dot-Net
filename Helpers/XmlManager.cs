@@ -8,7 +8,7 @@ using System.Xml;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace WindowsFormsApplication1
+namespace IDES
 {
     /// <summary>
     /// The type of signature to perform

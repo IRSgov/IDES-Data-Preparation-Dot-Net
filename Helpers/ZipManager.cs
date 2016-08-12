@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 
-namespace WindowsFormsApplication1
+namespace IDES
 {
     class ZipManager
     {
