@@ -57,7 +57,7 @@ namespace WindowsFormsApplication1
         {
             using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
             {
-                if (useECBMode)
+                if(useECBMode)
                     aes.Mode = CipherMode.ECB;
                 else
                     aes.Mode = CipherMode.CBC;
@@ -97,6 +97,7 @@ namespace WindowsFormsApplication1
                     aes.Mode = CipherMode.ECB;
                 else
                     aes.Mode = CipherMode.CBC;
+               
                 aes.Key = key;
                 aes.IV = iv;
 
@@ -120,6 +121,7 @@ namespace WindowsFormsApplication1
         /// Encrypts a key using the public key from the specified certificate
         /// </summary>
         /// <param name="payload">The data to encrypt</param>
+        /// <param name="payloadIV">The IV to encrypt - ONLY FOR CBC</param>
         /// <param name="encryptionCert">The certificate used for encryption</param>
         /// <param name="encryptionCertPassword">The password for the encryption certificate</param>
         /// <param name="outputFilePath">Full path of the encrypted file</param>
@@ -129,7 +131,7 @@ namespace WindowsFormsApplication1
             X509Certificate2 cert = new X509Certificate2(encryptionCert, encryptionCertPassword);
 
             //If we are not using ECB mode, we need to add the IV to the key before we encrypt
-            if (useECBMode != true)
+            if(useECBMode != true)
             {
                 payload = payload.Concat(payloadIV).ToArray();
             }    
@@ -163,6 +165,101 @@ namespace WindowsFormsApplication1
 
                 return rsa.Decrypt(payload, false);
             }
+        }
+
+        /// <summary>
+        /// This will decrypt the payload from a downloaded and decompressed notification 
+        /// </summary>
+        /// <param name="xmlProcessingFolder">The path to folder that contains the decompressed notification files</param>
+        /// <param name="decryptionKey">The key file used to decrypt the AES key</param>
+        /// <param name="decryptionPass">The password to the key file above</param>
+        /// <param name="isECB">Determines the cipher mode, CBC or ECB</param>
+        /// <returns>the file path to the decrypted payload file</returns>
+        public static string DecryptNotification(string xmlProcessingFolder, string decryptionKey, string decryptionPass, bool isECB)
+        {
+            // select encrypted key file
+            string encryptedKeyFile = "";
+            string encryptedPayloadFile = "";
+            string metadataFile = "";
+            string[] keyFiles = Directory.GetFiles(xmlProcessingFolder, "*_Key", SearchOption.TopDirectoryOnly);
+            string[] payloadFiles = Directory.GetFiles(xmlProcessingFolder, "*_Payload", SearchOption.TopDirectoryOnly);
+            string[] metadataFiles = Directory.GetFiles(xmlProcessingFolder, "*_Metadata*", SearchOption.TopDirectoryOnly);
+
+            if (keyFiles.Length == 0)
+            {
+                // key file validation
+                throw new Exception("There was no file found containing the encrypted AES key!");
+            }
+            if (payloadFiles.Length == 0)
+            {
+                // key file validation
+                throw new Exception("There was no file found containing the encrypted Payload!");
+            }
+            if (metadataFiles.Length == 0)
+            {
+                // key file validation
+                throw new Exception("There was no file found containing the Metadata!");
+            }
+
+            encryptedKeyFile = keyFiles[0];
+            encryptedPayloadFile = payloadFiles[0];
+            metadataFile = metadataFiles[0];
+
+            //Check the metadata and see what we have            
+            string metadataContentType = XmlManager.CheckMetadataType(metadataFile);
+
+            byte[] encryptedAesKey = null;
+            byte[] decryptedAesKey = null;
+            byte[] aesVector = null;
+            string decryptedPayload = "";
+
+            // load encrypted AES key
+            encryptedAesKey = File.ReadAllBytes(encryptedKeyFile);
+
+            // decrypt AES key & generate default (empty) initialization vector
+            decryptedAesKey = AesManager.DecryptAesKey(encryptedAesKey, decryptionKey, decryptionPass);
+            aesVector = AesManager.GenerateRandomKey(16, true);
+            if (isECB != true)
+            {
+                aesVector = decryptedAesKey.Skip(32).Take(16).ToArray();
+                decryptedAesKey = decryptedAesKey.Take(32).ToArray();
+            }
+
+            // decrypt encrypted ZIP file using decrypted AES key
+            string decryptedFileName = encryptedPayloadFile.Replace("_Payload", "_Payload_decrypted.zip");
+            AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector, isECB);
+
+            //Deflate the decrypted zip archive
+            ZipManager.ExtractArchive(decryptedFileName, xmlProcessingFolder, true);
+            decryptedPayload = decryptedFileName.Replace("_Payload_decrypted.zip", "_Payload.xml");
+
+            //If the metadata is something other than XML, read the wrapper and rebuild the non-XML file
+            if (metadataContentType != "XML")
+            {
+                //Some non-XML files may not have _Payload in the file name, if not remove it   
+                if (!File.Exists(decryptedPayload))
+                {
+                    decryptedPayload = decryptedPayload.Replace("_Payload.xml", ".xml");
+                }
+
+                //This will give us the base64 encoded data from the XML file   
+                string encodedData = XmlManager.ExtractXMLImageData(decryptedPayload);
+
+                //We will convert the base64 data back to bytes
+                byte[] binaryData;
+                string decodedPayload = decryptedPayload.Replace(".xml", "." + metadataContentType);
+                binaryData = System.Convert.FromBase64String(encodedData);
+
+                //We can write the bytes back to rebuild the file
+                FileStream decodedFile;
+                decodedFile = new FileStream(decodedPayload, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+                decodedFile.Write(binaryData, 0, binaryData.Length);
+                decodedFile.Close();
+
+            }
+
+            return decryptedPayload;
+           
         }
     }
 }
