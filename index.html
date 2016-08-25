@@ -9,16 +9,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>IDES Data Preparation - .NET </title>
-    <script>
-  	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  	ga('create', 'UA-8154638-5', 'auto');
-  	ga('send', 'pageview');
-
-	</script>
   </head>
 
   <body>
@@ -46,7 +36,7 @@
 
 <p>The International Data Exchange Service (IDES) is a secure managed file transfer service that allows financial institutions and tax authorities to securely send information on financial accounts held by U.S. taxpayers in accordance with the Foreign Account Tax Compliance Act (FATCA). Files transmitted via IDES must be encrypted and packaged in accordance with published data preparation instructions.  The data preparation process is an important step to ensure that information transmitted via IDES conforms to U.S security standards to safeguard sensitive information.</p>
 
-<p>The IDES Data Preparation.NET project repository demonstrates a sample working application built using <a href="http://www.visualstudio.com/en-us/products/free-developer-offers-vs">Microsoft Visual Studio 2013 Community edition</a>.  An application was also developed using Java, see <a href="http://irsgov.github.io/IDES-Data-Preparation-Java">IDES Data Preparation Java</a> for more information.</p>
+<p>The IDES Data Preparation.NET project repository demonstrates a sample working application built using <a href="https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx">Microsoft Visual Studio 2015 Community edition</a>. The 2013 version of Visual Studio Community works as well.  An application was also developed using Java, see <a href="http://irsgov.github.io/IDES-Data-Preparation-Java">IDES Data Preparation Java</a> for more information.</p>
 
 <p>The example explains how to use the code to develop an application that will create an IDES data packet and decrypt notifications. The project starts with a validated FATCA XML file. The application does not validate the XML or metadata schemas. The sample application will digitally sign, encrypt, compress, and archive the data packet into a compliant .ZIP format.  </p>
 
@@ -66,10 +56,67 @@ Figure 2  </p>
 <p>Under <strong>New Project</strong>, select the settings Visual C#, Windows Desktop and Windows Forms Application. Verify the settings, name and location. Click <strong>OK</strong> to continue.  </p>
 
 <h3>
+<a id="download-zip-code" class="anchor" href="#download-zip-code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download Zip Code</h3>
+
+<p>From this walkthrough, download the .zip file by clicking on the zip folder icon in the upper right of the screen.</p>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug10.png" alt="Image 3"><br>
+Figure 3  </p>
+
+<h3>
+<a id="extract-zip-contents" class="anchor" href="#extract-zip-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extract Zip Contents</h3>
+
+<p>The contents of the zip file should be extracted. From the extracted contents, copy the highlighted files and folders below. You will copy these into the new project you just created. You need the Helpers folder, the Form1.cs, Form1.Designer.cs, Form1.resx, and Program.cs files. </p>
+
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug20.png" alt="Image 4"><br>
+Figure 4</p>
+
+<p>Open a folder containing the newly created application on your file system. It should look similar to this and have these files. The highlighted files from the .zip extract above should be copied into your application folder.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug30.png" alt="Image 5"><br>
+Figure 5</p>
+
+<p>With the extracted zip files copied into your application folder, it should look similar to this.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug40.png" alt="Image 6"><br>
+Figure 6</p>
+
+<p>When you go back into Visual Studio, you will be prompted to update the solution. Select Yes to All to refresh the solution with the new files.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug50.png" alt="Image 7"><br>
+Figure 7</p>
+
+<p>The updated solution will look like the screen below.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug60.png" alt="Image 8"><br>
+Figure 8</p>
+
+<h3>
+<a id="importing-class-files" class="anchor" href="#importing-class-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Importing Class Files</h3>
+
+<p>In <strong>Solution Explorer</strong>, add a new folder named <strong>Helpers</strong> that will contain class files or modules for different phases of the application. 
+Right click the Project name in the Solution Explorer and select Add --&gt; New Folder. This folder will be named Helpers. 
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug70.png" alt="Image 9"><br>
+Figure 9</p>
+
+<p>This shows the newly created Helpers folder.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug80.png" alt="Image 10"><br>
+Figure 10</p>
+
+<p>Add the class files from the Helpers folder into the application. You will need to right click the new Helpers folder and select Add --&gt; Existing Item
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug90.png" alt="Image 11"><br>
+Figure 11</p>
+
+<p>Select all 6 of the files in the Helpers folder that is in your new project. You should have all 6 below selected and this will import these into the application.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug100.png" alt="Image 12"><br>
+Figure 12</p>
+
+<p>You should now have a Helpers folder in your project and be able to see the 6 class files within it.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug110.png" alt="Image 13"><br>
+Figure 13</p>
+
+<h3>
 <a id="adding-references" class="anchor" href="#adding-references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding References</h3>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img3.png" alt="Image 3"><br>
-Figure 3  </p>
+<p>Under the Project menu, select the Add Reference option. This will pull up a screen of all references that can be added. 
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug120.png" alt="Image 13"><br>
+Figure 13</p>
 
 <p>Next, you will add a reference to the each of the following:</p>
 
@@ -79,1330 +126,37 @@ Figure 3  </p>
 <li>System.Security<br>
 </li>
 <li>WindowsBase</li>
-<li>System.Drawing
-Select the <strong>Project</strong> and <strong>Add Reference</strong> from the program menu. The <strong>Reference Manager-SignXML</strong> screen appears. Select the checkbox next to each entry and click <strong>OK</strong>.</li>
+<li>System.Drawing (may already be selected in Visual Studio 2015)
+Select the checkbox next to each entry and click <strong>OK</strong>.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug130.png" alt="Image 14"><br>
+Figure 14</li>
 </ul>
 
 <h3>
-<a id="adding-components" class="anchor" href="#adding-components" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding Components</h3>
+<a id="add-winscp" class="anchor" href="#add-winscp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add WinSCP</h3>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img4.png" alt="Image 4">
-Figure 4  </p>
+<p>From the Tools menu, select the NuGet Package Manager --&gt; Package Manager Console
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug140.png" alt="Image 15"><br>
+Figure 15</p>
 
-<p>In the <strong>Designer Interface</strong>, add the components listed below. The selections are used when you run the application. The figure above shows a sample layout.</p>
+<p>This will open the Package Manager Console shown below.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug150.png" alt="Image 16"><br>
+Figure 16</p>
 
-<table>
-<thead>
-<tr>
-<th align="center">Label</th>
-<th align="center">Text</th>
-<th align="center">Button</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">lblLoadXml</td>
-<td align="center">txtXmlFile</td>
-<td align="center">btnBrowseXml</td>
-</tr>
-<tr>
-<td align="center">lblCert</td>
-<td align="center">txtCert</td>
-<td align="center">btnBrowseCert</td>
-</tr>
-<tr>
-<td align="center">lblCertPass</td>
-<td align="center"><strong>txtCertPass</strong></td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">lblKeyCert</td>
-<td align="center">txtKeyCert</td>
-<td align="center">btnBrowseKeyCert</td>
-</tr>
-<tr>
-<td align="center">lblKeyEncryptionCertPassword</td>
-<td align="center">txtKeyCertPassword</td>
-<td align="center">btnSignXML</td>
-</tr>
-<tr>
-<td align="center">lblHCTAKey</td>
-<td align="center">txtHCTACert</td>
-<td align="center">btnBrowseHCTACert</td>
-</tr>
-<tr>
-<td align="center">lblEncryptionHCTAPassword</td>
-<td align="center">txtHCTACertPassword</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">lblHCTACode</td>
-<td align="center">txtHCTACode</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">lblZipFile</td>
-<td align="center">txtNotificationZip</td>
-<td align="center">btnBrowseNotificationZip</td>
-</tr>
-<tr>
-<td align="center">lblReceiverCert</td>
-<td align="center">txtReceiverCert</td>
-<td align="center">btnBrowseRecCert</td>
-</tr>
-<tr>
-<td align="center">lblRecPass</td>
-<td align="center"><strong>txtRecKeyPassword</strong></td>
-<td align="center">btnDecryptZip</td>
-</tr>
-<tr>
-<td align="center">lblSender</td>
-<td align="center">txtSenderCode</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">lblReceiver</td>
-<td align="center">txtReceiverCode</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">lblOutput</td>
-<td align="center">txtNotificationFolder</td>
-<td align="center">btnBrowseOutput</td>
-</tr>
-<tr>
-<td align="center">lblTaxYear</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">ComboBox</td>
-<td align="center">cmbTaxYear</td>
-<td align="center">NA</td>
-</tr>
-<tr>
-<td align="center">CheckBox</td>
-<td align="center">chkM1O2</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">RadioButton</td>
-<td align="center">radCBC</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">RadioButton</td>
-<td align="center">radECB</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">OpenFileDialog</td>
-<td align="center">dlgOpen</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">SaveFileDialog</td>
-<td align="center">dlgSave</td>
-<td align="center">N/A</td>
-</tr>
-<tr>
-<td align="center">FolderBrowserDialog</td>
-<td align="center">dlgOpenFolder</td>
-<td align="center">N/A</td>
-</tr>
-</tbody>
-</table>
+<p>Type “Install-Package WinSCP” in the Console and hit enter.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug160.png" alt="Image 17"><br>
+Figure 17</p>
 
-<p>Note: The <strong>passwordChar</strong> attribute can be set to mask the input for the <strong>txtCertPass</strong> and <strong>txtRecKeyPassword</strong> text box.  </p>
-
-<h2>
-<a id="create-class-files" class="anchor" href="#create-class-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create Class Files</h2>
+<p>This will install the WinSCP package. A sucessful installation message should be seen in the Console.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug170.png" alt="Image 18"><br>
+Figure 18</p>
 
 <h3>
-<a id="organizing-class-files" class="anchor" href="#organizing-class-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Organizing Class Files</h3>
-
-<p>The descriptions of the interface components may be modified to provide more detail.  </p>
-
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img5.png" alt="Image 5">
-Figure 5  </p>
-
-<p>In <strong>Solution Explorer</strong>, add a new folder named <strong>Helpers</strong> that will contain class files or modules for different phases of the application. Please note, as an alternative to copying the text for each class in the Helpers folder, the completed files can be manually added from the Helpers folder located in the .zip file for the repository.  </p>
-
-<h3>
-<a id="class-file---extensionmethodscs" class="anchor" href="#class-file---extensionmethodscs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Class File - ExtensionMethods.cs</h3>
-
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img6.png" alt="Image 6"><br>
-Figure 6  </p>
-
-<p>In the <strong>Helpers</strong> folder, create a new class file named <strong>ExtensionMethods.cs</strong>.  </p>
-
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img7.png" alt="Image 7"><br>
-Figure 7    </p>
-
-<p>Next, let’s create code used to display error messages and show the file load dialog screens. In the new class <strong>ExtensionMethods.cs</strong> , enter the following:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> System<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Windows.Forms<span class="pl-k">;</span>
-
-<span class="pl-k">namespace</span> <span class="pl-en">WindowsFormsApplication1</span>
-{
-    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">class</span> <span class="pl-en">ExtensionMethods</span>
-    {
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">string</span> <span class="pl-en">ShowDialogWithFilter</span>(<span class="pl-k">this</span> <span class="pl-smi">OpenFileDialog</span> dialog, <span class="pl-k">string</span> <span class="pl-smi">filter</span>)
-        {
-            dialog.Filter = filter;
-
-            <span class="pl-k">if</span> (dialog.ShowDialog() == DialogResult.OK)
-            {
-                <span class="pl-k">return</span> dialog.FileName;
-            }
-
-            <span class="pl-k">return</span> <span class="pl-k">string</span>.Empty;
-        }
-
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">DisplayException</span>(<span class="pl-k">this</span> <span class="pl-smi">Exception</span> ex, <span class="pl-k">string</span> <span class="pl-smi">messageBoxTitle</span>)
-        {
-            <span class="pl-k">string</span> errorMessage = ex.GetBaseException().Message;
-
-            <span class="pl-k">if</span> (errorMessage.Contains(<span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>))
-            {
-                <span class="pl-c">// certificate password is incorrect</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>Specified certificate password is incorrect!<span class="pl-pds">"</span></span>, 
-messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-
-            <span class="pl-c">// other error</span>
-            MessageBox.Show(errorMessage, messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
-    }
-}
-</pre></div>
-
-<h3>
-<a id="class-file---xmlmanagercs" class="anchor" href="#class-file---xmlmanagercs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Class File - XmlManager.cs</h3>
-
-<p>Create a new class named <strong>XmlManager.cs</strong> in the <strong>Helpers</strong> folder and add the following code to the new <strong>XmlManager.cs</strong> class:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> System<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.IO<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography.X509Certificates<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography.Xml<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Text<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Xml<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Linq<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
-
-<span class="pl-k">namespace</span> <span class="pl-en">WindowsFormsApplication1</span>
-{
-    <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-    <span class="pl-c">/// The type of signature to perform</span>
-    <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-    <span class="pl-k">public</span> <span class="pl-k">enum</span> <span class="pl-en">XmlSignatureType</span>
-    {
-
-        Enveloping
-    }
-
-    <span class="pl-k">class</span> <span class="pl-en">XmlManager</span>
-    {
-        #region Private methods
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Creates a KeyInfo object based on information from specified certificate</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certificate<span class="pl-pds">"</span></span>&gt;The certificate used to create the KeyInfo from&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;KeyInfo object&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">private</span> <span class="pl-k">static</span> KeyInfo <span class="pl-en">CreateKeyInfoFromCertificate</span>(<span class="pl-k">X509Certificate2</span> <span class="pl-smi">certificate</span>)
-        {
-            <span class="pl-c">// create KeyInfoX509Data object &amp; include certificate subject</span>
-            KeyInfoX509Data kiData = <span class="pl-k">new</span> KeyInfoX509Data(certificate);
-            kiData.AddSubjectName(certificate.Subject);
-
-            <span class="pl-c">// create KeyInfo object with specified KeyInfoX509Data</span>
-            KeyInfo keyInfo = <span class="pl-k">new</span> KeyInfo();
-            keyInfo.AddClause(kiData);
-
-            <span class="pl-k">return</span> keyInfo;
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Gets the RSA private key from the specified signing certificate</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certificate<span class="pl-pds">"</span></span>&gt;The certificate used to extract the key from&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;RSACryptoServiceProvider object&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">private</span> <span class="pl-k">static</span> RSACryptoServiceProvider <span class="pl-en">GetSigningRsaKeyFromCertificate</span>(<span class="pl-k">X509Certificate2</span> <span class="pl-smi">certificate</span>)
-        {
-            RSACryptoServiceProvider key = <span class="pl-k">new</span> RSACryptoServiceProvider(<span class="pl-k">new</span> CspParameters(<span class="pl-c1">24</span>));
-            key.FromXmlString(certificate.PrivateKey.ToXmlString(<span class="pl-c1">true</span>));
-
-            <span class="pl-k">return</span> key;
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Loads the specified certificate using specific storage flags for SHA-256</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certFile<span class="pl-pds">"</span></span>&gt;The certificate file to open&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certPassword<span class="pl-pds">"</span></span>&gt;The certificate password&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>signWithSha256<span class="pl-pds">"</span></span>&gt;Sign the document using SHA-256&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;X509Certificate2 object&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">private</span> <span class="pl-k">static</span> X509Certificate2 <span class="pl-en">LoadSigningCertificate</span>(<span class="pl-k">string</span> <span class="pl-smi">certFile</span>, <span class="pl-k">string</span> <span class="pl-smi">certPassword</span>, <span class="pl-k">bool</span> <span class="pl-smi">signWithSha256</span>)
-        {
-            X509Certificate2 certificate = <span class="pl-c1">null</span>;
-
-            <span class="pl-k">if</span> (signWithSha256)
-            {
-                <span class="pl-c">// register SHA-256 and open certificate with exportable private key</span>
-                CryptoConfig.AddAlgorithm(<span class="pl-k">typeof</span>(RSAPKCS1SHA256SignatureDescription), RSAPKCS1SHA256SignatureDescription.SignatureMethod);
-                certificate = <span class="pl-k">new</span> X509Certificate2(certFile, certPassword, X509KeyStorageFlags.Exportable);
-            }
-            <span class="pl-k">else</span>
-            {
-                <span class="pl-c">// open certificate with password (to be able to access the private key)</span>
-                certificate = <span class="pl-k">new</span> X509Certificate2(certFile, certPassword);
-            }
-
-            <span class="pl-k">return</span> certificate;
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Generates a SignedXml object</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>doc<span class="pl-pds">"</span></span>&gt;The XML data to sign represented as XmlDocument object&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certificate<span class="pl-pds">"</span></span>&gt;The certificate used for signing represented as X509Certificate2 object&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>signWithSha256<span class="pl-pds">"</span></span>&gt;Sign the document using SHA-256&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">private</span> <span class="pl-k">static</span> SignedXml <span class="pl-en">GenerateSignedXml</span>(<span class="pl-k">XmlDocument</span> <span class="pl-smi">doc</span>, <span class="pl-k">X509Certificate2</span> <span class="pl-smi">certificate</span>, <span class="pl-k">bool</span> <span class="pl-smi">signWithSha256</span>)
-        {
-            <span class="pl-c">// create new SignedXml from XmlDocument</span>
-            SignedXml signed = <span class="pl-k">new</span> SignedXml(doc);
-
-            <span class="pl-k">if</span> (signWithSha256)
-            {
-                <span class="pl-c">// set signing key and signature method for SHA-256</span>
-                signed.SigningKey = GetSigningRsaKeyFromCertificate(certificate);
-                signed.SignedInfo.SignatureMethod = RSAPKCS1SHA256SignatureDescription.SignatureMethod;
-            }
-            <span class="pl-k">else</span>
-            {
-                <span class="pl-c">// set signing key and signature method for SHA-1</span>
-                signed.SigningKey = certificate.PrivateKey;
-            }
-
-            <span class="pl-k">return</span> signed;
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Signs a XML file (enveloped signature) using a digital certificate</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>xml<span class="pl-pds">"</span></span>&gt;The XML data to sign represented as byte array&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certFile<span class="pl-pds">"</span></span>&gt;The certificate file to use for signing&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certPassword<span class="pl-pds">"</span></span>&gt;The certificate password&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>signWithSha256<span class="pl-pds">"</span></span>&gt;Sign the document using SHA-256&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;The signed data represented as byte array&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">byte</span>[] <span class="pl-en">SignEnvelopedXml</span>(<span class="pl-k">byte[]</span> <span class="pl-smi">xml</span>, <span class="pl-k">string</span> <span class="pl-smi">certFile</span>, <span class="pl-k">string</span> <span class="pl-smi">certPassword</span>, <span class="pl-k">bool</span> <span class="pl-smi">signWithSha256</span>)
-        {
-            <span class="pl-k">if</span> (xml == <span class="pl-c1">null</span> || xml.Length == <span class="pl-c1">0</span>)
-            {
-                <span class="pl-c">// invalid XML array</span>
-                <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Nothing to sign!<span class="pl-pds">"</span></span>);
-            }
-
-            <span class="pl-c">// load certificate</span>
-            X509Certificate2 certificate = LoadSigningCertificate(certFile, certPassword, signWithSha256);
-
-            <span class="pl-k">if</span> (!certificate.HasPrivateKey)
-            {
-                <span class="pl-c">// invalid certificate</span>
-                <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Specified certificate not suitable for signing!<span class="pl-pds">"</span></span>);
-            }
-
-            <span class="pl-k">using</span> (MemoryStream stream = <span class="pl-k">new</span> MemoryStream(xml))
-            {
-                <span class="pl-c">// go to the beginning of the stream</span>
-                stream.Flush();
-                stream.Position = <span class="pl-c1">0</span>;
-
-                <span class="pl-c">// create new XmlDocument from stream</span>
-                XmlDocument doc = <span class="pl-k">new</span> XmlDocument() { PreserveWhitespace = <span class="pl-c1">true</span> };
-                doc.Load(stream);
-
-                <span class="pl-c">// create new SignedXml from XmlDocument</span>
-                SignedXml signed = GenerateSignedXml(doc, certificate, signWithSha256);
-
-                <span class="pl-c">// create reference &amp; add enveloped transform</span>
-                Reference reference = <span class="pl-k">new</span> Reference(<span class="pl-k">string</span>.Empty);
-                reference.AddTransform(<span class="pl-k">new</span> XmlDsigEnvelopedSignatureTransform());
-
-                <span class="pl-k">if</span> (signWithSha256)
-                {
-                    <span class="pl-c">// SHA-256 digest</span>
-                    reference.DigestMethod = RSAPKCS1SHA256SignatureDescription.ReferenceDigestMethod;
-                }
-
-                <span class="pl-c">// add reference to document</span>
-                signed.AddReference(reference);
-
-                <span class="pl-c">// include KeyInfo object &amp; compute signature</span>
-                signed.KeyInfo = CreateKeyInfoFromCertificate(certificate);
-                signed.ComputeSignature();
-
-                <span class="pl-c">// get signature &amp; append node</span>
-                XmlElement xmlDigitalSignature = signed.GetXml();
-                doc.DocumentElement.AppendChild(doc.ImportNode(xmlDigitalSignature, <span class="pl-c1">true</span>));
-
-                <span class="pl-c">// returned content as byte array</span>
-                <span class="pl-k">return</span> Encoding.UTF8.GetBytes(doc.OuterXml);
-            }
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Signs a XML file (enveloping signature) using a digital certificate</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>xml<span class="pl-pds">"</span></span>&gt;The XML data to sign represented as byte array&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certFile<span class="pl-pds">"</span></span>&gt;The certificate file to use for signing&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certPassword<span class="pl-pds">"</span></span>&gt;The certificate password&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>signWithSha256<span class="pl-pds">"</span></span>&gt;Sign the document using SHA-256&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;The signed data represented as byte array&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">byte</span>[] <span class="pl-en">SignEnvelopingXml</span>(<span class="pl-k">byte[]</span> <span class="pl-smi">xml</span>, <span class="pl-k">string</span> <span class="pl-smi">certFile</span>, <span class="pl-k">string</span> <span class="pl-smi">certPassword</span>, <span class="pl-k">bool</span> <span class="pl-smi">signWithSha256</span>)
-        {
-            <span class="pl-k">if</span> (xml == <span class="pl-c1">null</span> || xml.Length == <span class="pl-c1">0</span>)
-            {
-                <span class="pl-c">// invalid XML array</span>
-                <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Nothing to sign!<span class="pl-pds">"</span></span>);
-            }
-
-            <span class="pl-c">// load certificate</span>
-            X509Certificate2 certificate = LoadSigningCertificate(certFile, certPassword, signWithSha256);
-
-            <span class="pl-k">if</span> (!certificate.HasPrivateKey)
-            {
-                <span class="pl-c">// invalid certificate</span>
-                <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Specified certificate not suitable for signing!<span class="pl-pds">"</span></span>);
-            }
-
-            <span class="pl-k">using</span> (MemoryStream stream = <span class="pl-k">new</span> MemoryStream(xml))
-            {
-                <span class="pl-c">// go to the beginning of the stream</span>
-                stream.Flush();
-                stream.Position = <span class="pl-c1">0</span>;
-
-                <span class="pl-c">// create new XmlDocument from stream</span>
-                XmlDocument doc = <span class="pl-k">new</span> XmlDocument() { PreserveWhitespace = <span class="pl-c1">true</span> };
-                doc.Load(stream);
-
-                <span class="pl-c">// craete transform (for canonicalization method &amp; reference)</span>
-                XmlDsigExcC14NTransform transform = <span class="pl-k">new</span> XmlDsigExcC14NTransform();
-
-                <span class="pl-c">// create new SignedXml from XmlDocument</span>
-                SignedXml signed = GenerateSignedXml(doc, certificate, signWithSha256);
-                signed.SignedInfo.CanonicalizationMethod = transform.Algorithm;
-
-                <span class="pl-c">// get nodes (use XPath to include FATCA declaration)</span>
-                XmlNodeList nodes = doc.DocumentElement.SelectNodes(<span class="pl-s"><span class="pl-pds">"</span>/*<span class="pl-pds">"</span></span>);
-
-                <span class="pl-c">// define data object</span>
-                DataObject dataObject = <span class="pl-k">new</span> DataObject() { Data = nodes, Id = <span class="pl-s"><span class="pl-pds">"</span>FATCA<span class="pl-pds">"</span></span> };
-
-                <span class="pl-c">// add the data we are signing as a sub-element (object) of the signature element</span>
-                signed.AddObject(dataObject);
-
-                <span class="pl-c">// create reference</span>
-                Reference reference = <span class="pl-k">new</span> Reference(<span class="pl-k">string</span>.Format(<span class="pl-s"><span class="pl-pds">"</span>#{0}<span class="pl-pds">"</span></span>, dataObject.Id));
-                reference.AddTransform(transform);
-
-                <span class="pl-k">if</span> (signWithSha256)
-                {
-                    <span class="pl-c">// SHA-256 digest</span>
-                    reference.DigestMethod = RSAPKCS1SHA256SignatureDescription.ReferenceDigestMethod;
-                }
-
-                <span class="pl-c">// add reference to document</span>
-                signed.AddReference(reference);
-
-                <span class="pl-c">// include KeyInfo object &amp; compute signature</span>
-                signed.KeyInfo = CreateKeyInfoFromCertificate(certificate);
-                signed.ComputeSignature();
-
-                <span class="pl-c">// get signature</span>
-                XmlElement xmlDigitalSignature = signed.GetXml();
-
-                <span class="pl-c">// XML declaration</span>
-                <span class="pl-k">string</span> xmlDeclaration = <span class="pl-k">string</span>.Empty;
-
-                <span class="pl-k">if</span> (doc.FirstChild <span class="pl-k">is</span> XmlDeclaration)
-                {
-                    <span class="pl-c">// include declaration</span>
-                    xmlDeclaration = doc.FirstChild.OuterXml;
-                }
-
-                <span class="pl-c">// return signature as byte array</span>
-                <span class="pl-k">return</span> Encoding.UTF8.GetBytes(<span class="pl-k">string</span>.Concat(xmlDeclaration, xmlDigitalSignature.OuterXml));
-            }
-        }
-        #endregion Private methods
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Signs a XML file using a digital certificate</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>signatureType<span class="pl-pds">"</span></span>&gt;The type of signature to perform&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>xml<span class="pl-pds">"</span></span>&gt;The XML data to sign represented as byte array&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certFile<span class="pl-pds">"</span></span>&gt;The certificate file to use for signing&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>certPassword<span class="pl-pds">"</span></span>&gt;The certificate password&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>signWithSha256<span class="pl-pds">"</span></span>&gt;Sign the document using SHA-256&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;The signed data represented as byte array&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">byte</span>[] <span class="pl-en">Sign</span>(<span class="pl-k">XmlSignatureType</span> <span class="pl-smi">signatureType</span>, <span class="pl-k">byte[]</span> <span class="pl-smi">xml</span>, <span class="pl-k">string</span> <span class="pl-smi">certFile</span>, <span class="pl-k">string</span> <span class="pl-smi">certPassword</span>, <span class="pl-k">bool</span> <span class="pl-smi">signWithSha256</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
-        {
-            <span class="pl-k">switch</span> (signatureType)
-            {
-
-                <span class="pl-k">case</span> XmlSignatureType.Enveloping:
-                    <span class="pl-k">return</span> SignEnvelopingXml(xml, certFile, certPassword, signWithSha256);
-
-                <span class="pl-k">default</span>:
-                    <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Please use a valid XML signature type!<span class="pl-pds">"</span></span>);
-            }
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Verifies if the signature of the file is valid</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>signedXml<span class="pl-pds">"</span></span>&gt;The path to the signed file&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;True or false&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">bool</span> <span class="pl-en">CheckSignature</span>(<span class="pl-k">string</span> <span class="pl-smi">signedXml</span>)
-        {
-            <span class="pl-k">byte</span>[] xml = File.ReadAllBytes(signedXml);
-
-            <span class="pl-k">using</span> (MemoryStream stream = <span class="pl-k">new</span> MemoryStream(xml))
-            {
-                <span class="pl-c">// go to the beginning of the stream</span>
-                stream.Flush();
-                stream.Position = <span class="pl-c1">0</span>;
-
-                <span class="pl-c">// create new XmlDocument from stream</span>
-                XmlDocument doc = <span class="pl-k">new</span> XmlDocument() { PreserveWhitespace = <span class="pl-c1">true</span> };
-                doc.Load(stream);
-
-                <span class="pl-c">// get signature node</span>
-                XmlNodeList nodeList = doc.GetElementsByTagName(<span class="pl-s"><span class="pl-pds">"</span>Signature<span class="pl-pds">"</span></span>);
-
-                <span class="pl-k">if</span> (nodeList.Count != <span class="pl-c1">1</span>)
-                {
-                    <span class="pl-c">// invalid file</span>
-                    <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Signature is missing or multiple signatures found!<span class="pl-pds">"</span></span>);
-                }
-
-                <span class="pl-c">// create SignedXml and load it with data</span>
-                SignedXml signed = <span class="pl-k">new</span> SignedXml(doc);
-                signed.LoadXml(nodeList[<span class="pl-c1">0</span>] <span class="pl-k">as</span> XmlElement);
-
-                <span class="pl-c">// check</span>
-                <span class="pl-k">return</span> signed.CheckSignature();
-            }
-        }
-    }
-}</pre></div>
-
-<h3>
-<a id="class-file-rsapkcs1sha256signaturedescriptioncs" class="anchor" href="#class-file-rsapkcs1sha256signaturedescriptioncs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Class File-RSAPKCS1SHA256SignatureDescription.cs</h3>
-
-<p>Create a new class named <strong>RSAPKCS1SHA256SignatureDescription.cs</strong>in the <strong>Helpers</strong> folder and add the code to the new <strong>RSAPKCS1SHA256SignatureDescription.cs</strong> class:   </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> System<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography<span class="pl-k">;</span>
-
-<span class="pl-k">namespace</span> <span class="pl-en">WindowsFormsApplication1</span>
-{
-    <span class="pl-k">public</span> <span class="pl-k">sealed</span> <span class="pl-k">class</span> <span class="pl-en">RSAPKCS1SHA256SignatureDescription</span> : <span class="pl-k">SignatureDescription</span>
-    {
-        <span class="pl-k">public</span> <span class="pl-k">const</span> <span class="pl-k">string</span> SignatureMethod = <span class="pl-s"><span class="pl-pds">"</span>http://<span class="pl-pds">"</span></span> + <span class="pl-s"><span class="pl-pds">"</span>www.w3.org/2001/04/xmldsig-more#rsa-sha256<span class="pl-pds">"</span></span>;
-        <span class="pl-k">public</span> <span class="pl-k">const</span> <span class="pl-k">string</span> ReferenceDigestMethod = <span class="pl-s"><span class="pl-pds">"</span>http://<span class="pl-pds">"</span></span> + <span class="pl-s"><span class="pl-pds">"</span>www.w3.org/2001/04/xmlenc#sha256<span class="pl-pds">"</span></span>;
-
-        <span class="pl-k">public</span> <span class="pl-en">RSAPKCS1SHA256SignatureDescription</span>()
-        {
-            KeyAlgorithm = <span class="pl-k">typeof</span>(RSACryptoServiceProvider).FullName;
-            DigestAlgorithm = <span class="pl-k">typeof</span>(SHA256Managed).FullName;
-            FormatterAlgorithm = <span class="pl-k">typeof</span>(RSAPKCS1SignatureFormatter).FullName;
-            DeformatterAlgorithm = <span class="pl-k">typeof</span>(RSAPKCS1SignatureDeformatter).FullName;
-        }
-
-        <span class="pl-k">public</span> <span class="pl-k">override</span> AsymmetricSignatureDeformatter <span class="pl-en">CreateDeformatter</span>(<span class="pl-k">AsymmetricAlgorithm</span> <span class="pl-smi">key</span>)
-        {
-            <span class="pl-k">if</span> (key == <span class="pl-c1">null</span>)
-            {
-                <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Invalid key specified for RSAPKCS1SHA256SignatureDescription!<span class="pl-pds">"</span></span>);
-            }
-
-            RSAPKCS1SignatureDeformatter deformatter = <span class="pl-k">new</span> RSAPKCS1SignatureDeformatter(key);
-            deformatter.SetHashAlgorithm(<span class="pl-s"><span class="pl-pds">"</span>SHA256<span class="pl-pds">"</span></span>);
-
-            <span class="pl-k">return</span> deformatter;
-        }
-
-        <span class="pl-k">public</span> <span class="pl-k">override</span> AsymmetricSignatureFormatter <span class="pl-en">CreateFormatter</span>(<span class="pl-k">AsymmetricAlgorithm</span> <span class="pl-smi">key</span>)
-        {
-            <span class="pl-k">if</span> (key == <span class="pl-c1">null</span>)
-            {
-                <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Invalid key specified for RSAPKCS1SHA256SignatureDescription!<span class="pl-pds">"</span></span>);
-            }
-
-            RSAPKCS1SignatureFormatter formatter = <span class="pl-k">new</span> RSAPKCS1SignatureFormatter(key);
-            formatter.SetHashAlgorithm(<span class="pl-s"><span class="pl-pds">"</span>SHA256<span class="pl-pds">"</span></span>);
-
-            <span class="pl-k">return</span> formatter;
-        }
-    }
-}
-</pre></div>
-
-<h3>
-<a id="class-file-zipmanagercs" class="anchor" href="#class-file-zipmanagercs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Class File-ZipManager.cs</h3>
-
-<p>Create a new class named <strong>ZipManager.cs</strong> in the Helpers folder and add the following code to the new <strong>ZipManager.cs</strong> class:</p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> System.IO<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.IO.Compression<span class="pl-k">;</span>
-
-<span class="pl-k">namespace</span> <span class="pl-en">WindowsFormsApplication1</span>
-{
-    <span class="pl-k">class</span> <span class="pl-en">ZipManager</span>
-    {
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">CreateArchive</span>(<span class="pl-k">string</span> <span class="pl-smi">inputFileName</span>, <span class="pl-k">string</span> <span class="pl-smi">outputFileName</span>)
-        {
-            <span class="pl-k">using</span> (FileStream fs = <span class="pl-k">new</span> FileStream(outputFileName, FileMode.Create, FileAccess.Write))
-            {
-                <span class="pl-k">using</span> (ZipArchive archive = <span class="pl-k">new</span> ZipArchive(fs, ZipArchiveMode.Create))
-                {
-                    <span class="pl-k">string</span> entryName = Path.GetFileName(inputFileName);
-                    archive.CreateEntryFromFile(inputFileName, entryName, CompressionLevel.Optimal);
-                }
-            }
-        }
-
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">UpdateArchive</span>(<span class="pl-k">string</span> <span class="pl-smi">inputFileName</span>, <span class="pl-k">string</span> <span class="pl-smi">outputFileName</span>)
-        {
-            <span class="pl-k">using</span> (FileStream fs = <span class="pl-k">new</span> FileStream(outputFileName, FileMode.Open, FileAccess.ReadWrite))
-            {
-                <span class="pl-k">using</span> (ZipArchive archive = <span class="pl-k">new</span> ZipArchive(fs, ZipArchiveMode.Update))
-                {
-                    <span class="pl-k">string</span> entryName = Path.GetFileName(inputFileName);
-                    archive.CreateEntryFromFile(inputFileName, entryName, CompressionLevel.Optimal);
-                }
-            }
-        }
-
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">string</span> <span class="pl-en">ExtractArchive</span>(<span class="pl-k">string</span> <span class="pl-smi">inputFileName</span>, <span class="pl-k">string</span> <span class="pl-smi">outputFolder</span>)
-        {
-            <span class="pl-k">string</span> zipFileName = Path.GetFileNameWithoutExtension(inputFileName);
-            <span class="pl-k">string</span> zipFolderPath = outputFolder + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span><span class="pl-pds">"</span></span> + zipFileName;
-
-            <span class="pl-k">using</span> (ZipArchive archive = ZipFile.Open(inputFileName, ZipArchiveMode.Update))
-            {
-
-                archive.ExtractToDirectory(zipFolderPath);
-            }
-
-            <span class="pl-k">return</span> zipFolderPath;
-
-        }
-
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">ExtractArchive</span>(<span class="pl-k">string</span> <span class="pl-smi">inputFileName</span>, <span class="pl-k">string</span> <span class="pl-smi">outputFolder</span>, <span class="pl-k">bool</span> <span class="pl-smi">noPath</span>)
-        {
-
-            <span class="pl-k">string</span> zipFileName = Path.GetFileName(inputFileName);
-            <span class="pl-k">string</span> zipFolderPath = inputFileName.Replace(zipFileName, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>);
-
-            <span class="pl-k">using</span> (ZipArchive archive = ZipFile.Open(inputFileName, ZipArchiveMode.Update))
-            {
-
-                archive.ExtractToDirectory(zipFolderPath);
-            }
-        }
-    }
-
-}
-</pre></div>
-
-<h3>
-<a id="class-file-aesmanagercs" class="anchor" href="#class-file-aesmanagercs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Class File-AesManager.cs</h3>
-
-<p>Create a new class in the <strong>Helpers</strong> folder named <strong>AesManager.cs</strong> and add the following code to the new <strong>AesManager.cs</strong> class:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> System<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.IO<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography.X509Certificates<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Linq<span class="pl-k">;</span>
-
-<span class="pl-k">namespace</span> <span class="pl-en">WindowsFormsApplication1</span>
-{
-    <span class="pl-k">class</span> <span class="pl-en">AesManager</span>
-    {
-        <span class="pl-k">private</span> <span class="pl-k">const</span> <span class="pl-k">int</span> bufferSize = <span class="pl-c1">1024</span> * <span class="pl-c1">8</span>;
-        <span class="pl-k">private</span> <span class="pl-k">const</span> <span class="pl-k">int</span> keySize = <span class="pl-c1">256</span>;
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// AES key size</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">int</span> KeySize
-        {
-            <span class="pl-k">get</span>
-            {
-                <span class="pl-k">return</span> keySize;
-            }
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Generates a random key of the specified size</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>length<span class="pl-pds">"</span></span>&gt;The length of the key to generate&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>emptyBytes<span class="pl-pds">"</span></span>&gt;If true all bytes will contain zeroes&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;A random key represented as byte array&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">byte</span>[] <span class="pl-en">GenerateRandomKey</span>(<span class="pl-k">int</span> <span class="pl-smi">length</span>, <span class="pl-k">bool</span> <span class="pl-smi">emptyBytes</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>)
-        {
-            <span class="pl-k">byte</span>[] key = <span class="pl-k">new</span> <span class="pl-k">byte</span>[length];
-
-            <span class="pl-k">if</span> (emptyBytes)
-            {
-                <span class="pl-k">return</span> key;
-            }
-
-            <span class="pl-k">using</span> (RNGCryptoServiceProvider random = <span class="pl-k">new</span> RNGCryptoServiceProvider())
-            {
-                random.GetBytes(key);
-            }
-
-            <span class="pl-k">return</span> key;
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Encrypts a file with AES</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>filePath<span class="pl-pds">"</span></span>&gt;Full path of the file to be encrypted&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>outputFilePath<span class="pl-pds">"</span></span>&gt;Full path of the encrypted file&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>&gt;AES encryption key&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>iv<span class="pl-pds">"</span></span>&gt;AES initialization vector&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>useECBMode<span class="pl-pds">"</span></span>&gt;boolean to determine if ECB or CBC mode is used&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">EncryptFile</span>(<span class="pl-k">string</span> <span class="pl-smi">filePath</span>, <span class="pl-k">string</span> <span class="pl-smi">outputFilePath</span>, <span class="pl-k">byte[]</span> <span class="pl-smi">key</span>, <span class="pl-k">byte[]</span> <span class="pl-smi">iv</span>, <span class="pl-k">bool</span> <span class="pl-smi">useECBMode</span>)
-        {
-            <span class="pl-k">using</span> (AesCryptoServiceProvider aes = <span class="pl-k">new</span> AesCryptoServiceProvider())
-            {
-                <span class="pl-k">if</span> (useECBMode)
-                    aes.Mode = CipherMode.ECB;
-                <span class="pl-k">else</span>
-                    aes.Mode = CipherMode.CBC;
-
-                aes.Key = key;
-                aes.IV = iv;
-
-
-                <span class="pl-k">using</span> (ICryptoTransform cryptoTransform = aes.CreateEncryptor(aes.Key, aes.IV))
-                {
-                    <span class="pl-k">using</span> (FileStream plain = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                    {
-                        <span class="pl-k">using</span> (FileStream encrypted = File.Open(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
-                        {
-                            <span class="pl-k">using</span> (CryptoStream cs = <span class="pl-k">new</span> CryptoStream(encrypted, cryptoTransform, CryptoStreamMode.Write))
-                            {
-                                plain.CopyTo(cs, bufferSize);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Decrypts a file encrypted with AES</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>filePath<span class="pl-pds">"</span></span>&gt;Full path of the file to be decrypted&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>outputFilePath<span class="pl-pds">"</span></span>&gt;Full path of the decrypted file&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>&gt;AES decryption key&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>iv<span class="pl-pds">"</span></span>&gt;AES initialization vector&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">DecryptFile</span>(<span class="pl-k">string</span> <span class="pl-smi">filePath</span>, <span class="pl-k">string</span> <span class="pl-smi">outputFilePath</span>, <span class="pl-k">byte[]</span> <span class="pl-smi">key</span>, <span class="pl-k">byte[]</span> <span class="pl-smi">iv</span>, <span class="pl-k">bool</span> <span class="pl-smi">useECBMode</span>)
-        {
-            <span class="pl-k">using</span> (AesCryptoServiceProvider aes = <span class="pl-k">new</span> AesCryptoServiceProvider())
-            {
-                <span class="pl-k">if</span> (useECBMode)
-                    aes.Mode = CipherMode.ECB;
-                <span class="pl-k">else</span>
-                    aes.Mode = CipherMode.CBC;
-                aes.Key = key;
-                aes.IV = iv;
-
-                <span class="pl-k">using</span> (ICryptoTransform cryptoTransform = aes.CreateDecryptor(aes.Key, aes.IV))
-                {
-                    <span class="pl-k">using</span> (FileStream encrypted = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                    {
-                        <span class="pl-k">using</span> (FileStream plain = File.Open(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
-                        {
-                            <span class="pl-k">using</span> (CryptoStream cs = <span class="pl-k">new</span> CryptoStream(plain, cryptoTransform, CryptoStreamMode.Write))
-                            {
-                                encrypted.CopyTo(cs, bufferSize);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Encrypts a key using the public key from the specified certificate</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>payload<span class="pl-pds">"</span></span>&gt;The data to encrypt&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>encryptionCert<span class="pl-pds">"</span></span>&gt;The certificate used for encryption&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>encryptionCertPassword<span class="pl-pds">"</span></span>&gt;The password for the encryption certificate&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>outputFilePath<span class="pl-pds">"</span></span>&gt;Full path of the encrypted file&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>useECBMode<span class="pl-pds">"</span></span>&gt;boolean to determine if ECB or CBC mode is used&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">EncryptAesKey</span>(<span class="pl-k">byte[]</span> <span class="pl-smi">payload</span>, <span class="pl-k">byte[]</span> <span class="pl-smi">payloadIV</span>, <span class="pl-k">string</span> <span class="pl-smi">encryptionCert</span>, <span class="pl-k">string</span> <span class="pl-smi">encryptionCertPassword</span>, <span class="pl-k">string</span> <span class="pl-smi">outputFilePath</span>, <span class="pl-k">bool</span> <span class="pl-smi">useECBMode</span>)
-        {
-            X509Certificate2 cert = <span class="pl-k">new</span> X509Certificate2(encryptionCert, encryptionCertPassword);
-
-            <span class="pl-c">//If we are not using ECB mode, we need to add the IV to the key before we encrypt</span>
-            <span class="pl-k">if</span> (useECBMode != <span class="pl-c1">true</span>)
-            {
-                payload = payload.Concat(payloadIV).ToArray();
-            }    
-
-            <span class="pl-k">using</span> (RSACryptoServiceProvider rsa = cert.PublicKey.Key <span class="pl-k">as</span> RSACryptoServiceProvider)
-            {
-                <span class="pl-k">byte</span>[] encryptedKey = rsa.Encrypt(payload, <span class="pl-c1">false</span>);
-                File.WriteAllBytes(outputFilePath, encryptedKey);
-            }
-        }
-
-        <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// Decrypts a key using the private key from the specified certificate</span>
-        <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>payload<span class="pl-pds">"</span></span>&gt;The data to decrypt&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>encryptionCert<span class="pl-pds">"</span></span>&gt;The certificate used for decryption&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>encryptionCertPassword<span class="pl-pds">"</span></span>&gt;The password for the decryption certificate&lt;/<span class="pl-ent">param</span>&gt;</span>
-        <span class="pl-c">/// &lt;<span class="pl-ent">returns</span>&gt;Decrypted key represented as byte array&lt;/<span class="pl-ent">returns</span>&gt;</span>
-        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">byte</span>[] <span class="pl-en">DecryptAesKey</span>(<span class="pl-k">byte[]</span> <span class="pl-smi">payload</span>, <span class="pl-k">string</span> <span class="pl-smi">encryptionCert</span>, <span class="pl-k">string</span> <span class="pl-smi">encryptionCertPassword</span>)
-        {
-            X509Certificate2 cert = <span class="pl-k">new</span> X509Certificate2(encryptionCert, encryptionCertPassword);
-
-            <span class="pl-k">if</span> (!cert.HasPrivateKey)
-            {
-                <span class="pl-c">// invalid certificate</span>
-                <span class="pl-k">throw</span> <span class="pl-k">new</span> Exception(<span class="pl-s"><span class="pl-pds">"</span>Specified certificate not suitable for decryption!<span class="pl-pds">"</span></span>);
-            }
-
-            <span class="pl-k">using</span> (RSACryptoServiceProvider rsa = cert.PrivateKey <span class="pl-k">as</span> RSACryptoServiceProvider)
-            {
-
-                <span class="pl-k">return</span> rsa.Decrypt(payload, <span class="pl-c1">false</span>);
-            }
-        }
-    }
-}
-
-</pre></div>
-
-<p><strong>Note: There should be five (5) classes in the Helpers folder.</strong>  </p>
-
-<h3>
-<a id="adding-a-using-statement" class="anchor" href="#adding-a-using-statement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding a using Statement</h3>
-
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img8.png" alt="Image 8">
-Figure 8</p>
-
-<p>In <strong>Form1.cs</strong>, enter the following using statements:</p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> System<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.IO<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Windows.Forms<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Xml<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Text<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Security.Cryptography.X509Certificates<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Drawing<span class="pl-k">;</span>
-<span class="pl-k">using</span> System.Linq<span class="pl-k">;</span></pre></div>
-
-<h3>
-<a id="enter-methods-for-click-events" class="anchor" href="#enter-methods-for-click-events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enter Methods for Click Events</h3>
-
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img9.png" alt="Image 9">
-Figure 9  </p>
-
-<p>In <strong>Form1.cs</strong>, enter methods that will handle the button click events for the form.</p>
-
-<h4>
-<a id="form1" class="anchor" href="#form1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Form1</h4>
-
-<p>Double click the main Form1 on the designer and add the code:</p>
-
-<div class="highlight highlight-source-cs"><pre>  <span class="pl-k">private</span> <span class="pl-k">void</span> Form1_Load(<span class="pl-k">object</span> sender, EventArgs e)
-   {
-            lblHCTAKey.Visible = <span class="pl-c1">false</span>;
-            txtHCTACert.Visible = <span class="pl-c1">false</span>;
-            btnBrowseHCTACert.Visible = <span class="pl-c1">false</span>;
-            lblEncryptionHCTAPassword.Visible = <span class="pl-c1">false</span>;
-            txtHCTACertPassword.Visible = <span class="pl-c1">false</span>;
-            lblHCTACode.Visible = <span class="pl-c1">false</span>;
-            txtHCTACode.Visible = <span class="pl-c1">false</span>;
-
-            <span class="pl-c">//Populate tax year combo box</span>
-            cmbTaxYear.Items.Add(<span class="pl-c1">2014</span>);
-            cmbTaxYear.Items.Add(<span class="pl-c1">2015</span>);
-            cmbTaxYear.Items.Add(<span class="pl-c1">2016</span>);
-            cmbTaxYear.SelectedItem = DateTime.Now.Year - <span class="pl-c1">1</span>;
-
-            <span class="pl-c">//Default the CBC checkbox to on</span>
-            radCBC.Checked = <span class="pl-c1">true</span>;
-
-        }</pre></div>
-
-<h4>
-<a id="btnbrowsexml" class="anchor" href="#btnbrowsexml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnBrowseXml</h4>
-
-<p>Double click <strong>8btnBrowseXml</strong> on the designer and add the code:  </p>
-
-<div class="highlight highlight-source-cs"><pre> <span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseXml_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-c">// load XML</span>
-            txtXmlFile.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s"><span class="pl-pds">"</span>XML Files (*.xml)|*.xml<span class="pl-pds">"</span></span>);
-        }</pre></div>
-
-<h4>
-<a id="btnbrowsecert" class="anchor" href="#btnbrowsecert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnBrowseCert</h4>
-
-<p>Double click <strong>btnBrowseCert</strong> on the designer and add the code:  </p>
-
-<div class="highlight highlight-source-cs"><pre> <span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseCert_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-c">// load certificate</span>
-            txtCert.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s"><span class="pl-pds">"</span>Signing Certificates (*.pfx, *.p12)|*.pfx;*.p12;<span class="pl-pds">"</span></span>);
-        }</pre></div>
-
-<h4>
-<a id="btnbrowsekeycert" class="anchor" href="#btnbrowsekeycert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnBrowseKeyCert</h4>
-
-<p>Double click <strong>btnBrowseKeyCert</strong> on the designer and add the code:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseKeyCert_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-c">// load AES key encryption certificate</span>
-            txtKeyCert.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s"><span class="pl-pds">"</span>Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12;<span class="pl-pds">"</span></span>);
-        }</pre></div>
-
-<h4>
-<a id="btnsignxml" class="anchor" href="#btnsignxml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnSignXML</h4>
-
-<p>Double click <strong>btnSignXML</strong> on the designer and add the code:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> btnSignXML_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-k">if</span> (<span class="pl-k">string</span>.IsNullOrWhiteSpace(txtXmlFile.Text))
-            {
-                <span class="pl-c">// files validation</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>The XML file was not specified!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-
-            <span class="pl-k">if</span> (<span class="pl-k">string</span>.IsNullOrWhiteSpace(txtCert.Text))
-            {
-                <span class="pl-c">// files validation</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>The Signing Certificate was not specified!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-
-            <span class="pl-k">if</span> (<span class="pl-k">string</span>.IsNullOrWhiteSpace(txtCertPass.Text))
-            {
-                <span class="pl-c">// certificate password validation</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>Signing Certificate password was not specified!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-
-            <span class="pl-k">if</span> (<span class="pl-k">string</span>.IsNullOrWhiteSpace(txtKeyCert.Text))
-            {
-                <span class="pl-c">// files validation</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>Encryption Certificate was not specified!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-
-            <span class="pl-k">try</span>
-            {
-                <span class="pl-c">// load XML file content</span>
-                <span class="pl-k">byte</span>[] xmlContent = File.ReadAllBytes(txtXmlFile.Text);
-                <span class="pl-k">string</span> senderGIIN = Path.GetFileNameWithoutExtension(txtXmlFile.Text);
-                <span class="pl-k">string</span> filePath = Path.GetDirectoryName(txtXmlFile.Text);
-
-                <span class="pl-c">// perform sign</span>
-                <span class="pl-k">byte</span>[] envelopingSignature = XmlManager.Sign(XmlSignatureType.Enveloping, xmlContent, txtCert.Text, txtCertPass.Text);
-
-                <span class="pl-k">string</span> envelopingFileName = txtXmlFile.Text.Replace(<span class="pl-s"><span class="pl-pds">"</span>.xml<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>_Payload.xml<span class="pl-pds">"</span></span>);
-                <span class="pl-k">string</span> zipFileName = envelopingFileName.Replace(<span class="pl-s"><span class="pl-pds">"</span>.xml<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>);
-
-                <span class="pl-c">// save enveloping version to disk</span>
-                File.WriteAllBytes(envelopingFileName, envelopingSignature);
-
-                <span class="pl-c">// add enveloping signature to ZIP file</span>
-                ZipManager.CreateArchive(envelopingFileName, zipFileName);
-
-                <span class="pl-c">// generate AES key (32 bytes) &amp; default initialization vector (empty)</span>
-                <span class="pl-k">byte</span>[] aesEncryptionKey = AesManager.GenerateRandomKey(AesManager.KeySize / <span class="pl-c1">8</span>);
-                <span class="pl-k">byte</span>[] aesEncryptionVector = AesManager.GenerateRandomKey(<span class="pl-c1">16</span>, radECB.Checked);
-
-                <span class="pl-c">// encrypt file &amp; save to disk</span>
-                <span class="pl-k">string</span> encryptedFileName = zipFileName.Replace(<span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>);
-                <span class="pl-k">string</span> encryptedHCTAFileName = zipFileName.Replace(<span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>);
-                <span class="pl-k">string</span> payloadFileName = encryptedFileName;
-                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector, radECB.Checked);
-
-
-                <span class="pl-c">// encrypt key with public key of certificate &amp; save to disk</span>
-                encryptedFileName = Path.GetDirectoryName(zipFileName) + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>000000.00000.TA.840_Key<span class="pl-pds">"</span></span>;
-                AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName, radECB.Checked);
-                <span class="pl-c">//For Model1 Option2 Only, encrypt the AES Key with the HCTA Public Key</span>
-                <span class="pl-k">if</span> (chkM1O2.Checked) {
-                    encryptedHCTAFileName = Path.GetDirectoryName(zipFileName) + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>000000.00000.TA.<span class="pl-pds">"</span></span> + txtHCTACode.Text + <span class="pl-s"><span class="pl-pds">"</span>_Key<span class="pl-pds">"</span></span>;
-                    AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtHCTACert.Text, txtHCTACertPassword.Text, encryptedHCTAFileName, radECB.Checked);
-                }
-
-                <span class="pl-c">// cleanup</span>
-                envelopingSignature = <span class="pl-c1">null</span>;
-                aesEncryptionKey = aesEncryptionVector = <span class="pl-c1">null</span>;
-
-                <span class="pl-c">//Start creating XML metadata</span>
-                XmlWriter writer = <span class="pl-c1">null</span>;
-                <span class="pl-k">string</span> fileCreationDateTime = <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
-                fileCreationDateTime = DateTime.Now.ToString(<span class="pl-s"><span class="pl-pds">"</span>yyyy'-'MM'-'dd'T'HH':'mm':'ssZ<span class="pl-pds">"</span></span>);
-
-                DateTime uDat = <span class="pl-k">new</span> DateTime();
-                uDat = DateTime.UtcNow;
-                <span class="pl-k">string</span> senderFile = uDat.ToString(<span class="pl-s"><span class="pl-pds">"</span>yyyyMMddTHHmmssfffZ<span class="pl-pds">"</span></span>) + <span class="pl-s"><span class="pl-pds">"</span>_<span class="pl-pds">"</span></span> + senderGIIN;
-
-                <span class="pl-k">try</span>
-                {
-
-                    <span class="pl-c">// Create an XmlWriterSettings object with the correct options. </span>
-                    XmlWriterSettings settings = <span class="pl-k">new</span> XmlWriterSettings();
-                    settings.Indent = <span class="pl-c1">true</span>;
-                    settings.IndentChars = (<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span>);
-                    settings.OmitXmlDeclaration = <span class="pl-c1">false</span>;
-                    settings.NewLineHandling = NewLineHandling.Replace;
-                    settings.CloseOutput = <span class="pl-c1">true</span>;
-
-                    <span class="pl-k">string</span> metadataFileName = filePath + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span><span class="pl-pds">"</span></span> + senderGIIN + <span class="pl-s"><span class="pl-pds">"</span>_Metadata.xml<span class="pl-pds">"</span></span>;
-
-                    <span class="pl-c">// Create the XmlWriter object and write some content.</span>
-                    writer = XmlWriter.Create(metadataFileName, settings);
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>FATCAIDESSenderFileMetadata<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>urn:fatca:idessenderfilemetadata<span class="pl-pds">"</span></span>);
-                    writer.WriteAttributeString(<span class="pl-s"><span class="pl-pds">"</span>xmlns<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>xsi<span class="pl-pds">"</span></span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="pl-pds">"</span></span>);
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>FATCAEntitySenderId<span class="pl-pds">"</span></span>);
-                    writer.WriteString(senderGIIN);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>FATCAEntityReceiverId<span class="pl-pds">"</span></span>);
-                    writer.WriteString(<span class="pl-s"><span class="pl-pds">"</span>000000.00000.TA.840<span class="pl-pds">"</span></span>);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>FATCAEntCommunicationTypeCd<span class="pl-pds">"</span></span>);
-                    writer.WriteString(<span class="pl-s"><span class="pl-pds">"</span>RPT<span class="pl-pds">"</span></span>);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>SenderFileId<span class="pl-pds">"</span></span>);
-                    writer.WriteString(senderFile);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>FileFormatCd<span class="pl-pds">"</span></span>);
-                    writer.WriteString(<span class="pl-s"><span class="pl-pds">"</span>XML<span class="pl-pds">"</span></span>);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>BinaryEncodingSchemeCd<span class="pl-pds">"</span></span>);
-                    writer.WriteString(<span class="pl-s"><span class="pl-pds">"</span>NONE<span class="pl-pds">"</span></span>);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>FileCreateTs<span class="pl-pds">"</span></span>);
-                    writer.WriteString(fileCreationDateTime);
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>TaxYear<span class="pl-pds">"</span></span>);
-                    writer.WriteString(cmbTaxYear.SelectedItem.ToString());
-                    writer.WriteEndElement();
-                    writer.WriteStartElement(<span class="pl-s"><span class="pl-pds">"</span>FileRevisionInd<span class="pl-pds">"</span></span>);
-                    writer.WriteString(<span class="pl-s"><span class="pl-pds">"</span>false<span class="pl-pds">"</span></span>);
-                    writer.WriteEndElement();
-                    <span class="pl-c">//Close the XmlTextWriter.</span>
-                    writer.WriteEndDocument();
-                    writer.Close();
-                    writer.Flush();
-
-
-                    <span class="pl-c">//Add the metadata, payload, and key files to the final zip package</span>
-                    <span class="pl-c">// add enveloping signature to ZIP file</span>
-                    ZipManager.CreateArchive(metadataFileName, filePath + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span><span class="pl-pds">"</span></span> + senderFile + <span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>);
-                    ZipManager.UpdateArchive(encryptedFileName, filePath + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span><span class="pl-pds">"</span></span> + senderFile + <span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>);
-                    ZipManager.UpdateArchive(payloadFileName, filePath + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span><span class="pl-pds">"</span></span> + senderFile + <span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>);
-                    <span class="pl-c">//Add the HCTA Key file for a M1O2 packet</span>
-                    <span class="pl-k">if</span> (chkM1O2.Checked)
-                    {
-                        ZipManager.UpdateArchive(encryptedHCTAFileName, filePath + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span><span class="pl-pds">"</span></span> + senderFile + <span class="pl-s"><span class="pl-pds">"</span>.zip<span class="pl-pds">"</span></span>);
-                    }
-
-                    <span class="pl-c">// success</span>
-                    MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>XML Signing and Encryption process is complete!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                }
-                <span class="pl-k">finally</span>
-                {
-                    <span class="pl-k">if</span> (writer != <span class="pl-c1">null</span>)
-                        writer.Close();
-                }
-
-
-
-            }
-            <span class="pl-k">catch</span> (Exception ex)
-            {
-                ex.DisplayException(Text);
-            }
-        }</pre></div>
-
-<h3>
-<a id="btnbrowsenotificationzip" class="anchor" href="#btnbrowsenotificationzip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnBrowseNotificationZip</h3>
-
-<p>Double click <strong>btnBrowseNotificationZip</strong> on the designer and add this code:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseNotificationZip_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-c">// load Notification Zip file</span>
-            txtNotificationZip.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s"><span class="pl-pds">"</span>ZIP Files (*.zip)|*.zip<span class="pl-pds">"</span></span>);
-        }</pre></div>
-
-<h3>
-<a id="btnbrowsereccert" class="anchor" href="#btnbrowsereccert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnBrowseRecCert</h3>
-
-<p>Double click the <strong>btnBrowseRecCert</strong> on the designer and add this code:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseRecCert_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-c">// load Notification Receiver key</span>
-            txtReceiverCert.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s"><span class="pl-pds">"</span>Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12<span class="pl-pds">"</span></span>);
-        }</pre></div>
-
-<h3>
-<a id="btndecryptzip" class="anchor" href="#btndecryptzip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnDecryptZip</h3>
-
-<p>Double click the <strong>btnDecryptZip</strong> on the designer and add this code:  </p>
-
-<div class="highlight highlight-source-cs"><pre> <span class="pl-k">private</span> <span class="pl-k">void</span> btnDecryptZip_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-
-            <span class="pl-k">if</span> (<span class="pl-k">string</span>.IsNullOrWhiteSpace(txtNotificationZip.Text) || <span class="pl-k">string</span>.IsNullOrWhiteSpace(txtReceiverCert.Text))
-            {
-                <span class="pl-c">// files validation</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>Either the ZIP file or certificate was not specified!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-
-            <span class="pl-k">string</span> zipFolder = <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
-            <span class="pl-k">try</span>
-            {
-                <span class="pl-c">//Deflate the zip archive</span>
-                zipFolder = ZipManager.ExtractArchive(txtNotificationZip.Text, txtNotificationFolder.Text);
-
-            }
-            <span class="pl-k">catch</span> (Exception ex)
-            {
-                ex.DisplayException(Text);
-                <span class="pl-k">return</span>;
-            }
-            <span class="pl-c">// select encrypted key file</span>
-            <span class="pl-k">string</span> encryptedKeyFile = <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
-            <span class="pl-k">string</span> encryptedPayloadFile = <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
-            <span class="pl-k">string</span>[] keyFiles = Directory.GetFiles(zipFolder, <span class="pl-s"><span class="pl-pds">"</span>*_Key<span class="pl-pds">"</span></span>, SearchOption.TopDirectoryOnly);
-            <span class="pl-k">string</span>[] payloadFiles = Directory.GetFiles(zipFolder, <span class="pl-s"><span class="pl-pds">"</span>*_Payload<span class="pl-pds">"</span></span>, SearchOption.TopDirectoryOnly);
-
-            <span class="pl-k">if</span> (keyFiles.Length == <span class="pl-c1">0</span>)
-            {
-                <span class="pl-c">// key file validation</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>There was no file found containing the encrypted AES key!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-            <span class="pl-k">if</span> (payloadFiles.Length == <span class="pl-c1">0</span>)
-            {
-                <span class="pl-c">// key file validation</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>There was no file found containing the encrypted Payload!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                <span class="pl-k">return</span>;
-            }
-            encryptedKeyFile = keyFiles[<span class="pl-c1">0</span>];
-            encryptedPayloadFile = payloadFiles[<span class="pl-c1">0</span>];
-
-
-
-            <span class="pl-k">byte</span>[] encryptedAesKey = <span class="pl-c1">null</span>;
-            <span class="pl-k">byte</span>[] decryptedAesKey = <span class="pl-c1">null</span>;
-            <span class="pl-k">byte</span>[] aesVector = <span class="pl-c1">null</span>;
-
-            <span class="pl-k">try</span>
-            {
-                <span class="pl-c">// load encrypted AES key</span>
-                encryptedAesKey = File.ReadAllBytes(encryptedKeyFile);
-
-                <span class="pl-c">// decrypt AES key &amp; generate default (empty) initialization vector</span>
-                decryptedAesKey = AesManager.DecryptAesKey(encryptedAesKey, txtReceiverCert.Text, txtRecKeyPassword.Text);
-                aesVector = AesManager.GenerateRandomKey(<span class="pl-c1">16</span>, <span class="pl-c1">true</span>);
-                <span class="pl-k">if</span> (radECB.Checked != <span class="pl-c1">true</span>)
-                {
-                    aesVector = decryptedAesKey.Skip(<span class="pl-c1">32</span>).Take(<span class="pl-c1">16</span>).ToArray();
-                    decryptedAesKey = decryptedAesKey.Take(<span class="pl-c1">32</span>).ToArray();
-                }
-
-                <span class="pl-c">// decrypt encrypted ZIP file using decrypted AES key</span>
-                <span class="pl-k">string</span> decryptedFileName = encryptedPayloadFile.Replace(<span class="pl-s"><span class="pl-pds">"</span>_Payload<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>_Payload_decrypted.zip<span class="pl-pds">"</span></span>);
-                AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector, radECB.Checked);
-
-
-                <span class="pl-c">//Deflate the decrypted zip archive</span>
-                ZipManager.ExtractArchive(decryptedFileName, decryptedFileName, <span class="pl-c1">false</span>);
-
-
-                <span class="pl-c">// success</span>
-                MessageBox.Show(<span class="pl-s"><span class="pl-pds">"</span>Notification decryption process is complete!<span class="pl-pds">"</span></span>, Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            <span class="pl-k">catch</span> (Exception ex)
-            {
-                ex.DisplayException(Text);
-            }
-            <span class="pl-k">finally</span>
-            {
-                <span class="pl-k">if</span> (encryptedAesKey != <span class="pl-c1">null</span>)
-                {
-                    encryptedAesKey = <span class="pl-c1">null</span>;
-                }
-
-                <span class="pl-k">if</span> (decryptedAesKey != <span class="pl-c1">null</span>)
-                {
-                    decryptedAesKey = <span class="pl-c1">null</span>;
-                }
-
-                <span class="pl-k">if</span> (aesVector != <span class="pl-c1">null</span>)
-                {
-                    aesVector = <span class="pl-c1">null</span>;
-                }
-            }
-        }</pre></div>
-
-<h3>
-<a id="btnbrowseoutput" class="anchor" href="#btnbrowseoutput" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnBrowseOutput</h3>
-
-<p>Double click the <strong>btnBrowseOutput</strong> on the designer and add this code:  </p>
-
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseOutput_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-c">// load AES key encryption certificate</span>
-            <span class="pl-k">if</span> (dlgOpenFolder.ShowDialog() == DialogResult.OK)
-            {
-                txtNotificationFolder.Text = dlgOpenFolder.SelectedPath;
-            }
-        }</pre></div>
-
-<h3>
-<a id="btnbrowsehctacert_click" class="anchor" href="#btnbrowsehctacert_click" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>btnBrowseHCTACert_Click</h3>
-
-<p>Double click the <strong>btnBrowseHCTACert</strong> on the designer and add this code:</p>
-
-<div class="highlight highlight-source-cs"><pre>  <span class="pl-k">private</span> <span class="pl-k">void</span> btnBrowseHCTACert_Click(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-c">// load AES key encryption certificate</span>
-            txtHCTACert.Text = dlgOpen.ShowDialogWithFilter(<span class="pl-s"><span class="pl-pds">"</span>Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12<span class="pl-pds">"</span></span>);
-
-        }</pre></div>
-
-<h3>
-<a id="chkm1o2" class="anchor" href="#chkm1o2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>chkM1O2</h3>
-
-<p>Double click the <strong>chkM1O2</strong> on the designer and add this code:</p>
-
-<div class="highlight highlight-source-cs"><pre> <span class="pl-k">private</span> <span class="pl-k">void</span> chkM1O2_CheckedChanged(<span class="pl-k">object</span> sender, EventArgs e)
-        {
-            <span class="pl-k">if</span> (chkM1O2.Checked)
-            {
-                <span class="pl-c1">this</span>.lblHCTAKey.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.lblHCTAKey.Location.X,
-                <span class="pl-c1">this</span>.lblHCTAKey.Location.Y - <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.btnBrowseHCTACert.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.btnBrowseHCTACert.Location.X,
-                <span class="pl-c1">this</span>.btnBrowseHCTACert.Location.Y - <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.txtHCTACert.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.txtHCTACert.Location.X,
-                <span class="pl-c1">this</span>.txtHCTACert.Location.Y - <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.lblEncryptionHCTAPassword.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.lblEncryptionHCTAPassword.Location.X,
-                <span class="pl-c1">this</span>.lblEncryptionHCTAPassword.Location.Y - <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.txtHCTACertPassword.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.txtHCTACertPassword.Location.X,
-                <span class="pl-c1">this</span>.txtHCTACertPassword.Location.Y - <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.lblHCTACode.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.lblHCTACode.Location.X,
-                <span class="pl-c1">this</span>.lblHCTACode.Location.Y - <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.txtHCTACode.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.txtHCTACode.Location.X,
-                <span class="pl-c1">this</span>.txtHCTACode.Location.Y - <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.btnSignXML.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.btnSignXML.Location.X,
-                <span class="pl-c1">this</span>.btnSignXML.Location.Y + <span class="pl-c1">140</span>
-                );
-
-
-                lblHCTAKey.Visible = <span class="pl-c1">true</span>;
-                txtHCTACert.Visible = <span class="pl-c1">true</span>;
-                btnBrowseHCTACert.Visible = <span class="pl-c1">true</span>;
-                lblEncryptionHCTAPassword.Visible = <span class="pl-c1">true</span>;
-                txtHCTACertPassword.Visible = <span class="pl-c1">true</span>;
-                lblHCTACode.Visible = <span class="pl-c1">true</span>;
-                txtHCTACode.Visible = <span class="pl-c1">true</span>;
-            }
-            <span class="pl-k">else</span>
-            {
-                <span class="pl-c1">this</span>.lblHCTAKey.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.lblHCTAKey.Location.X,
-                <span class="pl-c1">this</span>.lblHCTAKey.Location.Y + <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.btnBrowseHCTACert.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.btnBrowseHCTACert.Location.X,
-                <span class="pl-c1">this</span>.btnBrowseHCTACert.Location.Y + <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.txtHCTACert.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.txtHCTACert.Location.X,
-                <span class="pl-c1">this</span>.txtHCTACert.Location.Y + <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.lblEncryptionHCTAPassword.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.lblEncryptionHCTAPassword.Location.X,
-                <span class="pl-c1">this</span>.lblEncryptionHCTAPassword.Location.Y + <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.txtHCTACertPassword.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.txtHCTACertPassword.Location.X,
-                <span class="pl-c1">this</span>.txtHCTACertPassword.Location.Y + <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.lblHCTACode.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.lblHCTACode.Location.X,
-                <span class="pl-c1">this</span>.lblHCTACode.Location.Y + <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.txtHCTACode.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.txtHCTACode.Location.X,
-                <span class="pl-c1">this</span>.txtHCTACode.Location.Y + <span class="pl-c1">40</span>
-                );
-                <span class="pl-c1">this</span>.btnSignXML.Location = <span class="pl-k">new</span> Point(
-                <span class="pl-c1">this</span>.btnSignXML.Location.X,
-                <span class="pl-c1">this</span>.btnSignXML.Location.Y - <span class="pl-c1">140</span>
-                );
-
-                lblHCTAKey.Visible = <span class="pl-c1">false</span>;
-                txtHCTACert.Visible = <span class="pl-c1">false</span>;
-                btnBrowseHCTACert.Visible = <span class="pl-c1">false</span>;
-                lblEncryptionHCTAPassword.Visible = <span class="pl-c1">false</span>;
-                txtHCTACertPassword.Visible = <span class="pl-c1">false</span>;
-                lblHCTACode.Visible = <span class="pl-c1">false</span>;
-                txtHCTACode.Visible = <span class="pl-c1">false</span>;
-            }
-        }</pre></div>
-
-<p>This is the end of the code used to create and run the application.  </p>
+<a id="running-application" class="anchor" href="#running-application" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running Application</h3>
+
+<p>Clicking the start button should now give you the completed application.
+<img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/aug180.png" alt="Image 19"><br>
+Figure 19</p>
 
 <h2>
 <a id="create-a-transmission-file" class="anchor" href="#create-a-transmission-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create a Transmission File</h2>
@@ -1410,31 +164,33 @@ Figure 9  </p>
 <p>To create a transmission file for IDES, you are required to have (1) an .xml file, (2) a private key that will be used to sign the xml, and (3) the public key of the receiver. The file names are case sensitive and any variation in name, extension or format will cause a transmission failure.  There are no file extensions, unless otherwise noted. For more information, review the IDES User Guide.  </p>
 
 <ol>
+<li> Select the Create Data Packet tab</li>
 <li> Select the .xml file. The file should be correctly named  to create the correct sender metadata file. For example, Canada (ISO Code = 124) requires a file to be named 000000.00000.TA.124.xml.</li>
 <li> Select the sender’s private key. The application uses a <strong>.p12</strong> file that contains the private key. The key may be in a different format, such as a .pfx file.</li>
 <li> If there is a password on the key file above, enter it here. </li>
 <li> Select the receiver’s public key. This will be the IRS Public Key. This may be in a different format, such as a .cer, .pfx, or .p12 extension.</li>
 <li> If there is a password on the public key, enter it here.</li>
+<li> Select the Tax Year. This will be used in the metadata file.</li>
 </ol>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img10.png" alt="Image 10">
-Figure 10  </p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img10.png" alt="Image 20">
+Figure 20  </p>
 
 <ol>
 <li> Click the <strong>Sign and Encrypt XML</strong> button. If the files and keys are set up correctly, a success message dialog box will appear. Click <strong>OK</strong> to continue.<br>
 </li>
 </ol>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img11.png" alt="Image 11"><br>
-Figure 11    </p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img11.png" alt="Image 21"><br>
+Figure 21    </p>
 
 <h3>
 <a id="creating-a-zip-file" class="anchor" href="#creating-a-zip-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating a .ZIP File</h3>
 
 <p>The <strong>Sign and Encrypt XML</strong> button creates a .zip file that contains the key, payload, and sender metadata xml file. The zip filename should follow proper naming conventions and any variation in name, extension or format will cause a transmission failure. For example, the filename is 20150115T174443889Z_000000.00000.TA.124.zip. The contents of the sample .zip file are shown in Figure 12 below.  </p>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img12.png" alt="Image 12"><br>
-Figure 12  </p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img12.png" alt="Image 22"><br>
+Figure 22  </p>
 
 <p>Next, you are ready to upload the transmission into IDES. For more information on using IDES, review the <a href="http://www.irs.gov/Businesses/Corporations/International-Data-Exchange-Service">IDES User Guide</a>.    </p>
 
@@ -1445,6 +201,7 @@ Figure 12  </p>
 
 <ol>
 <li> In IDES, download or save the notification to your hard drive.  Select the downloaded .zip notification file.</li>
+<li> Select the Decrypt Notification tab.</li>
 <li> Select the private key of the receiver. The sample uses a .p12 format; however, the file can be modified for other formats.</li>
 <li> If there is a password on the private key, enter it here.</li>
 <li> The notification output folder controls the location of the decrypted output.<br>
@@ -1453,8 +210,8 @@ Figure 12  </p>
 </li>
 </ol>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img13.png" alt="Image 13"><br>
-Figure 13  </p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img13.png" alt="Image 23"><br>
+Figure 23  </p>
 
 <ol>
 <li> If the correct key and password (optional) are used on the file, a success message dialog box will appear.<br>
@@ -1463,8 +220,8 @@ Figure 13  </p>
 </li>
 </ol>
 
-<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img14.png" alt="Image 14">
-Figure 14  </p>
+<p><img src="http://irsgov.github.io/IDES-Data-Preparation-Dot-Net/images/img14.png" alt="Image 24">
+Figure 24  </p>
 
 <h3>
 <a id="disclaimer" class="anchor" href="#disclaimer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Disclaimer:</h3>
