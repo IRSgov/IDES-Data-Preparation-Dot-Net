@@ -45,9 +45,13 @@ namespace WindowsFormsApplication1
             if (serverType == "PRODUCTION") {
                 fingerprint = "ssh-rsa 2048 9c:6a:de:70:54:ba:a6:dc:03:72:6f:73:dd:a2:d9:13";
             }
-            else
+            else if (serverType == "TEST")
             {
                 fingerprint = "ssh-rsa 2048 ca:8f:be:b4:c6:92:58:ef:3b:b2:d1:fd:63:c0:8e:a5";
+            }
+            else
+            {
+                fingerprint = "ssh-rsa 2048 64:25:44:96:0d:db:cc:10:3b:80:f3:2d:0e:24:bf:75";
             }
             // Setup session options
             SessionOptions sessionOptions = new SessionOptions

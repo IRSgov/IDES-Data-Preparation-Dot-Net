@@ -171,7 +171,7 @@ namespace WindowsFormsApplication1
                     else
                     {
                         envelopingSignature = XmlManager.Sign(XmlSignatureType.NonXML, xmlContent, txtCert.Text, txtCertPass.Text, filePath);
-                        envelopingFileName = currentFileToProcess.Replace(".pdf", "_Payload.xml");
+                        envelopingFileName = currentFileToProcess.ToUpper().Replace(".PDF", "_Payload.xml");
                     }
 
                     string zipFileName = envelopingFileName.Replace(".xml", ".zip");
@@ -253,7 +253,7 @@ namespace WindowsFormsApplication1
                             //write to log
                             string path = @"simplelog.csv";
                             // This text is added only once to the file.
-                            string lineToLog = fileName + "," + currentFileToProcess + "," + senderFile + ",IDESTRANSID,NOTIFICATIONID,NULL";
+                            string lineToLog = fileName + "," + currentFileToProcess + "," + senderFile + ",IDESTRANSID,NOTIFICATIONID,NULL,ERRORCOUNT";
                             if (!File.Exists(path))
                             {
                                 // Create a file to write to.
@@ -396,6 +396,7 @@ namespace WindowsFormsApplication1
             //Add the SFTP Servers
             cmbSFTPServers.Items.Add("PRODUCTION: WWW.IDESGATEWAY.COM");
             cmbSFTPServers.Items.Add("TEST: WWWPSE.IDESGATEWAY.COM");
+            cmbSFTPServers.Items.Add("SAT: WWWSAT.IDESGATEWAY.COM");
             cmbSFTPServers.SelectedItem = "PRODUCTION: WWW.IDESGATEWAY.COM";
         }
 
@@ -771,7 +772,8 @@ namespace WindowsFormsApplication1
                     currentNotificationData = currentNotificationData.Replace("NOTIFICATIONID", Path.GetFileName(fileName));
                     currentNotificationData = currentNotificationData.Replace("IDESTRANSID", notificationID[0]);
                     currentNotificationData = currentNotificationData.Replace("NULL", notificationID[2]);
-                    
+                    currentNotificationData = currentNotificationData.Replace("ERRORCOUNT", notificationID[3]);
+
                     //add new record with updated information
                     transmissions.Add(Path.GetFileName(fileName), string.Join(",", currentNotificationData));
                     

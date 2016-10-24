@@ -494,7 +494,7 @@ namespace WindowsFormsApplication1
         public static string[] CheckNotification(string notificationFile)
         {
             //Our default value will be XML, and we only need to do something different if it isn't
-            string[] notificationValues = new string[3];
+            string[] notificationValues = new string[4];
             byte[] xml = File.ReadAllBytes(notificationFile);
 
             using (MemoryStream stream = new MemoryStream(xml))
@@ -509,28 +509,37 @@ namespace WindowsFormsApplication1
 
                 // get IDES transmission ID
                 XmlNodeList nodeList = doc.GetElementsByTagName("IDESTransmissionId");
-                //If the node is found, we will pull the value so we know if this is something other than XML
+                //If the node is found, we will pull the value which will be the IDES transmission ID
                 if (nodeList.Count == 1)
                 {
                     notificationValues[0] = nodeList[0].InnerText;
                 }
 
-                // get File Format Code node
+                // get SenderFileId node
                 nodeList = doc.GetElementsByTagName("SenderFileId");
-                //If the node is found, we will pull the value so we know if this is something other than XML
+                //If the node is found, we will pull the value which will be the file name
                 if (nodeList.Count == 1)
                 {
                     notificationValues[1] = nodeList[0].InnerText;
                 }
 
-                // get File Format Code node
+                // get FATCANotificationCd node
                 nodeList = doc.GetElementsByTagName("FATCANotificationCd");
-                //If the node is found, we will pull the value so we know if this is something other than XML
+                //If the node is found, we will pull the value which will be the file level error code (NVF, NDM, NSC, etc..)
                 if (nodeList.Count == 1)
                 {
                     notificationValues[2] = nodeList[0].InnerText;
                 }
 
+                // get FATCARecordErrorFIGrp node
+                nodeList = doc.GetElementsByTagName("FATCARecordErrorFIGrp", "*");
+                //If the node is found, we will pull the count which will be the count of record level errors on the file
+                if (nodeList.Count > 0)
+                {
+                    notificationValues[3] = nodeList.Count.ToString();
+                }
+                else
+                    notificationValues[3] = "0";
                 // check
                 return notificationValues;
             }
@@ -595,7 +604,7 @@ namespace WindowsFormsApplication1
                 schemas.Add("urn:oecd:ties:stffatcatypes:v2", stfFile);
                 schemas.Add("urn:oecd:ties:isofatcatypes:v1", isoFile);
                 schemas.Add("urn:oecd:ties:stf:v4", oecdFile);
-            
+
             }
             else
             {
@@ -604,8 +613,8 @@ namespace WindowsFormsApplication1
                 schemas.Add("urn:oecd:ties:isofatcatypes:v1", isoFile);
                 schemas.Add("urn:oecd:ties:stf:v4", oecdFile);
             }
-            
-            
+
+
             XDocument doc = XDocument.Load(inputFile);
             string msg = "";
             doc.Validate(schemas, (o, e) =>
