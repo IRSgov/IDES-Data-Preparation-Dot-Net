@@ -43,7 +43,7 @@ namespace WindowsFormsApplication1
             string fingerprint = "";
             // not currently used - SAT SshHostKeyFingerprint = "ssh-rsa 2048 64:25:44:96:0d:db:cc:10:3b:80:f3:2d:0e:24:bf:75"
             if (serverType == "PRODUCTION") {
-                fingerprint = "ssh-rsa 2048 9c:6a:de:70:54:ba:a6:dc:03:72:6f:73:dd:a2:d9:13";
+                fingerprint = "ssh-rsa 2048 8a:8e:04:ad:07:7d:e4:20:f0:ba:93:9d:4c:6a:95:50";
             }
             else if (serverType == "TEST")
             {
