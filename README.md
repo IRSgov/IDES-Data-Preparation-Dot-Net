@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This repository is archived and no longer maintained. The code is available for historical reference only and may contain unpatched or unknown vulnerabilities. Do **not** use it in production systems.
+
 ## IDES-Data-Preparation-Dot-Net
 The International Data Exchange Service (IDES) is a secure managed file transfer service that allows financial institutions and foreign tax authorities to securely send information on financial accounts held by U.S. taxpayers in accordance with the Foreign Account Tax Compliance Act (FATCA). 
 
